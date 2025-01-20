@@ -1,5 +1,7 @@
 package dsa.lib;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 
@@ -36,6 +38,22 @@ public class To
     if (Is.string(object))
     {
       return To.string((String) object, indent);
+    }
+    if (Is.stringArrayExercise(object))
+    {
+      return To.string((dsa.lab01.exercises.StringArray) object, indent);
+    }
+    if (Is.stringArraySolution(object))
+    {
+      return To.string((dsa.lab01.solutions.StringArray) object, indent);
+    }
+    if (Is.arrayExercise(object))
+    {
+      return To.string((dsa.lab01.exercises.Array<?>) object, indent);
+    }
+    if (Is.arraySolution(object))
+    {
+      return To.string((dsa.lab01.solutions.Array<?>) object, indent);
     }
     return object.toString();
   }
@@ -90,8 +108,94 @@ public class To
     return sb.toString();
   }
 
+  public static String string(dsa.lab01.exercises.StringArray stringArray)
+  {
+    return To.string(stringArray, "");
+  }
+
+  public static String string(
+    dsa.lab01.exercises.StringArray stringArray,
+    String indent)
+  {
+    return To.typedString(
+      stringArray, To.untypedString(
+        Arrays.asList(To.<String[]>field(
+          stringArray,
+          dsa.lab01.exercises.StringArray.class,
+          "strings")), indent));
+  }
+
+  public static String string(dsa.lab01.solutions.StringArray stringArray)
+  {
+    return To.string(stringArray, "");
+  }
+
+  public static String string(
+    dsa.lab01.solutions.StringArray stringArray,
+    String indent)
+  {
+    return To.typedString(
+      stringArray, To.untypedString(
+        Arrays.asList(To.<String[]>field(
+          stringArray,
+          dsa.lab01.solutions.StringArray.class,
+          "strings")), indent));
+  }
+
+  public static <Item> String string(dsa.lab01.exercises.Array<Item> array)
+  {
+    return To.string(array, "");
+  }
+
+  public static <Item> String string(
+    dsa.lab01.exercises.Array<Item> array,
+    String indent)
+  {
+    return To.typedString(
+      array, To.untypedString(
+        Arrays.asList(To.<Item[]>field(
+          array,
+          dsa.lab01.exercises.Array.class,
+          "items")), indent));
+  }
+
+  public static <Item> String string(dsa.lab01.solutions.Array<Item> array)
+  {
+    return To.string(array, "");
+  }
+
+  public static <Item> String string(
+    dsa.lab01.solutions.Array<Item> array,
+    String indent)
+  {
+    return To.typedString(
+      array, To.untypedString(
+        Arrays.asList(To.<Item[]>field(
+          array,
+          dsa.lab01.solutions.Array.class,
+          "items")), indent));
+  }
+
   private static String typedString(Object object, String string)
   {
     return object.getClass().getSimpleName() + string;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <FieldType> FieldType field(
+    Object object,
+    Class<?> class_,
+    String fieldName)
+  {
+    try
+    {
+      Field field = class_.getDeclaredField(fieldName);
+      field.setAccessible(true);
+      return (FieldType) field.get(object);
+    }
+    catch (NoSuchFieldException | IllegalAccessException e)
+    {
+      throw new RuntimeException("ERROR: Please let the module staff know!", e);
+    }
   }
 }
