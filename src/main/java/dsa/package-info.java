@@ -73,7 +73,7 @@
  * The most commonly-provided {@code base} code are interfaces defining abstract
  * data types (such as in {@link dsa.lab01.base.StringContainer}, as exercises
  * will often be to implement various concrete data types as subclasses of these
- * ADTs (e.g. as in {@link dsa.lab01.exercises.StaticArray}).
+ * ADTs (e.g. as in {@link dsa.lab01.exercises.StringArray}).
  * <ul>
  * <li>{@linkplain dsa.lab01 Lab 1}</li>
  * </ul>
