@@ -164,7 +164,7 @@ Now open the `exercises\SinglyLinkedList.java` file. Here we defined the
 interface we discussed at length above. Notice that **we keep a reference to
 both the first and the last item** in the list, as suggested at the end of
 Lecture 2; this will be useful for next week's labs. Notice also that this file
-contains a subclass, `Node<Item>` (at line 95), which implements the
+contains a subclass, `Node<Item>` (at line 109), which implements the
 `LinkedNode<Item>` interface and features, as private fields, a
 `SinglyLinkedList<Item>` list which is meant to be the linked list to which the
 node belongs to, an item of type `Item` which is meant to contain the item the
