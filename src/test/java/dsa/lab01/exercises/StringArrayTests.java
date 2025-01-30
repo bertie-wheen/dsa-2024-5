@@ -1,10 +1,11 @@
-package dsa.lab01;
+package dsa.lab01.exercises;
 
-import dsa.lab01.exercises.StringArray;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("StringArray")
 public class StringArrayTests
 {
   @Test

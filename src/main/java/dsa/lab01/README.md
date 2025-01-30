@@ -85,13 +85,13 @@ querying how many strings it contains, by asking if it's empty or not, or by
 checking whether a given string does or does not appear in the container. The
 user cannot see or access the underlying array of strings.
 
-If you select the `Run tests` run configuration in the top-right, you can run
-all the tests for the exercises that have been released thus far (assuming
-you're reading this in the first week, currently two: `StringArray` and `Array`)
-and check which are passing. If you implemented `StringArray.size()` correctly,
-you should see a green tick next to `StringArrayTests`, but still a red
-exclamation mark symbol next to `ArrayTests` - these are for the next exercise,
-which we turn to now.
+If you select the `Run Lab 1 tests` run configuration in the top-right, you can
+run all the tests for the exercises in this lab (`StringArray` and `Array`) and
+check which are passing. If you implemented `StringArray.size()` correctly, you
+should see a green tick next to `StringArray`, but still a red exclamation mark
+symbol next to `Array` - these are for the next exercise, which we turn to now.
+
+(If you don't see `Run Lab 1 tests`, expand `All Configurations`.)
 
 (One more thing before we do - getting all green ticks on the tests is great,
 but they aren't exhaustive, so there could still be issues with your solution.
