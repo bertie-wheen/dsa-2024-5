@@ -1,5 +1,9 @@
 package dsa.lib;
 
+import dsa.lab02.base.Container;
+
+import java.util.Arrays;
+
 public class Is
 {
   public static boolean string(Object object)
@@ -50,5 +54,22 @@ public class Is
   public static boolean arraySolution(Class<?> class_)
   {
     return dsa.lab01.solutions.Array.class.equals(class_);
+  }
+
+  public static boolean container(Object object)
+  {
+    return Is.container(object.getClass());
+  }
+
+  public static boolean container(Class<?> class_)
+  {
+    return Is.interface_(class_, Container.class);
+  }
+
+  private static boolean interface_(Class<?> class_, Class<?> interface_)
+  {
+    return class_.equals(interface_) ||
+      Arrays.stream(class_.getInterfaces())
+        .anyMatch((i) -> Is.interface_(i, interface_));
   }
 }

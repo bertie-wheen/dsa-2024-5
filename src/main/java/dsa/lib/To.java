@@ -1,5 +1,7 @@
 package dsa.lib;
 
+import dsa.lab02.base.Container;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -54,6 +56,10 @@ public class To
     if (Is.arraySolution(object))
     {
       return To.string((dsa.lab01.solutions.Array<?>) object, indent);
+    }
+    if (Is.container(object))
+    {
+      return To.string((Container<?>) object, indent);
     }
     return object.toString();
   }
@@ -174,6 +180,16 @@ public class To
           array,
           dsa.lab01.solutions.Array.class,
           "items")), indent));
+  }
+
+  public static <Item> String string(Container<Item> container)
+  {
+    return To.string(container, "");
+  }
+
+  public static <Item> String string(Container<Item> container, String indent)
+  {
+    return To.string((Iterable<Item>) container, indent);
   }
 
   private static String typedString(Object object, String string)
