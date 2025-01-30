@@ -143,7 +143,7 @@ to be contained. That is, if we need a container of strings, then we need to
 write `Array<String> myStringContainer = new Array<>()`; if we need a container
 of integers, then we write `Array<Integer> myIntegerContainer = new Array<>()`,
 and so on. We can use whatever type we want instead of `Item`, either already
-defined by classes implementing in imported Java libraries or by a class defined
+defined by classes implemented in imported Java libraries or by a class defined
 by us. We can even create a container of containers of containers of... some
 specified type. Eventually we *must* specify a type. For example,
 `Array<Array<Boolean>> myContainerOfBooleanContainers = new Array<>()`.
@@ -160,7 +160,8 @@ System.out.println("Does it contain the word 'Hello'? " + myArray.contains("Hell
 System.out.println("Does it contain the word 'hello'? " + myArray.contains("hello"));
 System.out.println("Does it contain the word `bye`? " + myArray.contains("bye"));
 ```
-(Remember to `import dsa.lab01` at the top of the `Main.java` file first.)
+(Remember to add `import dsa.lab01.exercises.Array;` at the top of the
+`Main.java` file first.)
 
 ## Interfaces extending other interfaces
 
