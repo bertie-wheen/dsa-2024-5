@@ -1,8 +1,9 @@
 package dsa.lab02.base;
 
+import dsa.lib.Iterators;
+
 import static dsa.lib.Misc.addSaturating;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StaticSequenceTests
 {
@@ -40,21 +41,17 @@ public class StaticSequenceTests
         assertEquals(first, nonEmptyStaticSequence.first());
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeItems(
         StaticSequence<Item> nonEmptyStaticSequence)
       {
         int size = nonEmptyStaticSequence.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] items =
+          (Item[]) Iterators.toArray(nonEmptyStaticSequence, size);
         nonEmptyStaticSequence.first();
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          items,
+          Iterators.toArray(nonEmptyStaticSequence, size));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -76,22 +73,18 @@ public class StaticSequenceTests
         assertEquals(items[index], nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeItems(
         StaticSequence<Item> nonEmptyStaticSequence)
       {
         int size = nonEmptyStaticSequence.size();
         int index = size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          items[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] items =
+          (Item[]) Iterators.toArray(nonEmptyStaticSequence, size);
         nonEmptyStaticSequence.get(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(items[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          items,
+          Iterators.toArray(nonEmptyStaticSequence, size));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -113,22 +106,18 @@ public class StaticSequenceTests
         assertEquals(items[index], nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeItems(
         StaticSequence<Item> nonEmptyStaticSequence)
       {
         int size = nonEmptyStaticSequence.size();
         int index = size / 2;
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] items =
+          (Item[]) Iterators.toArray(nonEmptyStaticSequence, size);
         nonEmptyStaticSequence.get(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          items,
+          Iterators.toArray(nonEmptyStaticSequence, size));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -150,22 +139,18 @@ public class StaticSequenceTests
         assertEquals(items[index], nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeItems(
         StaticSequence<Item> nonEmptyStaticSequence)
       {
         int size = nonEmptyStaticSequence.size();
         int index = 3 * size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          items[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] items =
+          (Item[]) Iterators.toArray(nonEmptyStaticSequence, size);
         nonEmptyStaticSequence.get(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(items[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          items,
+          Iterators.toArray(nonEmptyStaticSequence, size));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -186,21 +171,17 @@ public class StaticSequenceTests
         assertEquals(last, nonEmptyStaticSequence.last());
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeItems(
         StaticSequence<Item> nonEmptyStaticSequence)
       {
         int size = nonEmptyStaticSequence.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] items =
+          (Item[]) Iterators.toArray(nonEmptyStaticSequence, size);
         nonEmptyStaticSequence.last();
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          items,
+          Iterators.toArray(nonEmptyStaticSequence, size));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -250,22 +231,22 @@ public class StaticSequenceTests
         assertEquals(first, nonEmptyStaticSequence.first());
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         StaticSequence<Item> nonEmptyStaticSequence,
         Item first)
       {
         int size = nonEmptyStaticSequence.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i + 1);
-        }
+        Item[] others =
+          (Item[]) Iterators.toArray(
+            Iterators.skipIndex(0, nonEmptyStaticSequence),
+            size - 1);
         nonEmptyStaticSequence.setFirst(first);
-        for (int i = 0; i < size - 1; i++)
-        {
-          assertEquals(others[i], nonEmptyStaticSequence.get(i + 1));
-        }
+        assertArrayEquals(
+          others,
+          Iterators.toArray(
+            Iterators.skipIndex(0, nonEmptyStaticSequence),
+            size - 1));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -289,25 +270,23 @@ public class StaticSequenceTests
         assertEquals(item, nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         StaticSequence<Item> nonEmptyStaticSequence,
         Item item)
       {
         int size = nonEmptyStaticSequence.size();
         int index = size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++)
-        {
-          items[i] = nonEmptyStaticSequence.get(i < index ? i : i + 1);
-        }
+        Item[] others =
+          (Item[]) Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1);
         nonEmptyStaticSequence.set(index, item);
-        for (int i = 0; i < size - 1; i++)
-        {
-          assertEquals(
-            items[i],
-            nonEmptyStaticSequence.get(i < index ? i : i + 1));
-        }
+        assertArrayEquals(
+          others,
+          Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -331,25 +310,23 @@ public class StaticSequenceTests
         assertEquals(item, nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         StaticSequence<Item> nonEmptyStaticSequence,
         Item item)
       {
         int size = nonEmptyStaticSequence.size();
         int index = size / 2;
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i < index ? i : i + 1);
-        }
+        Item[] others =
+          (Item[]) Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1);
         nonEmptyStaticSequence.set(index, item);
-        for (int i = 0; i < size - 1; i++)
-        {
-          assertEquals(
-            others[i],
-            nonEmptyStaticSequence.get(i < index ? i : i + 1));
-        }
+        assertArrayEquals(
+          others,
+          Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -373,25 +350,23 @@ public class StaticSequenceTests
         assertEquals(item, nonEmptyStaticSequence.get(index));
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         StaticSequence<Item> nonEmptyStaticSequence,
         Item item)
       {
         int size = nonEmptyStaticSequence.size();
         int index = 3 * size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++)
-        {
-          items[i] = nonEmptyStaticSequence.get(i < index ? i : i + 1);
-        }
+        Item[] others =
+          (Item[]) Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1);
         nonEmptyStaticSequence.set(index, item);
-        for (int i = 0; i < size - 1; i++)
-        {
-          assertEquals(
-            items[i],
-            nonEmptyStaticSequence.get(i < index ? i : i + 1));
-        }
+        assertArrayEquals(
+          others,
+          Iterators.toArray(
+            Iterators.skipIndex(index, nonEmptyStaticSequence),
+            size - 1));
       }
 
       public static <Item> void doesNotChangeSize(
@@ -414,22 +389,22 @@ public class StaticSequenceTests
         assertEquals(last, nonEmptyStaticSequence.last());
       }
 
+      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         StaticSequence<Item> nonEmptyStaticSequence,
         Item last)
       {
         int size = nonEmptyStaticSequence.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++)
-        {
-          others[i] = nonEmptyStaticSequence.get(i);
-        }
+        Item[] others =
+          (Item[]) Iterators.toArray(
+            Iterators.skipIndex(size - 1, nonEmptyStaticSequence),
+            size - 1);
         nonEmptyStaticSequence.setLast(last);
-        for (int i = 0; i < size - 1; i++)
-        {
-          assertEquals(others[i], nonEmptyStaticSequence.get(i));
-        }
+        assertArrayEquals(
+          others,
+          Iterators.toArray(
+            Iterators.skipIndex(size - 1, nonEmptyStaticSequence),
+            size - 1));
       }
 
       public static <Item> void doesNotChangeSize(

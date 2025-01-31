@@ -269,6 +269,100 @@ public class Iterators
     return () -> Iterators.applyEach(iterable.iterator(), function);
   }
 
+  public static <T> int fillArray(T[] array, Iterator<T> iterator)
+  {
+    return fillArray(array, () -> iterator);
+  }
+
+  public static <T> int fillArray(T[] array, Iterable<T> iterable)
+  {
+    int i = 0;
+    for (T item : iterable)
+    {
+      if (i == array.length)
+      {
+        break;
+      }
+      array[i++] = item;
+    }
+    return i;
+  }
+
+  @SuppressWarnings("rawtypes")
+  public static <T> Object[] toArray(Iterator iterator, int size)
+  {
+    return toArray(() -> iterator, size);
+  }
+
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  public static <T> Object[] toArray(Iterable iterable, int size)
+  {
+    T[] array = (T[]) new Object[size];
+    if (fillArray(array, (Iterable<Object>) iterable) != size)
+    {
+      throw new IllegalArgumentException();
+    }
+    return array;
+  }
+
+  public static <T> T[] toArray(Class<T> class_, Iterator<T> iterator, int size)
+  {
+    return toArray(class_, () -> iterator, size);
+  }
+
+  public static <T> T[] toArray(Class<T> class_, Iterable<T> iterable, int size)
+  {
+    @SuppressWarnings("unchecked")
+    T[] array = (T[]) Array.newInstance(class_, size);
+    if (fillArray(array, iterable) != size)
+    {
+      throw new IllegalArgumentException();
+    }
+    return array;
+  }
+
+  public static <T> Iterator<T> skipIndex(int index, Iterator<T> iterator)
+  {
+    return new Iterator<T>()
+    {
+      private int i = 0;
+
+      {
+        if (index == 0 && iterator.hasNext())
+        {
+          iterator.next();
+          i++;
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return iterator.hasNext();
+      }
+
+      @Override
+      public T next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        T item = iterator.next();
+        if (++i == index && iterator.hasNext())
+        {
+          iterator.next();
+        }
+        return item;
+      }
+    };
+  }
+
+  public static <T> Iterable<T> skipIndex(int index, Iterable<T> iterable)
+  {
+    return () -> skipIndex(index, iterable.iterator());
+  }
+
   public static <T> Iterator<T> flatten(Iterator<? extends Iterable<T>> iterator)
   {
     return new Iterator<T>()
