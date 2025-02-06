@@ -225,6 +225,10 @@ public class SinglyLinkedList<Item>
       if (this.isFirst())
       {
         this.list.first = this.next;
+        if (this.list.first == null)
+        {
+          this.list.last = null;
+        }
         this.list.size--;
         return this.item;
       }
