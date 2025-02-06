@@ -11,6 +11,8 @@
 
 
 1. [Getting Started](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab01)
+2. [Static Arrays & Linked Lists](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab02)
+3. [Dynamic Arrays, Stacks & Queues](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab03)
 
 
 ## Setup
