@@ -1,5 +1,7 @@
 package dsa.lib;
 
+import dsa.lab03.solutions.DynamicArray;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -267,6 +269,28 @@ public class Iterators
     Function<A, B> function)
   {
     return () -> Iterators.applyEach(iterable.iterator(), function);
+  }
+
+  public static <T> Iterator<T> reversed(Iterator<T> iterator)
+  {
+    return reversed(() -> iterator).iterator();
+  }
+
+  public static <T> Iterable<T> reversed(Iterable<T> iterable)
+  {
+    return new DynamicArray<>(iterable).reversed();
+  }
+
+  public static <T> Iterator<T> reversed(Iterator<T> iterator, int size)
+    throws IllegalArgumentException
+  {
+    return reversed(() -> iterator, size).iterator();
+  }
+
+  public static <T> Iterable<T> reversed(Iterable<T> iterable, int size)
+    throws IllegalArgumentException
+  {
+    return new DynamicArray<>(iterable, size).reversed();
   }
 
   public static <T> int fillArray(T[] array, Iterator<T> iterator)
