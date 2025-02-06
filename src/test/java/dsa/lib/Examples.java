@@ -9,7 +9,7 @@ public class Examples
       new Integer[]{2});
   private static final Iterable<Integer[]> multiItemIntArrays =
     Iterators.iterable(
-      new Integer[]{1, 42, 3},
+      new Integer[]{1, 42, 1, 3},
       new Integer[]{Integer.MAX_VALUE, 0, Integer.MIN_VALUE, -1, -2});
   private static final Iterable<Integer[]> nonEmptyIntArrays =
     Iterators.chain(singletonIntArrays, multiItemIntArrays);
@@ -44,7 +44,7 @@ public class Examples
       new String[]{"supercalifragilisticexpialidocious"});
   private static final Iterable<String[]> multiItemStringArrays =
     Iterators.iterable(
-      new String[]{"foo", "bar", "quux"},
+      new String[]{"foo", "bar", "quux", "quux"},
       new String[]{"Hello", null},
       new String[]{"LOREM", "IPSUM", "DOLOR", "SIT", "AMET!"});
   private static final Iterable<String[]> nonEmptyStringArrays =
@@ -64,12 +64,19 @@ public class Examples
     Iterators.chain(multiItemIntArrays, multiItemStringArrays);
   private static final Iterable<Object[]> nonEmptyArrays =
     Iterators.chain(nonEmptyIntArrays, nonEmptyStringArrays);
-  private static final Iterable<Object[]> arrays =
+  private static final Iterable<Object[]> comparableArrays =
     Iterators.chain(intArrays, stringArrays);
+  private static final Iterable<Object[]> arrays =
+    comparableArrays;
+
+  static Object[] wrap(Object object)
+  {
+    return new Object[]{object};
+  }
 
   static Iterable<Object[]> emptyArrays()
   {
-    return Iterators.applyEach(emptyArrays, (array) -> new Object[]{array});
+    return Iterators.applyEach(emptyArrays, Examples::wrap);
   }
 
   static Iterable<Object[]> emptyArraysAndInts()
@@ -79,22 +86,27 @@ public class Examples
 
   static Iterable<Object[]> singletonArrays()
   {
-    return Iterators.applyEach(singletonArrays, (array) -> new Object[]{array});
+    return Iterators.applyEach(singletonArrays, Examples::wrap);
   }
 
   static Iterable<Object[]> multiItemArrays()
   {
-    return Iterators.applyEach(multiItemArrays, (array) -> new Object[]{array});
+    return Iterators.applyEach(multiItemArrays, Examples::wrap);
   }
 
   static Iterable<Object[]> nonEmptyArrays()
   {
-    return Iterators.applyEach(nonEmptyArrays, (array) -> new Object[]{array});
+    return Iterators.applyEach(nonEmptyArrays, Examples::wrap);
+  }
+
+  static Iterable<Object[]> comparableArrays()
+  {
+    return Iterators.applyEach(comparableArrays, Examples::wrap);
   }
 
   static Iterable<Object[]> arrays()
   {
-    return Iterators.applyEach(arrays, (array) -> new Object[]{array});
+    return Iterators.applyEach(arrays, Examples::wrap);
   }
 
   static Iterable<Object[]> nonEmptyArraysAndItems()
@@ -133,5 +145,10 @@ public class Examples
     return Iterators.chain(
       Iterators.product(intArrays, nonNegativeInts, ints),
       Iterators.product(stringArrays, nonNegativeInts, strings));
+  }
+
+  static Iterable<Object[]> nonEmptyArraysAndNonNegativeInts()
+  {
+    return Iterators.product(nonEmptyArrays, nonNegativeInts);
   }
 }
