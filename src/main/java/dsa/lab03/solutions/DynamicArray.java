@@ -185,6 +185,7 @@ public class DynamicArray<Item>
     {
       this.items[i] = this.items[i + 1];
     }
+    this.items[this.size] = null;
     if (this.size <= this.capacity() / 4)
     {
       this.resize(this.capacity() / 2);
