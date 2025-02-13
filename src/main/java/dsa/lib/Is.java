@@ -1,6 +1,8 @@
 package dsa.lib;
 
 import dsa.lab02.base.Container;
+import dsa.lab04.base.Map;
+import dsa.lab04.base.MapItem;
 
 import java.util.Arrays;
 
@@ -56,6 +58,16 @@ public class Is
     return dsa.lab01.solutions.Array.class.equals(class_);
   }
 
+  public static boolean mapItem(Object object)
+  {
+    return Is.mapItem(object.getClass());
+  }
+
+  public static boolean mapItem(Class<?> class_)
+  {
+    return class_.equals(MapItem.class);
+  }
+
   public static boolean container(Object object)
   {
     return Is.container(object.getClass());
@@ -64,6 +76,16 @@ public class Is
   public static boolean container(Class<?> class_)
   {
     return Is.interface_(class_, Container.class);
+  }
+
+  public static boolean map(Object object)
+  {
+    return Is.map(object.getClass());
+  }
+
+  public static boolean map(Class<?> class_)
+  {
+    return Is.interface_(class_, Map.class);
   }
 
   private static boolean interface_(Class<?> class_, Class<?> interface_)

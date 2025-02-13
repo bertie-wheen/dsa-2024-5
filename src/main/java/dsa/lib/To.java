@@ -1,6 +1,8 @@
 package dsa.lib;
 
 import dsa.lab02.base.Container;
+import dsa.lab04.base.Map;
+import dsa.lab04.base.MapItem;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -56,6 +58,14 @@ public class To
     if (Is.arraySolution(object))
     {
       return To.string((dsa.lab01.solutions.Array<?>) object, indent);
+    }
+    if (Is.map(object))
+    {
+      return To.string((Map<?, ?>) object, indent);
+    }
+    if (Is.mapItem(object))
+    {
+      return To.string((MapItem<?, ?>) object, indent);
     }
     if (Is.container(object))
     {
@@ -190,6 +200,46 @@ public class To
   public static <Item> String string(Container<Item> container, String indent)
   {
     return To.string((Iterable<Item>) container, indent);
+  }
+
+  public static <Key, Value> String string(Map<Key, Value> map)
+  {
+    return To.string(map, "");
+  }
+
+  public static <Key, Value> String string(Map<Key, Value> map, String indent)
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append(map.getClass().getSimpleName());
+    sb.append('(');
+    if (!map.isEmpty())
+    {
+      sb.append('\n');
+      for (MapItem<Key, Value> item : map)
+      {
+        String itemIndent = indent + "  ";
+        sb.append(itemIndent);
+        sb.append(To.string(item, itemIndent));
+        sb.append('\n');
+      }
+      sb.append(indent);
+    }
+    sb.append(')');
+    return sb.toString();
+  }
+
+  public static <Key, Value> String string(MapItem<Key, Value> item)
+  {
+    return To.string(item, "");
+  }
+
+  public static <Key, Value> String string(
+    MapItem<Key, Value> item,
+    String indent)
+  {
+    return To.string(item.key(), indent) + " => " + To.string(
+      item.value(),
+      indent);
   }
 
   private static String typedString(Object object, String string)
