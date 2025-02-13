@@ -6,7 +6,7 @@ import dsa.lab02.base.LinkedNodeTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.FieldSource;
 
 @DisplayName("DoublyLinkedList")
 class DoublyLinkedListTests
@@ -21,7 +21,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("if index below bound")
-      @MethodSource("dsa.lib.Examples#arraysAndNegativeInts")
+      @FieldSource("dsa.lib.examples.Arrays#AND_NEGATIVE_INTS")
       <Item> void ifIndexBelowBound(
         Item[] array,
         int negativeIndex)
@@ -33,7 +33,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("if index above bound")
-      @MethodSource("dsa.lib.Examples#arraysAndNonNegativeInts")
+      @FieldSource("dsa.lib.examples.Arrays#AND_NON_NEGATIVE_INTS")
       <Item> void ifIndexAboveBound(
         Item[] array,
         int nonNegativeOffset)
@@ -50,7 +50,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("gets first")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsFirst(
         Item[] nonEmptyArray)
       {
@@ -61,7 +61,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(
         Item[] nonEmptyArray)
       {
@@ -71,7 +71,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray)
       {
@@ -86,7 +86,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(
         Item[] nonEmptyArray)
       {
@@ -96,7 +96,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(
         Item[] nonEmptyArray)
       {
@@ -106,7 +106,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray)
       {
@@ -121,7 +121,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(
         Item[] nonEmptyArray)
       {
@@ -131,7 +131,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(
         Item[] nonEmptyArray)
       {
@@ -141,7 +141,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray)
       {
@@ -156,7 +156,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(
         Item[] nonEmptyArray)
       {
@@ -166,7 +166,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(
         Item[] nonEmptyArray)
       {
@@ -176,7 +176,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray)
       {
@@ -191,7 +191,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("gets last")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsLast(
         Item[] nonEmptyArray)
       {
@@ -202,7 +202,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(
         Item[] nonEmptyArray)
       {
@@ -212,7 +212,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray)
       {
@@ -232,7 +232,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("inserts as first")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsAsFirst(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.insertsAsFirst(
@@ -242,7 +242,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.doesNotChangeOthers(
@@ -252,7 +252,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.incrementsSize(
@@ -267,7 +267,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -279,7 +279,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] array,
         Item item)
@@ -291,7 +291,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoFirstHalf.incrementsSize(
@@ -306,7 +306,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -318,7 +318,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoMiddle.doesNotChangeOthers(
@@ -328,7 +328,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoMiddle.incrementsSize(
@@ -343,7 +343,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -355,7 +355,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] array,
         Item item)
@@ -367,7 +367,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoSecondHalf.incrementsSize(
@@ -382,7 +382,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("inserts as last")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsAsLast(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.insertsAsLast(
@@ -392,7 +392,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.doesNotChangeOthers(
@@ -402,7 +402,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.incrementsSize(
@@ -418,7 +418,7 @@ class DoublyLinkedListTests
   {
     @ParameterizedTest
     @DisplayName("throws if empty")
-    @MethodSource("dsa.lib.Examples#emptyArraysAndInts")
+    @FieldSource("dsa.lib.examples.arrays.Empty#AND_INTS")
     <Item> void throwsIfEmpty(Item[] emptyArray, int index)
     {
       DynamicSequenceTests.Remove.throwsIfEmpty(
@@ -432,7 +432,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("removes first")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFirst(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.removesFirst(
@@ -441,7 +441,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.doesNotChangeOthers(
@@ -450,7 +450,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.decrementsSize(
@@ -464,7 +464,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.removesFromCorrectIndex(
@@ -473,7 +473,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.doesNotChangeOthers(
@@ -482,7 +482,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.decrementsSize(
@@ -496,7 +496,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.removesFromCorrectIndex(
@@ -505,7 +505,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.doesNotChangeOthers(
@@ -514,7 +514,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.decrementsSize(
@@ -528,7 +528,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.removesFromCorrectIndex(
@@ -537,7 +537,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.doesNotChangeOthers(
@@ -546,7 +546,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.decrementsSize(
@@ -560,7 +560,7 @@ class DoublyLinkedListTests
     {
       @ParameterizedTest
       @DisplayName("removes last")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesLast(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.removesLast(
@@ -569,7 +569,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.doesNotChangeOthers(
@@ -578,7 +578,7 @@ class DoublyLinkedListTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.decrementsSize(
@@ -601,7 +601,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as previous")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsPrevious(
           Item[] nonEmptyArray,
           Item previous)
@@ -613,7 +613,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesFirstNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -625,7 +625,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeLastNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -637,7 +637,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item previous)
@@ -649,7 +649,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item previous)
@@ -661,7 +661,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item previous)
@@ -678,7 +678,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as previous")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsPrevious(
           Item[] nonEmptyArray,
           Item previous)
@@ -690,7 +690,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item previous)
@@ -702,7 +702,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeLastNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -714,7 +714,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item previous)
@@ -726,7 +726,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item previous)
@@ -738,7 +738,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item previous)
@@ -755,7 +755,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as previous")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsPrevious(
           Item[] nonEmptyArray,
           Item previous)
@@ -767,7 +767,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item previous)
@@ -779,7 +779,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeLastNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -791,7 +791,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item previous)
@@ -803,7 +803,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item previous)
@@ -815,7 +815,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item previous)
@@ -832,7 +832,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as previous")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsPrevious(
           Item[] nonEmptyArray,
           Item previous)
@@ -844,7 +844,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item previous)
@@ -856,7 +856,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeLastNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -868,7 +868,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item previous)
@@ -880,7 +880,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item previous)
@@ -892,7 +892,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item previous)
@@ -909,7 +909,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as previous")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsPrevious(
           Item[] nonEmptyArray,
           Item previous)
@@ -921,7 +921,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item previous)
@@ -933,7 +933,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeLastNode(
           Item[] nonEmptyArray,
           Item previous)
@@ -945,7 +945,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item previous)
@@ -957,7 +957,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item previous)
@@ -969,7 +969,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item previous)
@@ -991,7 +991,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as next")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsNext(
           Item[] nonEmptyArray,
           Item next)
@@ -1003,7 +1003,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeFirstNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1015,7 +1015,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item next)
@@ -1027,7 +1027,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item next)
@@ -1039,7 +1039,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item next)
@@ -1051,7 +1051,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item next)
@@ -1068,7 +1068,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as next")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsNext(
           Item[] nonEmptyArray,
           Item next)
@@ -1080,7 +1080,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeFirstNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1092,7 +1092,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item next)
@@ -1104,7 +1104,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item next)
@@ -1116,7 +1116,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item next)
@@ -1128,7 +1128,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item next)
@@ -1145,7 +1145,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as next")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsNext(
           Item[] nonEmptyArray,
           Item next)
@@ -1157,7 +1157,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeFirstNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1169,7 +1169,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item next)
@@ -1181,7 +1181,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item next)
@@ -1193,7 +1193,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item next)
@@ -1205,7 +1205,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item next)
@@ -1222,7 +1222,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as next")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsNext(
           Item[] nonEmptyArray,
           Item next)
@@ -1234,7 +1234,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeFirstNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1246,7 +1246,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray,
           Item next)
@@ -1258,7 +1258,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item next)
@@ -1270,7 +1270,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item next)
@@ -1282,7 +1282,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item next)
@@ -1299,7 +1299,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("inserts as next")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void insertsAsNext(
           Item[] nonEmptyArray,
           Item next)
@@ -1311,7 +1311,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change last node")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeFirstNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1323,7 +1323,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void changesLastNode(
           Item[] nonEmptyArray,
           Item next)
@@ -1335,7 +1335,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray,
           Item next)
@@ -1347,7 +1347,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray,
           Item next)
@@ -1359,7 +1359,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("increments size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
         <Item> void incrementsSize(
           Item[] nonEmptyArray,
           Item next)
@@ -1381,7 +1381,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("returns item")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void returnsItem(
           Item[] nonEmptyArray)
         {
@@ -1391,7 +1391,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1401,7 +1401,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes last node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1411,7 +1411,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray)
         {
@@ -1421,7 +1421,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray)
         {
@@ -1431,7 +1431,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("decrements size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void decrementsSize(
           Item[] nonEmptyArray)
         {
@@ -1446,7 +1446,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("returns item")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void returnsItem(
           Item[] nonEmptyArray)
         {
@@ -1456,7 +1456,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1466,7 +1466,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes last node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1476,7 +1476,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray)
         {
@@ -1486,7 +1486,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray)
         {
@@ -1496,7 +1496,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("decrements size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void decrementsSize(
           Item[] nonEmptyArray)
         {
@@ -1511,7 +1511,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("returns item")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void returnsItem(
           Item[] nonEmptyArray)
         {
@@ -1521,7 +1521,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1531,7 +1531,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes last node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1541,7 +1541,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray)
         {
@@ -1551,7 +1551,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray)
         {
@@ -1561,7 +1561,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("decrements size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void decrementsSize(
           Item[] nonEmptyArray)
         {
@@ -1576,7 +1576,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("returns item")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void returnsItem(
           Item[] nonEmptyArray)
         {
@@ -1586,7 +1586,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1596,7 +1596,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes last node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1606,7 +1606,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray)
         {
@@ -1616,7 +1616,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray)
         {
@@ -1626,7 +1626,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("decrements size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void decrementsSize(
           Item[] nonEmptyArray)
         {
@@ -1641,7 +1641,7 @@ class DoublyLinkedListTests
       {
         @ParameterizedTest
         @DisplayName("returns item")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void returnsItem(
           Item[] nonEmptyArray)
         {
@@ -1651,7 +1651,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes first node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesFirstNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1661,7 +1661,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("changes last node only if should")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void changesLastNodeOnlyIfShould(
           Item[] nonEmptyArray)
         {
@@ -1671,7 +1671,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other items")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherItems(
           Item[] nonEmptyArray)
         {
@@ -1681,7 +1681,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("does not change other nodes")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void doesNotChangeOtherNodes(
           Item[] nonEmptyArray)
         {
@@ -1691,7 +1691,7 @@ class DoublyLinkedListTests
 
         @ParameterizedTest
         @DisplayName("decrements size")
-        @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
         <Item> void decrementsSize(
           Item[] nonEmptyArray)
         {

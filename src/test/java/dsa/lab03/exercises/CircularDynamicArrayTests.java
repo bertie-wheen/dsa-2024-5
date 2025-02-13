@@ -5,7 +5,7 @@ import dsa.lab02.base.StaticSequenceTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.FieldSource;
 
 @DisplayName("CircularDynamicArray")
 public class CircularDynamicArrayTests
@@ -20,7 +20,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("if below bound")
-      @MethodSource("dsa.lib.Examples#arraysAndNegativeInts")
+      @FieldSource("dsa.lib.examples.Arrays#AND_NEGATIVE_INTS")
       <Item> void ifBelowBound(Item[] array, int negativeIndex)
       {
         StaticSequenceTests.Get.Throws.ifIndexBelowBound(
@@ -30,7 +30,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("if above bound")
-      @MethodSource("dsa.lib.Examples#arraysAndNonNegativeInts")
+      @FieldSource("dsa.lib.examples.Arrays#AND_NON_NEGATIVE_INTS")
       <Item> void ifAboveBound(Item[] array, int nonNegativeOffset)
       {
         StaticSequenceTests.Get.Throws.ifIndexAboveBound(
@@ -45,7 +45,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("gets first")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsFirst(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.First.getsFirst(
@@ -54,7 +54,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.First.doesNotChangeItems(
@@ -63,7 +63,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.First.doesNotChangeSize(
@@ -77,7 +77,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InFirstHalf.getsCorrectIndex(
@@ -87,7 +87,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InFirstHalf.doesNotChangeItems(
@@ -96,7 +96,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InFirstHalf.doesNotChangeSize(
@@ -110,7 +110,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InMiddle.getsCorrectIndex(
@@ -120,7 +120,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InMiddle.doesNotChangeItems(
@@ -129,7 +129,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InMiddle.doesNotChangeSize(
@@ -143,7 +143,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("gets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsCorrectIndex(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InSecondHalf.getsCorrectIndex(
@@ -153,7 +153,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InSecondHalf.doesNotChangeItems(
@@ -162,7 +162,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.InSecondHalf.doesNotChangeSize(
@@ -176,7 +176,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("gets last")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void getsLast(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.Last.getsLast(
@@ -186,7 +186,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change items")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeItems(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.Last.doesNotChangeItems(
@@ -195,7 +195,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray)
       {
         StaticSequenceTests.Get.Last.doesNotChangeSize(
@@ -214,7 +214,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("if below bound")
-      @MethodSource("dsa.lib.Examples#arraysNegativeIntsAndItems")
+      @FieldSource("dsa.lib.examples.arrays.AndNegativeInts#AND_ITEMS")
       <Item> void ifBelowBound(
         Item[] array,
         int negativeIndex,
@@ -228,7 +228,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("if above bound")
-      @MethodSource("dsa.lib.Examples#arraysNonNegativeIntsAndItems")
+      @FieldSource("dsa.lib.examples.arrays.AndNonNegativeInts#AND_ITEMS")
       <Item> void ifAboveBound(
         Item[] array,
         int nonNegativeOffset,
@@ -247,7 +247,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("sets first")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void setsFirst(Item[] nonEmptyArray, Item first)
       {
         StaticSequenceTests.Set.First.setsFirst(
@@ -256,7 +256,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray, Item first)
       {
         StaticSequenceTests.Set.First.doesNotChangeOthers(
@@ -266,7 +266,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray, Item first)
       {
         StaticSequenceTests.Set.First.doesNotChangeSize(
@@ -281,7 +281,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("sets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void setsCorrectIndex(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InFirstHalf.setsCorrectIndex(
@@ -291,7 +291,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] nonEmptyArray,
         Item item)
@@ -303,7 +303,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InFirstHalf.doesNotChangeSize(
@@ -318,7 +318,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("sets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void setsCorrectIndex(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InMiddle.setsCorrectIndex(
@@ -328,7 +328,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InMiddle.doesNotChangeOthers(
@@ -338,7 +338,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InMiddle.doesNotChangeSize(
@@ -353,7 +353,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("sets correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void setsCorrectIndex(Item[] nonEmptyArray, Item item)
       {
         StaticSequenceTests.Set.InSecondHalf.setsCorrectIndex(
@@ -363,7 +363,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] nonEmptyArray,
         Item item)
@@ -375,7 +375,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeSize(
         Item[] nonEmptyArray,
         Item item)
@@ -392,7 +392,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("sets last")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void setsLast(Item[] nonEmptyArray, Item last)
       {
         StaticSequenceTests.Set.Last.setsLast(
@@ -402,7 +402,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray, Item last)
       {
         StaticSequenceTests.Set.Last.doesNotChangeOthers(
@@ -412,7 +412,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+      @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
       <Item> void doesNotChangeSize(Item[] nonEmptyArray, Item last)
       {
         StaticSequenceTests.Set.Last.doesNotChangeSize(
@@ -432,7 +432,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("inserts as first")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsAsFirst(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.insertsAsFirst(
@@ -442,7 +442,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.doesNotChangeOthers(
@@ -452,7 +452,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.First.incrementsSize(
@@ -467,7 +467,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -479,7 +479,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] array,
         Item item)
@@ -491,7 +491,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoFirstHalf.incrementsSize(
@@ -506,7 +506,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -518,7 +518,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoMiddle.doesNotChangeOthers(
@@ -528,7 +528,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoMiddle.incrementsSize(
@@ -543,7 +543,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("inserts into correct index")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsIntoCorrectIndex(
         Item[] array,
         Item item)
@@ -555,7 +555,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(
         Item[] array,
         Item item)
@@ -567,7 +567,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.IntoSecondHalf.incrementsSize(
@@ -582,7 +582,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("inserts as last")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void insertsAsLast(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.insertsAsLast(
@@ -592,7 +592,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void doesNotChangeOthers(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.doesNotChangeOthers(
@@ -602,7 +602,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("increments size")
-      @MethodSource("dsa.lib.Examples#arraysAndItems")
+      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
       <Item> void incrementsSize(Item[] array, Item item)
       {
         DynamicSequenceTests.Insert.Last.incrementsSize(
@@ -618,7 +618,7 @@ public class CircularDynamicArrayTests
   {
     @ParameterizedTest
     @DisplayName("throws if empty")
-    @MethodSource("dsa.lib.Examples#emptyArraysAndInts")
+    @FieldSource("dsa.lib.examples.arrays.Empty#AND_INTS")
     <Item> void throwsIfEmpty(Item[] emptyArray, int index)
     {
       DynamicSequenceTests.Remove.throwsIfEmpty(
@@ -632,7 +632,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("removes first")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFirst(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.removesFirst(
@@ -641,7 +641,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.doesNotChangeOthers(
@@ -650,7 +650,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.First.decrementsSize(
@@ -664,7 +664,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.removesFromCorrectIndex(
@@ -673,7 +673,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.doesNotChangeOthers(
@@ -682,7 +682,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromFirstHalf.decrementsSize(
@@ -696,7 +696,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.removesFromCorrectIndex(
@@ -705,7 +705,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.doesNotChangeOthers(
@@ -714,7 +714,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromMiddle.decrementsSize(
@@ -728,7 +728,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("removes from correct index")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.removesFromCorrectIndex(
@@ -737,7 +737,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.doesNotChangeOthers(
@@ -746,7 +746,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.FromSecondHalf.decrementsSize(
@@ -760,7 +760,7 @@ public class CircularDynamicArrayTests
     {
       @ParameterizedTest
       @DisplayName("removes last")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void removesLast(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.removesLast(
@@ -769,7 +769,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("does not change others")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.doesNotChangeOthers(
@@ -778,7 +778,7 @@ public class CircularDynamicArrayTests
 
       @ParameterizedTest
       @DisplayName("decrements size")
-      @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
       <Item> void decrementsSize(Item[] nonEmptyArray)
       {
         DynamicSequenceTests.Remove.Last.decrementsSize(

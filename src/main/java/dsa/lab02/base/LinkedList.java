@@ -93,16 +93,16 @@ public interface LinkedList<Item>
   @Override
   default Iterable<Item> items()
   {
-    return () -> Iterators.applyEach(
-      new ForwardNodeIterator<>(this),
+    return Iterators.applyEach(
+      () -> new ForwardNodeIterator<>(this),
       LinkedNode::item);
   }
 
   @Override
   default Iterable<Item> reversed()
   {
-    return () -> Iterators.applyEach(
-      new ReverseNodeIterator<>(this),
+    return Iterators.applyEach(
+      () -> new ReverseNodeIterator<>(this),
       LinkedNode::item);
   }
 

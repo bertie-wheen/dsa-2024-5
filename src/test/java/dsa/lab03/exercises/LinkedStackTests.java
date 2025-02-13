@@ -4,7 +4,7 @@ import dsa.lab03.base.StackTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.FieldSource;
 
 @DisplayName("LinkedStack")
 public class LinkedStackTests
@@ -15,7 +15,7 @@ public class LinkedStackTests
   {
     @ParameterizedTest
     @DisplayName("pushes as top")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void pushesAsTop(Item[] array, Item item)
     {
       StackTests.Push.pushesAsTop(
@@ -25,7 +25,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void doesNotChangeOthers(Item[] array, Item item)
     {
       StackTests.Push.doesNotChangeOthers(
@@ -35,7 +35,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void incrementsSize(Item[] array, Item item)
     {
       StackTests.Push.incrementsSize(
@@ -50,7 +50,7 @@ public class LinkedStackTests
   {
     @ParameterizedTest
     @DisplayName("returns top")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void returnsTop(Item[] nonEmptyArray)
     {
       StackTests.Top.returnsTop(
@@ -60,7 +60,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("does not change top")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeTop(Item[] nonEmptyArray)
     {
       StackTests.Top.doesNotChangeTop(
@@ -69,7 +69,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeItems(Item[] nonEmptyArray)
     {
       StackTests.Top.doesNotChangeItems(
@@ -78,7 +78,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeSize(Item[] nonEmptyArray)
     {
       StackTests.Top.doesNotChangeSize(
@@ -92,7 +92,7 @@ public class LinkedStackTests
   {
     @ParameterizedTest
     @DisplayName("returns top")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void returnsTop(Item[] nonEmptyArray)
     {
       StackTests.Pop.returnsTop(
@@ -102,7 +102,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
     {
       StackTests.Pop.doesNotChangeOthers(
@@ -111,7 +111,7 @@ public class LinkedStackTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void decrementsSize(Item[] nonEmptyArray)
     {
       StackTests.Pop.decrementsSize(

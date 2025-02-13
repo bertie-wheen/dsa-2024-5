@@ -1,154 +1,94 @@
 package dsa.lib;
 
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import static dsa.lib.Iterators.*;
+
 public class Examples
 {
-  private static final Iterable<Integer[]> emptyIntArray =
-    Iterators.singletonIterable(new Integer[]{});
-  private static final Iterable<Integer[]> singletonIntArrays =
-    Iterators.singletonIterable(
-      new Integer[]{2});
-  private static final Iterable<Integer[]> multiItemIntArrays =
-    Iterators.iterable(
-      new Integer[]{1, 42, 1, 3},
-      new Integer[]{Integer.MAX_VALUE, 0, Integer.MIN_VALUE, -1, -2});
-  private static final Iterable<Integer[]> nonEmptyIntArrays =
-    Iterators.chain(singletonIntArrays, multiItemIntArrays);
-  private static final Iterable<Integer[]> intArrays =
-    Iterators.chain(emptyIntArray, nonEmptyIntArrays);
-  private static final Iterable<Integer> zeroInt = Iterators.iterable(
-    0);
-  private static final Iterable<Integer> positiveInts = Iterators.iterable(
-    1,
-    100,
-    Integer.MAX_VALUE);
-  private static final Iterable<Integer> negativeInts = Iterators.iterable(
-    -1,
-    -40,
-    Integer.MIN_VALUE);
-  private static final Iterable<Integer> nonZeroInts = Iterators.chain(
-    positiveInts,
-    negativeInts);
-  private static final Iterable<Integer> nonNegativeInts = Iterators.chain(
-    zeroInt,
-    positiveInts);
-  private static final Iterable<Integer> nonPositiveInts = Iterators.chain(
-    zeroInt,
-    negativeInts);
-  private static final Iterable<Integer> ints = Iterators.chain(
-    zeroInt,
-    nonZeroInts);
-  private static final Iterable<String[]> emptyStringArray =
-    Iterators.singletonIterable(new String[]{});
-  private static final Iterable<String[]> singletonStringArrays =
-    Iterators.singletonIterable(
-      new String[]{"supercalifragilisticexpialidocious"});
-  private static final Iterable<String[]> multiItemStringArrays =
-    Iterators.iterable(
-      new String[]{"foo", "bar", "quux", "quux"},
-      new String[]{"Hello", null},
-      new String[]{"LOREM", "IPSUM", "DOLOR", "SIT", "AMET!"});
-  private static final Iterable<String[]> nonEmptyStringArrays =
-    Iterators.chain(singletonStringArrays, multiItemStringArrays);
-  private static final Iterable<String[]> stringArrays =
-    Iterators.chain(emptyStringArray, nonEmptyStringArrays);
-  private static final Iterable<String> strings = Iterators.iterable(
-    null,
-    "",
-    "CS",
-    ")(*&^%$£\"!");
-  private static final Iterable<Object[]> emptyArrays =
-    Iterators.chain(emptyIntArray, emptyStringArray);
-  private static final Iterable<Object[]> singletonArrays =
-    Iterators.chain(singletonIntArrays, singletonStringArrays);
-  private static final Iterable<Object[]> multiItemArrays =
-    Iterators.chain(multiItemIntArrays, multiItemStringArrays);
-  private static final Iterable<Object[]> nonEmptyArrays =
-    Iterators.chain(nonEmptyIntArrays, nonEmptyStringArrays);
-  private static final Iterable<Object[]> comparableArrays =
-    Iterators.chain(intArrays, stringArrays);
-  private static final Iterable<Object[]> arrays =
-    comparableArrays;
-
-  static Object[] wrap(Object object)
+  @SafeVarargs
+  public static <T> Iterable<Arguments> arguments(
+    Iterable<? extends T>... iterables)
   {
-    return new Object[]{object};
+    return applyEach(Iterators.<Object>product(iterables), Arguments::of);
   }
 
-  static Iterable<Object[]> emptyArrays()
+  public static <T> Iterable<Arguments> andValidIndices(Iterable<T[]> arrays)
   {
-    return Iterators.applyEach(emptyArrays, Examples::wrap);
+    return andValidIndices(arrays, false);
   }
 
-  static Iterable<Object[]> emptyArraysAndInts()
+  public static <T> Iterable<Arguments> andValidInsertIndices(Iterable<T[]> arrays)
   {
-    return Iterators.product(emptyArrays, ints);
+    return andValidIndices(arrays, true);
   }
 
-  static Iterable<Object[]> singletonArrays()
+  public static <T> Iterable<Arguments> andValidIndices(
+    Iterable<T[]> arrays,
+    boolean sizeValid)
   {
-    return Iterators.applyEach(singletonArrays, Examples::wrap);
-  }
+    return () -> new Iterator<Arguments>()
+    {
+      private Iterator<T[]> arraysIterator = arrays.iterator();
+      private T[] array = null;
+      private int numerator = 0;
 
-  static Iterable<Object[]> multiItemArrays()
-  {
-    return Iterators.applyEach(multiItemArrays, Examples::wrap);
-  }
+      {
+        while ((this.array == null || this.array.length == 0)
+          && this.arraysIterator.hasNext())
+        {
+          this.array = this.arraysIterator.next();
+        }
+      }
 
-  static Iterable<Object[]> nonEmptyArrays()
-  {
-    return Iterators.applyEach(nonEmptyArrays, Examples::wrap);
-  }
+      @Override
+      public boolean hasNext()
+      {
+        return this.array != null && this.array.length != 0;
+      }
 
-  static Iterable<Object[]> comparableArrays()
-  {
-    return Iterators.applyEach(comparableArrays, Examples::wrap);
-  }
+      private int index()
+      {
+        int size = sizeValid ? this.array.length : this.array.length - 1;
+        return Math.round(size * this.numerator / 4f);
+      }
 
-  static Iterable<Object[]> arrays()
-  {
-    return Iterators.applyEach(arrays, Examples::wrap);
-  }
-
-  static Iterable<Object[]> nonEmptyArraysAndItems()
-  {
-    return Iterators.chain(
-      Iterators.product(nonEmptyIntArrays, ints),
-      Iterators.product(nonEmptyStringArrays, strings));
-  }
-
-  static Iterable<Object[]> arraysAndItems()
-  {
-    return Iterators.chain(
-      Iterators.product(intArrays, ints),
-      Iterators.product(stringArrays, strings));
-  }
-
-  static Iterable<Object[]> arraysAndNegativeInts()
-  {
-    return Iterators.product(arrays, negativeInts);
-  }
-
-  static Iterable<Object[]> arraysAndNonNegativeInts()
-  {
-    return Iterators.product(arrays, nonNegativeInts);
-  }
-
-  static Iterable<Object[]> arraysNegativeIntsAndItems()
-  {
-    return Iterators.chain(
-      Iterators.product(intArrays, negativeInts, ints),
-      Iterators.product(stringArrays, negativeInts, strings));
-  }
-
-  static Iterable<Object[]> arraysNonNegativeIntsAndItems()
-  {
-    return Iterators.chain(
-      Iterators.product(intArrays, nonNegativeInts, ints),
-      Iterators.product(stringArrays, nonNegativeInts, strings));
-  }
-
-  static Iterable<Object[]> nonEmptyArraysAndNonNegativeInts()
-  {
-    return Iterators.product(nonEmptyArrays, nonNegativeInts);
+      @Override
+      public Arguments next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        int index = this.index();
+        Arguments arrayAndIndex = Arguments.of(this.array, index);
+        do
+        {
+          this.numerator++;
+        }
+        while (this.index() == index && this.numerator <= 4);
+        if (this.numerator > 4)
+        {
+          this.numerator = 0;
+          if (this.arraysIterator.hasNext())
+          {
+            do
+            {
+              this.array = this.arraysIterator.next();
+            }
+            while ((this.array == null || this.array.length == 0)
+              && this.arraysIterator.hasNext());
+          }
+          else
+          {
+            this.array = null;
+          }
+        }
+        return arrayAndIndex;
+      }
+    };
   }
 }

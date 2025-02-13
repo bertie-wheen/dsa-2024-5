@@ -4,7 +4,7 @@ import dsa.lab03.base.QueueTests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.FieldSource;
 
 @DisplayName("LinkedQueue")
 public class LinkedQueueTests
@@ -15,7 +15,7 @@ public class LinkedQueueTests
   {
     @ParameterizedTest
     @DisplayName("enqueues as front")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void enqueuesAsBack(Item[] array, Item item)
     {
       QueueTests.Enqueue.enqueuesAsBack(
@@ -25,7 +25,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("does not change front")
-    @MethodSource("dsa.lib.Examples#nonEmptyArraysAndItems")
+    @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
     <Item> void doesNotChangeFront(Item[] nonEmptyArray, Item item)
     {
       QueueTests.Enqueue.doesNotChangeFront(
@@ -35,7 +35,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void doesNotChangeOthers(Item[] array, Item item)
     {
       QueueTests.Enqueue.doesNotChangeOthers(
@@ -45,7 +45,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#arraysAndItems")
+    @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
     <Item> void incrementsSize(Item[] array, Item item)
     {
       QueueTests.Enqueue.incrementsSize(
@@ -60,7 +60,7 @@ public class LinkedQueueTests
   {
     @ParameterizedTest
     @DisplayName("returns front")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void returnsFront(Item[] nonEmptyArray)
     {
       QueueTests.Front.returnsFront(
@@ -70,7 +70,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("does not change front")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeFront(Item[] array)
     {
       QueueTests.Front.doesNotChangeFront(
@@ -79,7 +79,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeItems(Item[] nonEmptyArray)
     {
       QueueTests.Front.doesNotChangeItems(
@@ -88,7 +88,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeSize(Item[] nonEmptyArray)
     {
       QueueTests.Front.doesNotChangeSize(
@@ -102,7 +102,7 @@ public class LinkedQueueTests
   {
     @ParameterizedTest
     @DisplayName("returns front")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void returnsFront(Item[] nonEmptyArray)
     {
       QueueTests.Dequeue.returnsFront(
@@ -112,7 +112,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("does not change others")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
     {
       QueueTests.Dequeue.doesNotChangeOthers(
@@ -121,7 +121,7 @@ public class LinkedQueueTests
 
     @ParameterizedTest
     @DisplayName("increments size")
-    @MethodSource("dsa.lib.Examples#nonEmptyArrays")
+    @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
     <Item> void decrementsSize(Item[] nonEmptyArray)
     {
       QueueTests.Dequeue.decrementsSize(
