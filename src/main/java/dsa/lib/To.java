@@ -43,6 +43,10 @@ public class To
     {
       return To.string((String) object, indent);
     }
+    if (Is.javaArray(object))
+    {
+      return To.string((Object[]) object, indent);
+    }
     if (Is.stringArrayExercise(object))
     {
       return To.string((dsa.lab01.exercises.StringArray) object, indent);
@@ -71,7 +75,7 @@ public class To
     {
       return To.string((Container<?>) object, indent);
     }
-    return object.toString();
+    return object == null ? "null" : object.toString();
   }
 
   public static String string(String string)
@@ -83,6 +87,20 @@ public class To
   {
     return "\"" + string.replaceAll("\"", Matcher.quoteReplacement("\\\""))
       .replaceAll("\n", Matcher.quoteReplacement("\\n")) + "\"";
+  }
+
+  public static String string(Object[] array)
+  {
+    return To.string(array, "");
+  }
+
+  public static String string(Object[] array, String indent)
+  {
+    return To.typedString(
+      array,
+      To.untypedString(
+        Iterators.iterable(array),
+        indent));
   }
 
   public static <Item> String string(Iterable<Item> iterable)

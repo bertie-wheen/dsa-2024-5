@@ -39,13 +39,12 @@ public class QueueTests
       assertEquals(front, nonEmptyQueue.front());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeOthers(
       Queue<Item> queue,
       Item item)
     {
       int size = queue.size();
-      Item[] others = (Item[]) Iterators.toArray(queue, size);
+      Item[] others = Iterators.toArray(queue, size);
       queue.enqueue(item);
       assertArrayEquals(
         others,
@@ -78,12 +77,11 @@ public class QueueTests
       assertEquals(front, nonEmptyQueue.front());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeItems(
       Queue<Item> nonEmptyQueue)
     {
       int size = nonEmptyQueue.size();
-      Item[] items = (Item[]) Iterators.toArray(nonEmptyQueue, size);
+      Item[] items = Iterators.toArray(nonEmptyQueue, size);
       nonEmptyQueue.front();
       assertArrayEquals(
         items,
@@ -108,12 +106,11 @@ public class QueueTests
       assertEquals(front, nonEmptyQueue.dequeue());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeOthers(
       Queue<Item> nonEmptyQueue)
     {
       int size = nonEmptyQueue.size();
-      Item[] others = (Item[]) Iterators.toArray(
+      Item[] others = Iterators.toArray(
         Iterators.skipIndex(0, nonEmptyQueue),
         size - 1);
       nonEmptyQueue.dequeue();

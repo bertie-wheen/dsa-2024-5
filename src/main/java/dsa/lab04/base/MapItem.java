@@ -1,5 +1,7 @@
 package dsa.lab04.base;
 
+import dsa.lib.To;
+
 import java.util.Objects;
 
 /**
@@ -47,7 +49,7 @@ public class MapItem<Key, Value>
     return this.value;
   }
 
-  //<editor-fold defaultstate="collapsed" desc="equals() and hashCode()">
+  //<editor-fold defaultstate="collapsed" desc="equals()+hashCode()+toString()">
 
   @Override
   public boolean equals(Object that)
@@ -72,6 +74,12 @@ public class MapItem<Key, Value>
   public int hashCode()
   {
     return Objects.hash(this.key, this.value);
+  }
+
+  @Override
+  public String toString()
+  {
+    return To.string(this);
   }
 
   //</editor-fold>

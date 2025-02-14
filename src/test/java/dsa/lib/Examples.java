@@ -4,6 +4,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.BiFunction;
 
 import static dsa.lib.Iterators.*;
 
@@ -13,7 +14,9 @@ public class Examples
   public static <T> Iterable<Arguments> arguments(
     Iterable<? extends T>... iterables)
   {
-    return applyEach(Iterators.<Object>product(iterables), Arguments::of);
+    return applyEach(
+      Iterators.<Object>product(iterables),
+      t -> Arguments.of(t));
   }
 
   public static <T> Iterable<Arguments> andValidIndices(Iterable<T[]> arrays)
@@ -88,6 +91,78 @@ public class Examples
           }
         }
         return arrayAndIndex;
+      }
+    };
+  }
+
+  public static <T> Iterable<Arguments> andContainedItems(Iterable<T[]> arrays)
+  {
+    return andOnValidIndices(
+      arrays,
+      (array, index) -> Arguments.of(array, array[index]));
+  }
+
+  public static <A, B> Iterable<Arguments> andOnValidIndices(
+    Iterable<A[]> arrays,
+    BiFunction<A[], Integer, Arguments> argumentsOf)
+  {
+    return () -> new Iterator<Arguments>()
+    {
+      private Iterator<A[]> arraysIterator = arrays.iterator();
+      private A[] array = null;
+      private int numerator = 0;
+
+      {
+        while ((this.array == null || this.array.length == 0)
+          && this.arraysIterator.hasNext())
+        {
+          this.array = this.arraysIterator.next();
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.array != null && this.array.length != 0;
+      }
+
+      private int index()
+      {
+        return Math.round((this.array.length - 1) * this.numerator / 4f);
+      }
+
+      @Override
+      public Arguments next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        int index = this.index();
+        Arguments arrayAndItem = argumentsOf.apply(this.array, index);
+        do
+        {
+          this.numerator++;
+        }
+        while (this.index() == index && this.numerator <= 4);
+        if (this.numerator > 4)
+        {
+          this.numerator = 0;
+          if (this.arraysIterator.hasNext())
+          {
+            do
+            {
+              this.array = this.arraysIterator.next();
+            }
+            while ((this.array == null || this.array.length == 0)
+              && this.arraysIterator.hasNext());
+          }
+          else
+          {
+            this.array = null;
+          }
+        }
+        return arrayAndItem;
       }
     };
   }

@@ -2,8 +2,11 @@ package dsa.lib;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+@SuppressWarnings("UnnecessaryBoxing")  // (it's to satisfy corretto-1.8)
 public final class Iterators
 {
   private Iterators()
@@ -13,25 +16,34 @@ public final class Iterators
 
   public static <A, B> Iterable<B> applyEach(
     Iterable<A> iterable,
+    BiFunction<A, Integer, B> function)
+  {
+    return () -> new Iterator<B>()
+    {
+      private Iterator<A> iterator = iterable.iterator();
+      private int index = 0;
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.iterator.hasNext();
+      }
+
+      @Override
+      public B next()
+      {
+        return function.apply(
+          this.iterator.next(),
+          Integer.valueOf(this.index++));
+      }
+    };
+  }
+
+  public static <A, B> Iterable<B> applyEach(
+    Iterable<A> iterable,
     Function<A, B> function)
   {
-    return () ->
-      new Iterator<B>()
-      {
-        private Iterator<A> iterator = iterable.iterator();
-
-        @Override
-        public boolean hasNext()
-        {
-          return this.iterator.hasNext();
-        }
-
-        @Override
-        public B next()
-        {
-          return function.apply(this.iterator.next());
-        }
-      };
+    return applyEach(iterable, (item, index) -> function.apply(item));
   }
 
   @SafeVarargs
@@ -131,43 +143,56 @@ public final class Iterators
   public static <T> Iterable<T> flatten(
     Iterable<? extends Iterable<T>> iterable)
   {
-    return () ->
-      new Iterator<T>()
+    return () -> new Iterator<T>()
+    {
+      private Iterator<? extends Iterable<T>> iterator = iterable.iterator();
+      private Iterator<T> innerIterator;
+
       {
-        private Iterator<? extends Iterable<T>> iterator = iterable.iterator();
-        private Iterator<T> innerIterator;
-
+        do
         {
-          do
-          {
-            this.innerIterator =
-              this.iterator.hasNext() ? this.iterator.next().iterator() : null;
-          }
-          while (this.innerIterator != null && !this.innerIterator.hasNext());
+          this.innerIterator =
+            this.iterator.hasNext() ? this.iterator.next().iterator() : null;
         }
+        while (this.innerIterator != null && !this.innerIterator.hasNext());
+      }
 
-        @Override
-        public boolean hasNext()
-        {
-          return this.innerIterator != null;
-        }
+      @Override
+      public boolean hasNext()
+      {
+        return this.innerIterator != null;
+      }
 
-        @Override
-        public T next()
+      @Override
+      public T next()
+      {
+        if (this.innerIterator == null)
         {
-          if (this.innerIterator == null)
-          {
-            throw new NoSuchElementException();
-          }
-          T next = this.innerIterator.next();
-          while (this.innerIterator != null && !this.innerIterator.hasNext())
-          {
-            this.innerIterator =
-              this.iterator.hasNext() ? this.iterator.next().iterator() : null;
-          }
-          return next;
+          throw new NoSuchElementException();
         }
-      };
+        T next = this.innerIterator.next();
+        while (this.innerIterator != null && !this.innerIterator.hasNext())
+        {
+          this.innerIterator =
+            this.iterator.hasNext() ? this.iterator.next().iterator() : null;
+        }
+        return next;
+      }
+    };
+  }
+
+  public static <T, G> Iterable<Iterable<T>> group(
+    Iterable<T> items,
+    Function<T, G> grouper)
+  {
+    HashMap<G, Iterable<T>> map = new HashMap<>();
+    for (T item : items)
+    {
+      G group = grouper.apply(item);
+      map.putIfAbsent(group, new ArrayList<>());
+      ((List<T>) map.get(group)).add(item);
+    }
+    return map.values();
   }
 
   @SafeVarargs
@@ -190,42 +215,215 @@ public final class Iterators
 
   public static <T> Iterable<T> nonNull(Iterable<T> iterable)
   {
-    return () ->
-      new Iterator<T>()
+    return () -> new Iterator<T>()
+    {
+      private Iterator<T> iterator = iterable.iterator();
+      private T next;
+
       {
-        private Iterator<T> iterator = iterable.iterator();
-        private T next;
-
+        do
         {
-          do
-          {
-            this.next = this.iterator.hasNext() ? this.iterator.next() : null;
-          }
-          while (this.next == null && this.iterator.hasNext());
+          this.next = this.iterator.hasNext() ? this.iterator.next() : null;
         }
+        while (this.next == null && this.iterator.hasNext());
+      }
 
-        @Override
-        public boolean hasNext()
-        {
-          return this.next != null;
-        }
+      @Override
+      public boolean hasNext()
+      {
+        return this.next != null;
+      }
 
-        @Override
-        public T next()
+      @Override
+      public T next()
+      {
+        if (this.next == null)
         {
-          if (this.next == null)
-          {
-            throw new NoSuchElementException();
-          }
-          T next = this.next;
-          do
-          {
-            this.next = this.iterator.hasNext() ? this.iterator.next() : null;
-          }
-          while (this.next == null && this.iterator.hasNext());
-          return next;
+          throw new NoSuchElementException();
         }
-      };
+        T next = this.next;
+        do
+        {
+          this.next = this.iterator.hasNext() ? this.iterator.next() : null;
+        }
+        while (this.next == null && this.iterator.hasNext());
+        return next;
+      }
+    };
+  }
+
+  public static <T> Iterable<T> onlyEvery(
+    int start, int step,
+    Iterable<T> iterable)
+  {
+    return () -> new Iterator<T>()
+    {
+      private Iterator<T> iterator = iterable.iterator();
+
+      {
+        for (int i = 0; i < start && this.iterator.hasNext(); i++)
+        {
+          this.iterator.next();
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.iterator.hasNext();
+      }
+
+      @Override
+      public T next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        T next = this.iterator.next();
+        for (int i = 1; i < step && this.iterator.hasNext(); i++)
+        {
+          this.iterator.next();
+        }
+        return next;
+      }
+    };
+  }
+
+  public static <T> Iterable<T> onlyEvery(int step, Iterable<T> iterable)
+  {
+    return onlyEvery(0, step, iterable);
+  }
+
+  public static <T> T[] onlyEvery(int start, int step, T[] array)
+  {
+    return toArray(onlyEvery(start, step, iterable(array)));
+  }
+
+  public static <T> T[] onlyEvery(int step, T[] array)
+  {
+    return toArray(onlyEvery(step, iterable(array)));
+  }
+
+  public static <T> T[] onlyEvery(
+    Class<?> class_,
+    int start,
+    int step,
+    T[] array)
+  {
+    return toArray(class_, onlyEvery(start, step, iterable(array)));
+  }
+
+  public static <T> T[] onlyEvery(Class<?> class_, int step, T[] array)
+  {
+    return toArray(class_, onlyEvery(step, iterable(array)));
+  }
+
+  @SafeVarargs
+  public static <A, B> Iterable<B> onProduct(
+    Function<A[], B> function,
+    Iterable<? extends A>... iterables)
+  {
+    return onProduct(newObjectArray(), function, iterables);
+  }
+
+  @SafeVarargs
+  public static <A, B> Iterable<B> onProduct(
+    Class<?> class_,
+    Function<A[], B> function,
+    Iterable<? extends A>... iterables)
+  {
+    return onProduct(newTypedArray(class_), function, iterables);
+  }
+
+  @SafeVarargs
+  private static <A, B> Iterable<B> onProduct(
+    Function<Integer, A[]> newArray,
+    Function<A[], B> function,
+    Iterable<? extends A>... iterables)
+  {
+    int count = iterables.length;
+    if (count == 1)
+    {
+      return applyEach(
+        iterables[0], (item) ->
+        {
+          A[] array = newArray.apply(Integer.valueOf(1));
+          array[0] = item;
+          return function.apply(array);
+        });
+    }
+    return () -> new Iterator<B>()
+    {
+      @SuppressWarnings("unchecked")
+      private Iterator<? extends A>[] iterators =
+        (Iterator<? extends A>[]) new Iterator[count];
+      private A[] next;
+
+      {
+        boolean hasNext = count > 0;
+        if (hasNext)
+        {
+          for (int i = 0; i < count; i++)
+          {
+            this.iterators[i] = iterables[i].iterator();
+            if (!this.iterators[i].hasNext())
+            {
+              hasNext = false;
+            }
+          }
+        }
+        if (hasNext)
+        {
+          this.next = newArray.apply(Integer.valueOf(count));
+          for (int i = 0; i < count; i++)
+          {
+            this.next[i] = this.iterators[i].next();
+          }
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.next != null;
+      }
+
+      @Override
+      public B next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        A[] next = this.next;
+        this.next = newArray.apply(Integer.valueOf(count));
+        int i = count - 1;
+        for (; i >= 0; i--)
+        {
+          boolean flip = !this.iterators[i].hasNext();
+          if (flip)
+          {
+            if (i == 0)
+            {
+              this.next = null;
+              break;
+            }
+            this.iterators[i] = iterables[i].iterator();
+          }
+          this.next[i] = this.iterators[i].next();
+          if (!flip)
+          {
+            break;
+          }
+        }
+        for (int j = 0; j < i; j++)
+        {
+          this.next[j] = next[j];
+        }
+        return function.apply(next);
+      }
+    };
   }
 
   @SafeVarargs
@@ -253,7 +451,7 @@ public final class Iterators
       return applyEach(
         iterables[0], (item) ->
         {
-          T[] array = newArray.apply(1);
+          T[] array = newArray.apply(Integer.valueOf(1));
           array[0] = item;
           return array;
         });
@@ -280,7 +478,7 @@ public final class Iterators
         }
         if (hasNext)
         {
-          this.next = newArray.apply(count);
+          this.next = newArray.apply(Integer.valueOf(count));
           for (int i = 0; i < count; i++)
           {
             this.next[i] = this.iterators[i].next();
@@ -302,7 +500,7 @@ public final class Iterators
           throw new NoSuchElementException();
         }
         T[] next = this.next;
-        this.next = newArray.apply(count);
+        this.next = newArray.apply(Integer.valueOf(count));
         int i = count - 1;
         for (; i >= 0; i--)
         {
@@ -351,43 +549,62 @@ public final class Iterators
     return iterable(item);
   }
 
+  public static <T> int size(Iterable<T> iterable)
+  {
+    int size = 0;
+    for (T ignored : iterable)
+    {
+      size++;
+    }
+    return size;
+  }
+
+  public static <T> T[] skipIndex(int index, T[] array)
+  {
+    return toArray(skipIndex(index, iterable(array)), array.length - 1);
+  }
+
+  public static <T> T[] skipIndex(Class<?> class_, int index, T[] array)
+  {
+    return toArray(class_, skipIndex(index, iterable(array)), array.length - 1);
+  }
+
   public static <T> Iterable<T> skipIndex(int index, Iterable<T> iterable)
   {
-    return () ->
-      new Iterator<T>()
+    return () -> new Iterator<T>()
+    {
+      private Iterator<T> iterator = iterable.iterator();
+      private int i = 0;
+
       {
-        private Iterator<T> iterator = iterable.iterator();
-        private int i = 0;
-
+        if (index == 0 && this.iterator.hasNext())
         {
-          if (index == 0 && this.iterator.hasNext())
-          {
-            this.iterator.next();
-            this.i++;
-          }
+          this.iterator.next();
+          this.i++;
         }
+      }
 
-        @Override
-        public boolean hasNext()
-        {
-          return this.iterator.hasNext();
-        }
+      @Override
+      public boolean hasNext()
+      {
+        return this.iterator.hasNext();
+      }
 
-        @Override
-        public T next()
+      @Override
+      public T next()
+      {
+        if (!this.hasNext())
         {
-          if (!this.hasNext())
-          {
-            throw new NoSuchElementException();
-          }
-          T item = this.iterator.next();
-          if (++this.i == index && this.iterator.hasNext())
-          {
-            this.iterator.next();
-          }
-          return item;
+          throw new NoSuchElementException();
         }
-      };
+        T item = this.iterator.next();
+        if (++this.i == index && this.iterator.hasNext())
+        {
+          this.iterator.next();
+        }
+        return item;
+      }
+    };
   }
 
   public static <T extends Comparable<T>> Iterable<T> sorted(
@@ -418,10 +635,10 @@ public final class Iterators
   public static <T extends Comparable<T>> Iterable<T[]> sortedUniquesEach(
     Iterable<T[]> iterable)
   {
-    return applyEach(iterable, Iterators::sortedUniques);
+    return applyEach(iterable, (array) -> sortedUniques(array));
   }
 
-  public static <T> Object[] toArray(Iterable<T> iterable)
+  public static <T> T[] toArray(Iterable<T> iterable)
   {
     List<T> list = asList(iterable);
     return toArray(list, list.size());
@@ -451,7 +668,7 @@ public final class Iterators
     int size)
     throws IllegalArgumentException
   {
-    T[] array = newArray.apply(size);
+    T[] array = newArray.apply(Integer.valueOf(size));
     if (fillArray(array, iterable) != size)
     {
       throw new IllegalArgumentException();
@@ -459,12 +676,15 @@ public final class Iterators
     return array;
   }
 
-  public static <T> Iterable<T> uniques(Iterable<T> iterable)
+  public static <T> Iterable<T> uniques(
+    Iterable<T> iterable,
+    BiPredicate<T, T> equals)
   {
     List<T> uniques = new ArrayList<>();
     for (T item : iterable)
     {
-      if (!uniques.contains(item))
+      if (uniques.stream().noneMatch(
+        (containedItem) -> equals.test(item, containedItem)))
       {
         uniques.add(item);
       }
@@ -472,10 +692,14 @@ public final class Iterators
     return uniques;
   }
 
-  @SuppressWarnings("unchecked")
+  public static <T> Iterable<T> uniques(Iterable<T> iterable)
+  {
+    return uniques(iterable, Objects::equals);
+  }
+
   public static <T> T[] uniques(T[] array)
   {
-    return (T[]) toArray(uniques(asList(array)));
+    return toArray(uniques(asList(array)));
   }
 
   public static <T> T[] uniques(Class<?> class_, T[] array)
@@ -485,6 +709,13 @@ public final class Iterators
 
   public static <T> Iterable<T[]> uniquesEach(Iterable<T[]> iterable)
   {
-    return applyEach(iterable, Iterators::uniques);
+    return applyEach(iterable, (array) -> uniques(array));
+  }
+
+  public static <T> Iterable<T[]> uniquesEach(
+    Class<?> class_,
+    Iterable<T[]> iterable)
+  {
+    return applyEach(iterable, (array) -> uniques(class_, array));
   }
 }

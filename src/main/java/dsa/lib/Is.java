@@ -10,7 +10,7 @@ public class Is
 {
   public static boolean string(Object object)
   {
-    return Is.string(object.getClass());
+    return object != null && Is.string(object.getClass());
   }
 
   public static boolean string(Class<?> class_)
@@ -18,9 +18,19 @@ public class Is
     return class_.equals(String.class);
   }
 
+  public static boolean javaArray(Object object)
+  {
+    return object != null && Is.javaArray(object.getClass());
+  }
+
+  public static boolean javaArray(Class<?> class_)
+  {
+    return class_.isArray();
+  }
+
   public static boolean stringArrayExercise(Object object)
   {
-    return Is.stringArrayExercise(object.getClass());
+    return object != null && Is.stringArrayExercise(object.getClass());
   }
 
   public static boolean stringArrayExercise(Class<?> class_)
@@ -30,7 +40,7 @@ public class Is
 
   public static boolean stringArraySolution(Object object)
   {
-    return Is.stringArraySolution(object.getClass());
+    return object != null && Is.stringArraySolution(object.getClass());
   }
 
   public static boolean stringArraySolution(Class<?> class_)
@@ -40,7 +50,7 @@ public class Is
 
   public static boolean arrayExercise(Object object)
   {
-    return Is.arrayExercise(object.getClass());
+    return object != null && Is.arrayExercise(object.getClass());
   }
 
   public static boolean arrayExercise(Class<?> class_)
@@ -50,7 +60,7 @@ public class Is
 
   public static boolean arraySolution(Object object)
   {
-    return Is.arraySolution(object.getClass());
+    return object != null && Is.arraySolution(object.getClass());
   }
 
   public static boolean arraySolution(Class<?> class_)
@@ -60,7 +70,7 @@ public class Is
 
   public static boolean mapItem(Object object)
   {
-    return Is.mapItem(object.getClass());
+    return object != null && Is.mapItem(object.getClass());
   }
 
   public static boolean mapItem(Class<?> class_)
@@ -70,7 +80,7 @@ public class Is
 
   public static boolean container(Object object)
   {
-    return Is.container(object.getClass());
+    return object != null && Is.container(object.getClass());
   }
 
   public static boolean container(Class<?> class_)
@@ -80,7 +90,7 @@ public class Is
 
   public static boolean map(Object object)
   {
-    return Is.map(object.getClass());
+    return object != null && Is.map(object.getClass());
   }
 
   public static boolean map(Class<?> class_)

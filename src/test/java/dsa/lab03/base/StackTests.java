@@ -17,13 +17,12 @@ public class StackTests
       assertEquals(item, stack.top());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeOthers(
       Stack<Item> stack,
       Item item)
     {
       int size = stack.size();
-      Item[] others = (Item[]) Iterators.toArray(stack, size);
+      Item[] others = Iterators.toArray(stack, size);
       stack.push(item);
       assertArrayEquals(
         others,
@@ -56,12 +55,11 @@ public class StackTests
       assertEquals(top, nonEmptyStack.top());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeItems(
       Stack<Item> nonEmptyStack)
     {
       int size = nonEmptyStack.size();
-      Item[] items = (Item[]) Iterators.toArray(nonEmptyStack, size);
+      Item[] items = Iterators.toArray(nonEmptyStack, size);
       nonEmptyStack.top();
       assertArrayEquals(
         items,
@@ -86,12 +84,11 @@ public class StackTests
       assertEquals(top, nonEmptyStack.pop());
     }
 
-    @SuppressWarnings("unchecked")
     public static <Item> void doesNotChangeOthers(
       Stack<Item> nonEmptyStack)
     {
       int size = nonEmptyStack.size();
-      Item[] others = (Item[]) Iterators.toArray(
+      Item[] others = Iterators.toArray(
         Iterators.skipIndex(0, nonEmptyStack),
         size - 1);
       nonEmptyStack.pop();
