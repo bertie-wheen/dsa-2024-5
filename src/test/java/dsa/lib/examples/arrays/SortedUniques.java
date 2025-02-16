@@ -3,7 +3,8 @@ package dsa.lib.examples.arrays;
 import dsa.lib.Data;
 import org.junit.jupiter.params.provider.Arguments;
 
-import static dsa.lib.Examples.arguments;
+import static dsa.lib.Examples.*;
+import static dsa.lib.Iterators.skipIndex;
 
 public class SortedUniques
 {
@@ -21,4 +22,19 @@ public class SortedUniques
 
   public static final Iterable<Arguments> ALL =
     arguments(Data.Arrays.SortedUniques.ALL);
+
+  public static final Iterable<Arguments> AND_VALID_INDICES =
+    andValidIndices(Data.Arrays.SortedUniques.NON_EMPTY);
+
+  public static final Iterable<Arguments> AND_CONTAINED_ITEMS =
+    andOnValidIndices(
+      Data.Arrays.SortedUniques.NON_EMPTY, (array, index) ->
+        Arguments.of(array, array[index]));
+
+  public static final Iterable<Arguments> AND_NOT_CONTAINED_ITEMS =
+    andOnValidIndices(
+      Data.Arrays.SortedUniques.NON_EMPTY,
+      (array, index) -> Arguments.of(
+        skipIndex(Comparable.class, index, array),
+        array[index]));
 }

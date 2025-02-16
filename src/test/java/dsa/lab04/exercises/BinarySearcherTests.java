@@ -1,6 +1,7 @@
 package dsa.lab04.exercises;
 
 import dsa.lab03.solutions.DynamicArray;
+import dsa.lib.Iterators;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
@@ -13,26 +14,30 @@ public class BinarySearcherTests
   @ParameterizedTest
   @DisplayName("finds if member")
   @FieldSource(
-    "dsa.lib.examples.arrays.sorted_uniques.NonEmpty#AND_VALID_INDICES")
+    "dsa.lib.examples.arrays.SortedUniques#AND_CONTAINED_ITEMS")
   <Item extends Comparable<Item>> void findsIfMember(
     Item[] nonEmptySortedUniqueArray,
-    int validIndex)
+    Item containedItem)
   {
-    DynamicArray<Item> sequence = new DynamicArray<>(nonEmptySortedUniqueArray);
-    Item item = sequence.get(validIndex);
-    assertEquals(validIndex, new BinarySearcher().search(sequence, item));
+    assertEquals(
+      Iterators.asList(nonEmptySortedUniqueArray).indexOf(containedItem),
+      new BinarySearcher().search(
+        new DynamicArray<>(nonEmptySortedUniqueArray),
+        containedItem));
   }
 
   @ParameterizedTest
   @DisplayName("does not find if not member")
   @FieldSource(
-    "dsa.lib.examples.arrays.sorted_uniques.NonEmpty#AND_VALID_INDICES")
+    "dsa.lib.examples.arrays.SortedUniques#AND_NOT_CONTAINED_ITEMS")
   <Item extends Comparable<Item>> void doesNotFindIfNotMember(
-    Item[] nonEmptySortedUniqueArray,
-    int validIndex)
+    Item[] sortedUniqueArray,
+    Item notContainedItem)
   {
-    DynamicArray<Item> sequence = new DynamicArray<>(nonEmptySortedUniqueArray);
-    Item item = sequence.remove(validIndex);
-    assertEquals(-1, new BinarySearcher().search(sequence, item));
+    assertEquals(
+      -1,
+      new BinarySearcher().search(
+        new DynamicArray<>(sortedUniqueArray),
+        notContainedItem));
   }
 }

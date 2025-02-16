@@ -18,13 +18,12 @@ public class DynamicSequenceTests
         assertEquals(item, dynamicSequence.first());
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> dynamicSequence,
         Item item)
       {
         int size = dynamicSequence.size();
-        Item[] others = (Item[]) Iterators.toArray(dynamicSequence, size);
+        Item[] others = Iterators.toArray(dynamicSequence, size);
         dynamicSequence.insertFirst(item);
         assertArrayEquals(
           others,
@@ -52,14 +51,13 @@ public class DynamicSequenceTests
         assertEquals(item, dynamicSequence.get(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> dynamicSequence,
         Item item)
       {
         int size = dynamicSequence.size();
         int index = size / 4;
-        Item[] others = (Item[]) Iterators.toArray(dynamicSequence, size);
+        Item[] others = Iterators.toArray(dynamicSequence, size);
         dynamicSequence.insert(index, item);
         assertArrayEquals(
           others,
@@ -87,14 +85,13 @@ public class DynamicSequenceTests
         assertEquals(item, dynamicSequence.get(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> dynamicSequence,
         Item item)
       {
         int size = dynamicSequence.size();
         int index = size / 2;
-        Item[] others = (Item[]) Iterators.toArray(dynamicSequence, size);
+        Item[] others = Iterators.toArray(dynamicSequence, size);
         dynamicSequence.insert(index, item);
         assertArrayEquals(
           others,
@@ -122,14 +119,13 @@ public class DynamicSequenceTests
         assertEquals(item, dynamicSequence.get(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> dynamicSequence,
         Item item)
       {
         int size = dynamicSequence.size();
         int index = 3 * size / 4;
-        Item[] others = (Item[]) Iterators.toArray(dynamicSequence, size);
+        Item[] others = Iterators.toArray(dynamicSequence, size);
         dynamicSequence.insert(index, item);
         assertArrayEquals(
           others,
@@ -156,13 +152,12 @@ public class DynamicSequenceTests
         assertEquals(item, dynamicSequence.last());
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> dynamicSequence,
         Item item)
       {
         int size = dynamicSequence.size();
-        Item[] others = (Item[]) Iterators.toArray(dynamicSequence, size);
+        Item[] others = Iterators.toArray(dynamicSequence, size);
         dynamicSequence.insertLast(item);
         assertArrayEquals(
           others,
@@ -200,12 +195,11 @@ public class DynamicSequenceTests
         assertEquals(first, nonEmptyDynamicSequence.removeFirst());
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> nonEmptyDynamicSequence)
       {
         int size = nonEmptyDynamicSequence.size();
-        Item[] others = (Item[]) Iterators.toArray(
+        Item[] others = Iterators.toArray(
           Iterators.skipIndex(0, nonEmptyDynamicSequence),
           size - 1);
         nonEmptyDynamicSequence.removeFirst();
@@ -233,13 +227,12 @@ public class DynamicSequenceTests
         assertEquals(item, nonEmptyDynamicSequence.remove(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> nonEmptyDynamicSequence)
       {
         int size = nonEmptyDynamicSequence.size();
         int index = size / 4;
-        Item[] others = (Item[]) Iterators.toArray(
+        Item[] others = Iterators.toArray(
           Iterators.skipIndex(index, nonEmptyDynamicSequence),
           size - 1);
         nonEmptyDynamicSequence.remove(index);
@@ -267,13 +260,12 @@ public class DynamicSequenceTests
         assertEquals(item, nonEmptyDynamicSequence.remove(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> nonEmptyDynamicSequence)
       {
         int size = nonEmptyDynamicSequence.size();
         int index = size / 2;
-        Item[] others = (Item[]) Iterators.toArray(
+        Item[] others = Iterators.toArray(
           Iterators.skipIndex(index, nonEmptyDynamicSequence),
           size - 1);
         nonEmptyDynamicSequence.remove(index);
@@ -301,13 +293,12 @@ public class DynamicSequenceTests
         assertEquals(item, nonEmptyDynamicSequence.remove(index));
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> nonEmptyDynamicSequence)
       {
         int size = nonEmptyDynamicSequence.size();
         int index = size / 4;
-        Item[] others = (Item[]) Iterators.toArray(
+        Item[] others = Iterators.toArray(
           Iterators.skipIndex(index, nonEmptyDynamicSequence),
           size - 1);
         nonEmptyDynamicSequence.remove(index);
@@ -334,12 +325,11 @@ public class DynamicSequenceTests
         assertEquals(last, nonEmptyDynamicSequence.removeLast());
       }
 
-      @SuppressWarnings("unchecked")
       public static <Item> void doesNotChangeOthers(
         DynamicSequence<Item> nonEmptyDynamicSequence)
       {
         int size = nonEmptyDynamicSequence.size();
-        Item[] others = (Item[]) Iterators.toArray(
+        Item[] others = Iterators.toArray(
           Iterators.skipIndex(size - 1, nonEmptyDynamicSequence),
           size - 1);
         nonEmptyDynamicSequence.removeLast();
