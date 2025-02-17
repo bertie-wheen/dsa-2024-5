@@ -108,7 +108,7 @@ Now you're ready (!) to tackle the actual first exercise: open
 algorithm by simply adapting the pseudocode provided in the lectures to Java
 code to define the `sort(items, comparator)` method. Remember to use
 `comparator.compare(item1, item2)` to be able to tell whether `item1` is less
-than, equal to, or greater than `item2`, and the `swap(item1, item2)` method
+than, equal to, or greater than `item2`, and the `swap(index1, index2)` method
 supported by the static sequence `items`. Then, do the same for
 `lab04\exercises\SelectionSorter.java` and `lab04\exercises\MergeSorter.
 java`. 
