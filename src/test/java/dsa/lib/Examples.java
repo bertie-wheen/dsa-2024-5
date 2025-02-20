@@ -166,4 +166,18 @@ public class Examples
       }
     };
   }
+
+  public static Arguments flatten(Arguments[] array)
+  {
+    return Arguments.of(toArray(Object.class, Iterators.flatten(applyEach(
+      iterable(array),
+      arguments -> iterable(arguments.get())))));
+  }
+
+  @SafeVarargs
+  public static Iterable<Arguments> flatProduct(
+    Iterable<Arguments>... iterables)
+  {
+    return onProduct(Arguments.class, Examples::flatten, iterables);
+  }
 }

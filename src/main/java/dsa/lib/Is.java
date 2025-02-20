@@ -3,6 +3,8 @@ package dsa.lib;
 import dsa.lab02.base.Container;
 import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
+import dsa.lab06.solutions.BinaryTree;
+import dsa.lab09.base.PrioritisedItem;
 
 import java.util.Arrays;
 
@@ -78,6 +80,16 @@ public class Is
     return class_.equals(MapItem.class);
   }
 
+  public static boolean prioritisedItem(Object object)
+  {
+    return object != null && Is.mapItem(object.getClass());
+  }
+
+  public static boolean prioritisedItem(Class<?> class_)
+  {
+    return class_.equals(PrioritisedItem.class);
+  }
+
   public static boolean container(Object object)
   {
     return object != null && Is.container(object.getClass());
@@ -96,6 +108,16 @@ public class Is
   public static boolean map(Class<?> class_)
   {
     return Is.interface_(class_, Map.class);
+  }
+
+  public static boolean binaryTree(Object object)
+  {
+    return object != null && Is.binaryTree(object.getClass());
+  }
+
+  public static boolean binaryTree(Class<?> class_)
+  {
+    return Is.interface_(class_, BinaryTree.class);
   }
 
   private static boolean interface_(Class<?> class_, Class<?> interface_)

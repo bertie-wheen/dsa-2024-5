@@ -3,6 +3,7 @@ package dsa.lib;
 import dsa.lab04.base.MapItem;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import static dsa.lib.Iterators.*;
 
@@ -12,8 +13,8 @@ public class Data
   {
     public static final Iterable<Integer>
       ZERO = singletonIterable(0),
-      POSITIVE = iterable(1, 100, Integer.MAX_VALUE),
-      NEGATIVE = iterable(-1, -40, Integer.MIN_VALUE),
+      POSITIVE = iterable(1, 2, 4, 7, 10, 40, 100, Integer.MAX_VALUE),
+      NEGATIVE = iterable(-1, -2, -4, -7, -10, -40, -100, Integer.MIN_VALUE),
       NON_ZERO = chain(POSITIVE, NEGATIVE),
       NON_NEGATIVE = chain(ZERO, POSITIVE),
       NON_POSITIVE = chain(ZERO, NEGATIVE),
@@ -34,7 +35,15 @@ public class Data
     public static final Iterable<String>
       NULL = singletonIterable(null),
       EMPTY = singletonIterable(""),
-      NON_EMPTY = iterable("CS", ")(*&^%$£\"!"),
+      NON_EMPTY =
+        iterable(
+          "A",
+          "B",
+          "CS",
+          "foo",
+          "bar",
+          "testing testing 123",
+          ")(*&^%$£\"!"),
       NON_NULL = chain(EMPTY, NON_EMPTY),
       ALL = chain(NON_NULL, NULL);
 
@@ -48,23 +57,27 @@ public class Data
 
   public static class Lab04
   {
-    @SuppressWarnings({"rawtypes"})
+    @SuppressWarnings("rawtypes")
     public static class MapItems
     {
       // @formatter:off
 
       public static final Iterable<MapItem<Integer, String>>
-        INTS_TO_STRINGS = onProduct(
-          Serializable.class,
-          (array) -> new MapItem<>((Integer) array[0], (String) array[1]),
-          Ints.ALL,
-          Strings.ALL);
+        INTS_TO_STRINGS = onlyEvery(
+          5,
+          onProduct(
+            Serializable.class,
+            (array) -> new MapItem<>((Integer) array[0], (String) array[1]),
+            Ints.ALL,
+            Strings.ALL));
       public static final Iterable<MapItem<String, Integer>>
-        STRINGS_TO_INTS = onProduct(
-          Serializable.class,
-          (array) -> new MapItem<>((String) array[0], (Integer) array[1]),
-          Strings.ALL,
-          Ints.ALL);
+        STRINGS_TO_INTS = onlyEvery(
+          5,
+          onProduct(
+            Serializable.class,
+            (array) -> new MapItem<>((String) array[0], (Integer) array[1]),
+            Strings.NON_NULL,
+            Ints.ALL));
       public static final Iterable<MapItem>
         ALL = chain(INTS_TO_STRINGS, STRINGS_TO_INTS);
 
@@ -125,28 +138,33 @@ public class Data
         ALL = chain(EMPTY, NON_EMPTY);
     }
 
+    @SuppressWarnings("rawtypes")
     public static class Lab04
     {
-      @SuppressWarnings({"rawtypes", "unchecked"})
+      @SuppressWarnings("unchecked")
       public static class UniqueMapItems
       {
         public static class IntsToStrings
         {
           public static final Iterable<MapItem<Integer, String>[]>
             EMPTY = singletonIterable(new MapItem[]{}),
-            SINGLETON = applyEach(
-              Data.Lab04.MapItems.INTS_TO_STRINGS,
-              (item) -> new MapItem[]{item}),
+            SINGLETON = onlyEvery(
+              7,
+              applyEach(
+                Data.Lab04.MapItems.INTS_TO_STRINGS,
+                (item) -> new MapItem[]{item})),
             MULTI_ITEM = applyEach(
-              onlyEvery(
-                31,
-                product(
-                  MapItem.class,
-                  toArray(
-                    Iterable.class,
-                    group(
-                      Data.Lab04.MapItems.INTS_TO_STRINGS,
-                      MapItem::key)))),
+              atMost(
+                1000,
+                onlyEvery(
+                  1000,
+                  product(
+                    MapItem.class,
+                    toArray(
+                      Iterable.class,
+                      group(
+                        Data.Lab04.MapItems.INTS_TO_STRINGS,
+                        MapItem::key))))),
               (items, index) -> onlyEvery(
                 MapItem.class,
                 index % 3,
@@ -160,19 +178,23 @@ public class Data
         {
           public static final Iterable<MapItem<String, Integer>[]>
             EMPTY = singletonIterable(new MapItem[]{}),
-            SINGLETON = applyEach(
-              Data.Lab04.MapItems.STRINGS_TO_INTS,
-              (item) -> new MapItem[]{item}),
+            SINGLETON = onlyEvery(
+              7,
+              applyEach(
+                Data.Lab04.MapItems.STRINGS_TO_INTS,
+                (item) -> new MapItem[]{item})),
             MULTI_ITEM = applyEach(
-              onlyEvery(
-                7,
-                product(
-                  MapItem.class,
-                  toArray(
-                    Iterable.class,
-                    group(
-                      Data.Lab04.MapItems.STRINGS_TO_INTS,
-                      MapItem::key)))),
+              atMost(
+                1000,
+                onlyEvery(
+                  1000,
+                  product(
+                    MapItem.class,
+                    toArray(
+                      Iterable.class,
+                      group(
+                        Data.Lab04.MapItems.STRINGS_TO_INTS,
+                        MapItem::key))))),
               (items, index) -> onlyEvery(
                 MapItem.class,
                 index % 3,
@@ -185,6 +207,44 @@ public class Data
         public static final Iterable<MapItem[]>
           EMPTY = singletonIterable(new MapItem[]{}),
           SINGLETON = chain(IntsToStrings.SINGLETON, StringsToInts.SINGLETON),
+          MULTI_ITEM = chain(
+            IntsToStrings.MULTI_ITEM,
+            StringsToInts.MULTI_ITEM),
+          NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+          ALL = chain(EMPTY, NON_EMPTY);
+      }
+
+      public static class SortedUniqueMapItems
+      {
+        public static class IntsToStrings
+        {
+          public static final Iterable<MapItem<Integer, String>[]>
+            EMPTY = UniqueMapItems.IntsToStrings.EMPTY,
+            SINGLETON = UniqueMapItems.IntsToStrings.SINGLETON,
+            MULTI_ITEM =
+              sortedEach(
+                UniqueMapItems.IntsToStrings.MULTI_ITEM,
+                Comparator.comparing(MapItem::key)),
+            NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+            ALL = chain(EMPTY, NON_EMPTY);
+        }
+
+        public static class StringsToInts
+        {
+          public static final Iterable<MapItem<String, Integer>[]>
+            EMPTY = UniqueMapItems.StringsToInts.EMPTY,
+            SINGLETON = UniqueMapItems.StringsToInts.SINGLETON,
+            MULTI_ITEM =
+              sortedEach(
+                UniqueMapItems.StringsToInts.MULTI_ITEM,
+                Comparator.comparing(MapItem::key)),
+            NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+            ALL = chain(EMPTY, NON_EMPTY);
+        }
+
+        public static final Iterable<MapItem[]>
+          EMPTY = UniqueMapItems.EMPTY,
+          SINGLETON = UniqueMapItems.SINGLETON,
           MULTI_ITEM = chain(
             IntsToStrings.MULTI_ITEM,
             StringsToInts.MULTI_ITEM),
@@ -214,5 +274,13 @@ public class Data
       MULTI_ITEM = chain(Arrays.Ints.MULTI_ITEM, Arrays.Strings.MULTI_ITEM),
       NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
       ALL = chain(EMPTY, NON_EMPTY);
+  }
+
+  public static class Objects
+  {
+    public static final Iterable<Object>
+      NULL = singletonIterable(null),
+      NON_NULL = chain(Ints.ALL, Strings.ALL, Arrays.ALL),
+      ALL = chain(NON_NULL, NULL);
   }
 }

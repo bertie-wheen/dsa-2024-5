@@ -22,203 +22,52 @@ class DoublyLinkedListTests
       @ParameterizedTest
       @DisplayName("if index below bound")
       @FieldSource("dsa.lib.examples.Arrays#AND_NEGATIVE_INTS")
-      <Item> void ifIndexBelowBound(
-        Item[] array,
-        int negativeIndex)
+      <Item> void ifIndexBelowBound(Item[] items, int negativeIndex)
       {
         LinkedListTests.Node.Throws.ifIndexBelowBound(
-          new DoublyLinkedList<>(array),
+          new DoublyLinkedList<>(items),
           negativeIndex);
       }
 
       @ParameterizedTest
       @DisplayName("if index above bound")
       @FieldSource("dsa.lib.examples.Arrays#AND_NON_NEGATIVE_INTS")
-      <Item> void ifIndexAboveBound(
-        Item[] array,
-        int nonNegativeOffset)
+      <Item> void ifIndexAboveBound(Item[] items, int nonNegativeOffset)
       {
         LinkedListTests.Node.Throws.ifIndexAboveBound(
-          new DoublyLinkedList<>(array),
+          new DoublyLinkedList<>(items),
           nonNegativeOffset);
       }
     }
 
-    @Nested
-    @DisplayName("on first")
-    class OnFirst
+    @ParameterizedTest
+    @DisplayName("gets correct index")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void getsCorrectIndex(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("gets first")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void getsFirst(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnFirst.getsFirst(
-          new DoublyLinkedList<>(nonEmptyArray),
-          nonEmptyArray[0]);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change items")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeItems(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnFirst.doesNotChangeItems(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeSize(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnFirst.doesNotChangeSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      LinkedListTests.Node.getsCorrectIndex(
+        new DoublyLinkedList<>(items),
+        index);
     }
 
-    @Nested
-    @DisplayName("in first half")
-    class InFirstHalf
+    @ParameterizedTest
+    @DisplayName("does not change items")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void doesNotChangeItems(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("gets correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void getsCorrectIndex(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InFirstHalf.getsCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change items")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeItems(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InFirstHalf.doesNotChangeItems(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeSize(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InFirstHalf.doesNotChangeSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      LinkedListTests.Node.doesNotChangeItems(
+        new DoublyLinkedList<>(items),
+        index);
     }
 
-    @Nested
-    @DisplayName("in middle")
-    class InMiddle
+    @ParameterizedTest
+    @DisplayName("does not change size")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void doesNotChangeSize(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("gets correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void getsCorrectIndex(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InMiddle.getsCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change items")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeItems(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InMiddle.doesNotChangeItems(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeSize(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InMiddle.doesNotChangeSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-    }
-
-    @Nested
-    @DisplayName("in second half")
-    class InSecondHalf
-    {
-      @ParameterizedTest
-      @DisplayName("gets correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void getsCorrectIndex(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InSecondHalf.getsCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change items")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeItems(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InSecondHalf.doesNotChangeItems(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeSize(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.InSecondHalf.doesNotChangeSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-    }
-
-    @Nested
-    @DisplayName("on last")
-    class OnLast
-    {
-      @ParameterizedTest
-      @DisplayName("gets last")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void getsLast(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnLast.getsLast(
-          new DoublyLinkedList<>(nonEmptyArray),
-          nonEmptyArray[nonEmptyArray.length - 1]);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change items")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeItems(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnLast.doesNotChangeItems(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeSize(
-        Item[] nonEmptyArray)
-      {
-        LinkedListTests.Node.OnLast.doesNotChangeSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      LinkedListTests.Node.doesNotChangeSize(
+        new DoublyLinkedList<>(items),
+        index);
     }
   }
 
@@ -226,189 +75,37 @@ class DoublyLinkedListTests
   @DisplayName("insert")
   class Insert
   {
-    @Nested
-    @DisplayName("first")
-    class First
+    @ParameterizedTest
+    @DisplayName("inserts into correct index")
+    @FieldSource("dsa.lib.examples.arrays.AndValidInsertIndices#AND_ITEMS")
+    <Item> void insertsIntoCorrectIndex(Item[] items, int index, Item item)
     {
-      @ParameterizedTest
-      @DisplayName("inserts as first")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void insertsAsFirst(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.First.insertsAsFirst(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void doesNotChangeOthers(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.First.doesNotChangeOthers(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("increments size")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void incrementsSize(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.First.incrementsSize(
-          new DoublyLinkedList<>(array),
-          item);
-      }
+      DynamicSequenceTests.Insert.insertsIntoCorrectIndex(
+        new DoublyLinkedList<>(items),
+        index,
+        item);
     }
 
-    @Nested
-    @DisplayName("into first half")
-    class IntoFirstHalf
+    @ParameterizedTest
+    @DisplayName("does not change others")
+    @FieldSource("dsa.lib.examples.arrays.AndValidInsertIndices#AND_ITEMS")
+    <Item> void doesNotChangeOthers(Item[] items, int index, Item item)
     {
-      @ParameterizedTest
-      @DisplayName("inserts into correct index")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void insertsIntoCorrectIndex(
-        Item[] array,
-        Item item)
-      {
-        DynamicSequenceTests.Insert.IntoFirstHalf.insertsIntoCorrectIndex(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void doesNotChangeOthers(
-        Item[] array,
-        Item item)
-      {
-        DynamicSequenceTests.Insert.IntoFirstHalf.doesNotChangeOthers(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("increments size")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void incrementsSize(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.IntoFirstHalf.incrementsSize(
-          new DoublyLinkedList<>(array),
-          item);
-      }
+      DynamicSequenceTests.Insert.doesNotChangeOthers(
+        new DoublyLinkedList<>(items),
+        index,
+        item);
     }
 
-    @Nested
-    @DisplayName("into middle")
-    class IntoMiddle
+    @ParameterizedTest
+    @DisplayName("increments size")
+    @FieldSource("dsa.lib.examples.arrays.AndValidInsertIndices#AND_ITEMS")
+    <Item> void incrementsSize(Item[] items, int index, Item item)
     {
-      @ParameterizedTest
-      @DisplayName("inserts into correct index")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void insertsIntoCorrectIndex(
-        Item[] array,
-        Item item)
-      {
-        DynamicSequenceTests.Insert.IntoMiddle.insertsIntoCorrectIndex(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void doesNotChangeOthers(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.IntoMiddle.doesNotChangeOthers(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("increments size")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void incrementsSize(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.IntoMiddle.incrementsSize(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-    }
-
-    @Nested
-    @DisplayName("into second half")
-    class IntoSecondHalf
-    {
-      @ParameterizedTest
-      @DisplayName("inserts into correct index")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void insertsIntoCorrectIndex(
-        Item[] array,
-        Item item)
-      {
-        DynamicSequenceTests.Insert.IntoSecondHalf.insertsIntoCorrectIndex(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void doesNotChangeOthers(
-        Item[] array,
-        Item item)
-      {
-        DynamicSequenceTests.Insert.IntoSecondHalf.doesNotChangeOthers(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("increments size")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void incrementsSize(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.IntoSecondHalf.incrementsSize(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-    }
-
-    @Nested
-    @DisplayName("last")
-    class Last
-    {
-      @ParameterizedTest
-      @DisplayName("inserts as last")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void insertsAsLast(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.Last.insertsAsLast(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void doesNotChangeOthers(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.Last.doesNotChangeOthers(
-          new DoublyLinkedList<>(array),
-          item);
-      }
-
-      @ParameterizedTest
-      @DisplayName("increments size")
-      @FieldSource("dsa.lib.examples.Arrays#AND_ITEMS")
-      <Item> void incrementsSize(Item[] array, Item item)
-      {
-        DynamicSequenceTests.Insert.Last.incrementsSize(
-          new DoublyLinkedList<>(array),
-          item);
-      }
+      DynamicSequenceTests.Insert.incrementsSize(
+        new DoublyLinkedList<>(items),
+        index,
+        item);
     }
   }
 
@@ -426,164 +123,34 @@ class DoublyLinkedListTests
         index);
     }
 
-    @Nested
-    @DisplayName("first")
-    class First
+    @ParameterizedTest
+    @DisplayName("removes from correct index")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void removesFromCorrectIndex(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("removes first")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void removesFirst(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.First.removesFirst(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.First.doesNotChangeOthers(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("decrements size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void decrementsSize(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.First.decrementsSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      DynamicSequenceTests.Remove.removesFromCorrectIndex(
+        new DoublyLinkedList<>(items),
+        index);
     }
 
-    @Nested
-    @DisplayName("from first half")
-    class FromFirstHalf
+    @ParameterizedTest
+    @DisplayName("does not change others")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void doesNotChangeOthers(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("removes from correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromFirstHalf.removesFromCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromFirstHalf.doesNotChangeOthers(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("decrements size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void decrementsSize(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromFirstHalf.decrementsSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      DynamicSequenceTests.Remove.doesNotChangeOthers(
+        new DoublyLinkedList<>(items),
+        index);
     }
 
-    @Nested
-    @DisplayName("from middle")
-    class FromMiddle
+    @ParameterizedTest
+    @DisplayName("decrements size")
+    @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+    <Item> void decrementsSize(Item[] items, int index)
     {
-      @ParameterizedTest
-      @DisplayName("removes from correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromMiddle.removesFromCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromMiddle.doesNotChangeOthers(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("decrements size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void decrementsSize(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromMiddle.decrementsSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-    }
-
-    @Nested
-    @DisplayName("from second half")
-    class FromSecondHalf
-    {
-      @ParameterizedTest
-      @DisplayName("removes from correct index")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void removesFromCorrectIndex(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromSecondHalf.removesFromCorrectIndex(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromSecondHalf.doesNotChangeOthers(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("decrements size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void decrementsSize(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.FromSecondHalf.decrementsSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-    }
-
-    @Nested
-    @DisplayName("last")
-    class Last
-    {
-      @ParameterizedTest
-      @DisplayName("removes last")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void removesLast(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.Last.removesLast(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("does not change others")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void doesNotChangeOthers(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.Last.doesNotChangeOthers(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
-
-      @ParameterizedTest
-      @DisplayName("decrements size")
-      @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-      <Item> void decrementsSize(Item[] nonEmptyArray)
-      {
-        DynamicSequenceTests.Remove.Last.decrementsSize(
-          new DoublyLinkedList<>(nonEmptyArray));
-      }
+      DynamicSequenceTests.Remove.decrementsSize(
+        new DoublyLinkedList<>(items),
+        index);
     }
   }
 
@@ -595,389 +162,79 @@ class DoublyLinkedListTests
     @DisplayName("insert previous")
     class InsertPrevious
     {
-      @Nested
-      @DisplayName("on first")
-      class OnFirst
+      @ParameterizedTest
+      @DisplayName("inserts as previous")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void insertsAsPrevious(Item[] items, int index, Item previous)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as previous")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsPrevious(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.insertsAsPrevious(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesFirstNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.changesFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeLastNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.doesNotChangeLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnFirst.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+        LinkedNodeTests.InsertPrevious.insertsAsPrevious(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
       }
 
-      @Nested
-      @DisplayName("in first half")
-      class InFirstHalf
+      @ParameterizedTest
+      @DisplayName("changes first node only if should")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void changesFirstNodeOnlyIfShould(
+        Item[] items,
+        int index,
+        Item previous)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as previous")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsPrevious(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.insertsAsPrevious(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeLastNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.doesNotChangeLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InFirstHalf.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+        LinkedNodeTests.InsertPrevious.changesFirstNodeOnlyIfShould(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
       }
 
-      @Nested
-      @DisplayName("in middle")
-      class InMiddle
+      @ParameterizedTest
+      @DisplayName("does not change last node")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeLastNode(Item[] items, int index, Item previous)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as previous")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsPrevious(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.insertsAsPrevious(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeLastNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.doesNotChangeLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InMiddle.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+        LinkedNodeTests.InsertPrevious.doesNotChangeLastNode(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
       }
 
-      @Nested
-      @DisplayName("in second half")
-      class InSecondHalf
+      @ParameterizedTest
+      @DisplayName("does not change other items")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeOtherItems(
+        Item[] items,
+        int index,
+        Item previous)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as previous")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsPrevious(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.insertsAsPrevious(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeLastNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.doesNotChangeLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.InSecondHalf.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+        LinkedNodeTests.InsertPrevious.doesNotChangeOtherItems(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
       }
 
-      @Nested
-      @DisplayName("on last")
-      class OnLast
+      @ParameterizedTest
+      @DisplayName("does not change other nodes")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeOtherNodes(
+        Item[] items,
+        int index,
+        Item previous)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as previous")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsPrevious(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.insertsAsPrevious(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+        LinkedNodeTests.InsertPrevious.doesNotChangeOtherNodes(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
+      }
 
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeLastNode(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.doesNotChangeLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item previous)
-        {
-          LinkedNodeTests.InsertPrevious.OnLast.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            previous);
-        }
+      @ParameterizedTest
+      @DisplayName("increments size")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void incrementsSize(Item[] items, int index, Item previous)
+      {
+        LinkedNodeTests.InsertPrevious.incrementsSize(
+          new DoublyLinkedList<>(items),
+          index,
+          previous);
       }
     }
 
@@ -985,389 +242,73 @@ class DoublyLinkedListTests
     @DisplayName("insert next")
     class InsertNext
     {
-      @Nested
-      @DisplayName("on first")
-      class OnFirst
+      @ParameterizedTest
+      @DisplayName("inserts as next")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void insertsAsNext(Item[] items, int index, Item next)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as next")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsNext(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.insertsAsNext(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeFirstNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.doesNotChangeFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnFirst.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+        LinkedNodeTests.InsertNext.insertsAsNext(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
       }
 
-      @Nested
-      @DisplayName("in first half")
-      class InFirstHalf
+      @ParameterizedTest
+      @DisplayName("does not change last node")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeFirstNode(Item[] items, int index, Item next)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as next")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsNext(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.insertsAsNext(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeFirstNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.doesNotChangeFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InFirstHalf.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+        LinkedNodeTests.InsertNext.doesNotChangeFirstNode(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
       }
 
-      @Nested
-      @DisplayName("in middle")
-      class InMiddle
+      @ParameterizedTest
+      @DisplayName("changes first node only if should")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void changesLastNodeOnlyIfShould(
+        Item[] items,
+        int index,
+        Item next)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as next")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsNext(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.insertsAsNext(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeFirstNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.doesNotChangeFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InMiddle.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+        LinkedNodeTests.InsertNext.changesLastNodeOnlyIfShould(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
       }
 
-      @Nested
-      @DisplayName("in second half")
-      class InSecondHalf
+      @ParameterizedTest
+      @DisplayName("does not change other items")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeOtherItems(Item[] items, int index, Item next)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as next")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsNext(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.insertsAsNext(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeFirstNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.doesNotChangeFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.InSecondHalf.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+        LinkedNodeTests.InsertNext.doesNotChangeOtherItems(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
       }
 
-      @Nested
-      @DisplayName("on last")
-      class OnLast
+      @ParameterizedTest
+      @DisplayName("does not change other nodes")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void doesNotChangeOtherNodes(Item[] items, int index, Item next)
       {
-        @ParameterizedTest
-        @DisplayName("inserts as next")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void insertsAsNext(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.insertsAsNext(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+        LinkedNodeTests.InsertNext.doesNotChangeOtherNodes(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
+      }
 
-        @ParameterizedTest
-        @DisplayName("does not change last node")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeFirstNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.doesNotChangeFirstNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void changesLastNode(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.changesLastNode(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
-
-        @ParameterizedTest
-        @DisplayName("increments size")
-        @FieldSource("dsa.lib.examples.arrays.NonEmpty#AND_ITEMS")
-        <Item> void incrementsSize(
-          Item[] nonEmptyArray,
-          Item next)
-        {
-          LinkedNodeTests.InsertNext.OnLast.incrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray),
-            next);
-        }
+      @ParameterizedTest
+      @DisplayName("increments size")
+      @FieldSource("dsa.lib.examples.arrays.AndValidIndices#AND_ITEMS")
+      <Item> void incrementsSize(Item[] items, int index, Item next)
+      {
+        LinkedNodeTests.InsertNext.incrementsSize(
+          new DoublyLinkedList<>(items),
+          index,
+          next);
       }
     }
 
@@ -1375,329 +316,64 @@ class DoublyLinkedListTests
     @DisplayName("remove")
     class Remove
     {
-      @Nested
-      @DisplayName("on first")
-      class OnFirst
+      @ParameterizedTest
+      @DisplayName("returns item")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void returnsItem(Item[] items, int index)
       {
-        @ParameterizedTest
-        @DisplayName("returns item")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void returnsItem(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.returnsItem(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes last node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("decrements size")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void decrementsSize(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnFirst.decrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+        LinkedNodeTests.Remove.returnsItem(
+          new DoublyLinkedList<>(items),
+          index);
       }
 
-      @Nested
-      @DisplayName("in first half")
-      class InFirstHalf
+      @ParameterizedTest
+      @DisplayName("changes first node only if should")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void changesFirstNodeOnlyIfShould(Item[] items, int index)
       {
-        @ParameterizedTest
-        @DisplayName("returns item")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void returnsItem(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.returnsItem(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes last node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("decrements size")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void decrementsSize(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InFirstHalf.decrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+        LinkedNodeTests.Remove.changesFirstNodeOnlyIfShould(
+          new DoublyLinkedList<>(items),
+          index);
       }
 
-      @Nested
-      @DisplayName("in middle")
-      class InMiddle
+      @ParameterizedTest
+      @DisplayName("changes last node only if should")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void changesLastNodeOnlyIfShould(Item[] items, int index)
       {
-        @ParameterizedTest
-        @DisplayName("returns item")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void returnsItem(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.returnsItem(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes last node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("decrements size")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void decrementsSize(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InMiddle.decrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+        LinkedNodeTests.Remove.changesLastNodeOnlyIfShould(
+          new DoublyLinkedList<>(items),
+          index);
       }
 
-      @Nested
-      @DisplayName("in second half")
-      class InSecondHalf
+      @ParameterizedTest
+      @DisplayName("does not change other items")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void doesNotChangeOtherItems(Item[] items, int index)
       {
-        @ParameterizedTest
-        @DisplayName("returns item")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void returnsItem(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.returnsItem(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes last node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("decrements size")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void decrementsSize(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.InSecondHalf.decrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+        LinkedNodeTests.Remove.doesNotChangeOtherItems(
+          new DoublyLinkedList<>(items),
+          index);
       }
 
-      @Nested
-      @DisplayName("on last")
-      class OnLast
+      @ParameterizedTest
+      @DisplayName("does not change other nodes")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void doesNotChangeOtherNodes(Item[] items, int index)
       {
-        @ParameterizedTest
-        @DisplayName("returns item")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void returnsItem(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.returnsItem(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+        LinkedNodeTests.Remove.doesNotChangeOtherNodes(
+          new DoublyLinkedList<>(items),
+          index);
+      }
 
-        @ParameterizedTest
-        @DisplayName("changes first node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesFirstNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.changesFirstNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("changes last node only if should")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void changesLastNodeOnlyIfShould(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.changesLastNodeOnlyIfShould(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other items")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherItems(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.doesNotChangeOtherItems(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("does not change other nodes")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void doesNotChangeOtherNodes(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.doesNotChangeOtherNodes(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
-
-        @ParameterizedTest
-        @DisplayName("decrements size")
-        @FieldSource("dsa.lib.examples.Arrays#NON_EMPTY")
-        <Item> void decrementsSize(
-          Item[] nonEmptyArray)
-        {
-          LinkedNodeTests.Remove.OnLast.decrementsSize(
-            new DoublyLinkedList<>(nonEmptyArray));
-        }
+      @ParameterizedTest
+      @DisplayName("decrements size")
+      @FieldSource("dsa.lib.examples.Arrays#AND_VALID_INDICES")
+      <Item> void decrementsSize(Item[] items, int index)
+      {
+        LinkedNodeTests.Remove.decrementsSize(
+          new DoublyLinkedList<>(items),
+          index);
       }
     }
   }

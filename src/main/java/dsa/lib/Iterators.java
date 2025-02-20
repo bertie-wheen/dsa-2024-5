@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 @SuppressWarnings("UnnecessaryBoxing")  // (it's to satisfy corretto-1.8)
 public final class Iterators
@@ -77,6 +78,32 @@ public final class Iterators
     return list;
   }
 
+  public static <T> Iterable<T> atMost(int maxSize, Iterable<T> iterable)
+  {
+    return () -> new Iterator<T>()
+    {
+      private Iterator<T> iterator = iterable.iterator();
+      private int size = 0;
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.size < maxSize && this.iterator.hasNext();
+      }
+
+      @Override
+      public T next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        this.size++;
+        return this.iterator.next();
+      }
+    };
+  }
+
   @SafeVarargs
   @SuppressWarnings("unchecked")
   public static <T> Iterable<T> chain(Iterable<? extends T>... iterables)
@@ -140,6 +167,56 @@ public final class Iterators
     return i;
   }
 
+  @SuppressWarnings("AssignmentUsedAsCondition")
+  public static <T> Iterable<T> filter(
+    Predicate<T> predicate,
+    Iterable<T> iterable)
+  {
+    return () -> new Iterator<T>()
+    {
+      private Iterator<T> iterator = iterable.iterator();
+      private T next = null;
+      private boolean hasNext = false;
+
+      {
+        while (this.iterator.hasNext())
+        {
+          this.next = this.iterator.next();
+          if (this.hasNext = predicate.test(this.next))
+          {
+            break;
+          }
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.hasNext;
+      }
+
+      @Override
+      public T next()
+      {
+        if (!this.hasNext)
+        {
+          throw new NoSuchElementException();
+        }
+        T next = this.next;
+        this.hasNext = false;
+        while (this.iterator.hasNext())
+        {
+          this.next = this.iterator.next();
+          if (this.hasNext = predicate.test(this.next))
+          {
+            break;
+          }
+        }
+        return next;
+      }
+    };
+  }
+
   public static <T> Iterable<T> flatten(
     Iterable<? extends Iterable<T>> iterable)
   {
@@ -180,6 +257,25 @@ public final class Iterators
       }
     };
   }
+
+  /*
+  public static <T> T[] flatten(
+    T[][] arrays)
+  {
+    return toArray(flatten(applyEach(
+      iterable(arrays),
+      (array) -> iterable(array))));
+  }
+
+  public static <T> T[] flatten(
+    Class<?> class_,
+    T[][] arrays)
+  {
+    return toArray(class_, flatten(applyEach(
+      iterable(arrays),
+      (array) -> iterable(array))));
+  }
+   */
 
   public static <T, G> Iterable<Iterable<T>> group(
     Iterable<T> items,
@@ -610,15 +706,47 @@ public final class Iterators
   public static <T extends Comparable<T>> Iterable<T> sorted(
     Iterable<T> iterable)
   {
+    return sorted(iterable, Comparator.nullsFirst(Comparator.naturalOrder()));
+  }
+
+  public static <T extends Comparable<T>> Iterable<T> sorted(
+    Iterable<T> iterable, Comparator<T> comparator)
+  {
     List<T> sorted = asList(iterable);
     int size = sorted.size();
     T[] temp = toArray(Comparable.class, sorted, size);
-    Arrays.sort(temp, Comparator.nullsFirst(Comparator.naturalOrder()));
+    Arrays.sort(temp, comparator);
     for (int i = 0; i < size; i++)
     {
       sorted.set(i, temp[i]);
     }
     return sorted;
+  }
+
+  public static <T extends Comparable<T>> T[] sorted(T[] array)
+  {
+    return sorted(array, Comparator.nullsFirst(Comparator.naturalOrder()));
+  }
+
+  public static <T> T[] sorted(
+    T[] array,
+    Comparator<T> comparator)
+  {
+    T[] sorted = array.clone();
+    Arrays.sort(sorted, comparator);
+    return sorted;
+  }
+
+  public static <T extends Comparable<T>> Iterable<T[]> sortedEach(Iterable<T[]> arrays)
+  {
+    return applyEach(arrays, (array) -> Iterators.sorted(array));
+  }
+
+  public static <T> Iterable<T[]> sortedEach(
+    Iterable<T[]> arrays,
+    Comparator<T> comparator)
+  {
+    return applyEach(arrays, (array) -> Iterators.sorted(array, comparator));
   }
 
   public static <T extends Comparable<T>> Iterable<T> sortedUniques(

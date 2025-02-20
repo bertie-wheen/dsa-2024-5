@@ -27,9 +27,7 @@ public class SortedUniques
     andValidIndices(Data.Arrays.SortedUniques.NON_EMPTY);
 
   public static final Iterable<Arguments> AND_CONTAINED_ITEMS =
-    andOnValidIndices(
-      Data.Arrays.SortedUniques.NON_EMPTY, (array, index) ->
-        Arguments.of(array, array[index]));
+    andContainedItems(Data.Arrays.SortedUniques.NON_EMPTY);
 
   public static final Iterable<Arguments> AND_NOT_CONTAINED_ITEMS =
     andOnValidIndices(

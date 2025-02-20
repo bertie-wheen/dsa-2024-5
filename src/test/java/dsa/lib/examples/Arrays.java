@@ -3,6 +3,7 @@ package dsa.lib.examples;
 import dsa.lib.Data;
 import org.junit.jupiter.params.provider.Arguments;
 
+import static dsa.lib.Examples.andValidIndices;
 import static dsa.lib.Examples.arguments;
 import static dsa.lib.Iterators.*;
 
@@ -12,6 +13,9 @@ public class Arrays
     chain(
       dsa.lib.examples.arrays.Ints.AND_INTS,
       dsa.lib.examples.arrays.Strings.AND_STRINGS);
+
+  public static final Iterable<Arguments> AND_VALID_INDICES =
+    andValidIndices(Data.Arrays.ALL);
 
   public static final Iterable<Arguments> AND_NON_NEGATIVE_INTS =
     arguments(Data.Arrays.ALL, Data.Ints.NON_NEGATIVE);

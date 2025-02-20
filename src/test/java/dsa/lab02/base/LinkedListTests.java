@@ -44,182 +44,38 @@ public class LinkedListTests
       }
     }
 
-    public static class OnFirst
+    public static <Item> void getsCorrectIndex(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void getsFirst(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item first)
-      {
-        assertEquals(first, nonEmptyLinkedList.first());
-      }
+      assertEquals(validIndex, indexOf(nonEmptyLinkedList.node(validIndex)));
+    }
 
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
+    public static <Item> void doesNotChangeItems(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
+    {
+      int size = nonEmptyLinkedList.size();
+      @SuppressWarnings("unchecked")
+      Item[] items = (Item[]) new Object[size];
+      for (int i = 0; i < size; i++)
       {
-        int size = nonEmptyLinkedList.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyLinkedList.get(i);
-        }
-        nonEmptyLinkedList.first();
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyLinkedList.get(i));
-        }
+        items[i] = nonEmptyLinkedList.get(i);
       }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
+      nonEmptyLinkedList.node(validIndex);
+      for (int i = 0; i < size; i++)
       {
-        int size = nonEmptyLinkedList.size();
-        nonEmptyLinkedList.first();
-        assertEquals(size, nonEmptyLinkedList.size());
+        assertEquals(items[i], nonEmptyLinkedList.get(i));
       }
     }
 
-    public static class InFirstHalf
+    public static <Item> void doesNotChangeSize(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void getsCorrectIndex(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int index = nonEmptyLinkedList.size() / 4;
-        assertEquals(index, indexOf(nonEmptyLinkedList.node(index)));
-      }
-
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        int index = size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          items[i] = nonEmptyLinkedList.get(i);
-        }
-        nonEmptyLinkedList.node(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(items[i], nonEmptyLinkedList.get(i));
-        }
-      }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        nonEmptyLinkedList.node(size / 4);
-        assertEquals(size, nonEmptyLinkedList.size());
-      }
-    }
-
-    public static class InMiddle
-    {
-      public static <Item> void getsCorrectIndex(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int index = nonEmptyLinkedList.size() / 2;
-        assertEquals(index, indexOf(nonEmptyLinkedList.node(index)));
-      }
-
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        int index = size / 2;
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyLinkedList.get(i);
-        }
-        nonEmptyLinkedList.node(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyLinkedList.get(i));
-        }
-      }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        nonEmptyLinkedList.node(size / 2);
-        assertEquals(size, nonEmptyLinkedList.size());
-      }
-    }
-
-    public static class InSecondHalf
-    {
-      public static <Item> void getsCorrectIndex(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int index = 3 * nonEmptyLinkedList.size() / 4;
-        assertEquals(index, indexOf(nonEmptyLinkedList.node(index)));
-      }
-
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        int index = 3 * size / 4;
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          items[i] = nonEmptyLinkedList.get(i);
-        }
-        nonEmptyLinkedList.node(index);
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(items[i], nonEmptyLinkedList.get(i));
-        }
-      }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        nonEmptyLinkedList.node(3 * size / 4);
-        assertEquals(size, nonEmptyLinkedList.size());
-      }
-    }
-
-    public static class OnLast
-    {
-      public static <Item> void getsLast(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item last)
-      {
-        assertEquals(last, nonEmptyLinkedList.last());
-      }
-
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        @SuppressWarnings("unchecked")
-        Item[] others = (Item[]) new Object[size];
-        for (int i = 0; i < size; i++)
-        {
-          others[i] = nonEmptyLinkedList.get(i);
-        }
-        nonEmptyLinkedList.last();
-        for (int i = 0; i < size; i++)
-        {
-          assertEquals(others[i], nonEmptyLinkedList.get(i));
-        }
-      }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        nonEmptyLinkedList.last();
-        assertEquals(size, nonEmptyLinkedList.size());
-      }
+      int size = nonEmptyLinkedList.size();
+      nonEmptyLinkedList.node(validIndex);
+      assertEquals(size, nonEmptyLinkedList.size());
     }
   }
 }

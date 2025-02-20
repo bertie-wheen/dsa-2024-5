@@ -105,289 +105,64 @@ public class LinkedNodeTests
       assertEquals(size + 1, linkedNode.list().size());
     }
 
-    public static class OnFirst
+    public static <Item> void insertsAsPrevious(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
     {
-      public static <Item> void insertsAsPrevious(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.insertsAsPrevious(
-          nonEmptyLinkedList.firstNode(),
-          previous);
-      }
-
-      public static <Item> void changesFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        LinkedNode<Item> node = nonEmptyLinkedList.firstNode();
-        node.insertPrevious(previous);
-        assertSame(node.previous(), nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeLastNode(
-          nonEmptyLinkedList.firstNode(),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherItems(
-          nonEmptyLinkedList.firstNode(),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.firstNode(),
-          previous);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.incrementsSize(
-          nonEmptyLinkedList.firstNode(),
-          previous);
-      }
+      InsertPrevious.insertsAsPrevious(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
     }
 
-    public static class InFirstHalf
+    public static <Item> void changesFirstNodeOnlyIfShould(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
     {
-      public static <Item> void insertsAsPrevious(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.insertsAsPrevious(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeLastNode(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.incrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          previous);
-      }
+      InsertPrevious.changesFirstNodeOnlyIfShould(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
     }
 
-    public static class InMiddle
+    public static <Item> void doesNotChangeLastNode(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
     {
-      public static <Item> void insertsAsPrevious(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.insertsAsPrevious(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeLastNode(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.incrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          previous);
-      }
+      InsertPrevious.doesNotChangeLastNode(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
     }
 
-    public static class InSecondHalf
+    public static <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
     {
-      public static <Item> void insertsAsPrevious(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.insertsAsPrevious(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeLastNode(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.incrementsSize(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          previous);
-      }
+      InsertPrevious.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
     }
 
-    public static class OnLast
+    public static <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
     {
-      public static <Item> void insertsAsPrevious(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.insertsAsPrevious(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
+      InsertPrevious.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
+    }
 
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeLastNode(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherItems(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item previous)
-      {
-        InsertPrevious.incrementsSize(
-          nonEmptyLinkedList.lastNode(),
-          previous);
-      }
+    public static <Item> void incrementsSize(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item previous)
+    {
+      InsertPrevious.incrementsSize(
+        nonEmptyLinkedList.node(validIndex),
+        previous);
     }
   }
 
@@ -490,289 +265,64 @@ public class LinkedNodeTests
       assertEquals(size + 1, linkedNode.list().size());
     }
 
-    public static class OnFirst
+    public static <Item> void insertsAsNext(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
     {
-      public static <Item> void insertsAsNext(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.insertsAsNext(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeFirstNode(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherItems(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.incrementsSize(
-          nonEmptyLinkedList.firstNode(),
-          next);
-      }
+      InsertNext.insertsAsNext(
+        nonEmptyLinkedList.node(validIndex),
+        next);
     }
 
-    public static class InFirstHalf
+    public static <Item> void doesNotChangeFirstNode(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
     {
-      public static <Item> void insertsAsNext(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.insertsAsNext(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeFirstNode(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.incrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4),
-          next);
-      }
+      InsertNext.doesNotChangeFirstNode(
+        nonEmptyLinkedList.node(validIndex),
+        next);
     }
 
-    public static class InMiddle
+    public static <Item> void changesLastNodeOnlyIfShould(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
     {
-      public static <Item> void insertsAsNext(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.insertsAsNext(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeFirstNode(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.incrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2),
-          next);
-      }
+      InsertNext.changesLastNodeOnlyIfShould(
+        nonEmptyLinkedList.node(validIndex),
+        next);
     }
 
-    public static class InSecondHalf
+    public static <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
     {
-      public static <Item> void insertsAsNext(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.insertsAsNext(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeFirstNode(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.incrementsSize(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4),
-          next);
-      }
+      InsertNext.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex),
+        next);
     }
 
-    public static class OnLast
+    public static <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
     {
-      public static <Item> void insertsAsNext(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.insertsAsNext(
-          nonEmptyLinkedList.lastNode(),
-          next);
-      }
+      InsertNext.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex),
+        next);
+    }
 
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeFirstNode(
-          nonEmptyLinkedList.lastNode(),
-          next);
-      }
-
-      public static <Item> void changesLastNode(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        LinkedNode<Item> node = nonEmptyLinkedList.lastNode();
-        node.insertNext(next);
-        assertSame(node.next(), nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherItems(
-          nonEmptyLinkedList.lastNode(),
-          next);
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.lastNode(),
-          next);
-      }
-
-      public static <Item> void incrementsSize(
-        LinkedList<Item> nonEmptyLinkedList,
-        Item next)
-      {
-        InsertNext.incrementsSize(
-          nonEmptyLinkedList.lastNode(),
-          next);
-      }
+    public static <Item> void incrementsSize(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex,
+      Item next)
+    {
+      InsertNext.incrementsSize(
+        nonEmptyLinkedList.node(validIndex),
+        next);
     }
   }
 
@@ -884,229 +434,52 @@ public class LinkedNodeTests
       assertEquals(size - 1, linkedNode.list().size());
     }
 
-    public static class OnFirst
+    public static <Item> void returnsItem(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void returnsItem(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.returnsItem(
-          nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherItems(
-          nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.decrementsSize(
-          nonEmptyLinkedList.firstNode());
-      }
+      Remove.returnsItem(
+        nonEmptyLinkedList.node(validIndex));
     }
 
-    public static class InFirstHalf
+    public static <Item> void changesFirstNodeOnlyIfShould(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void returnsItem(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.returnsItem(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.decrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 4));
-      }
+      Remove.changesFirstNodeOnlyIfShould(
+        nonEmptyLinkedList.node(validIndex));
     }
 
-    public static class InMiddle
+    public static <Item> void changesLastNodeOnlyIfShould(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void returnsItem(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.returnsItem(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.decrementsSize(
-          nonEmptyLinkedList.node(nonEmptyLinkedList.size() / 2));
-      }
+      Remove.changesLastNodeOnlyIfShould(
+        nonEmptyLinkedList.node(validIndex));
     }
 
-    public static class InSecondHalf
+    public static <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void returnsItem(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.returnsItem(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherItems(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.decrementsSize(
-          nonEmptyLinkedList.node(3 * nonEmptyLinkedList.size() / 4));
-      }
+      Remove.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex));
     }
 
-    public static class OnLast
+    public static <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
     {
-      public static <Item> void returnsItem(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.returnsItem(
-          nonEmptyLinkedList.lastNode());
-      }
+      Remove.doesNotChangeOtherNodes(
+        nonEmptyLinkedList.node(validIndex));
+    }
 
-      public static <Item> void changesFirstNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesFirstNodeOnlyIfShould(
-          nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.changesLastNodeOnlyIfShould(
-          nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherItems(
-          nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.doesNotChangeOtherNodes(
-          nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        Remove.decrementsSize(
-          nonEmptyLinkedList.lastNode());
-      }
+    public static <Item> void decrementsSize(
+      LinkedList<Item> nonEmptyLinkedList,
+      int validIndex)
+    {
+      Remove.decrementsSize(
+        nonEmptyLinkedList.node(validIndex));
     }
   }
 

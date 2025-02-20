@@ -4,9 +4,12 @@ import dsa.lib.Data;
 import org.junit.jupiter.params.provider.Arguments;
 
 import static dsa.lib.Examples.arguments;
+import static dsa.lib.Iterators.onlyEvery;
 
 public class AndNegativeInts
 {
   public static final Iterable<Arguments> AND_INTS =
-    arguments(Data.Arrays.Ints.ALL, Data.Ints.NEGATIVE, Data.Ints.ALL);
+    onlyEvery(
+      17,
+      arguments(Data.Arrays.Ints.ALL, Data.Ints.NEGATIVE, Data.Ints.ALL));
 }

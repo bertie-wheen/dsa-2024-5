@@ -3,6 +3,8 @@ package dsa.lib;
 import dsa.lab02.base.Container;
 import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
+import dsa.lab06.solutions.BinaryTree;
+import dsa.lab09.base.PrioritisedItem;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -63,6 +65,10 @@ public class To
     {
       return To.string((dsa.lab01.solutions.Array<?>) object, indent);
     }
+    if (Is.binaryTree(object))
+    {
+      return To.string((BinaryTree<?>) object, indent);
+    }
     if (Is.map(object))
     {
       return To.string((Map<?, ?>) object, indent);
@@ -70,6 +76,10 @@ public class To
     if (Is.mapItem(object))
     {
       return To.string((MapItem<?, ?>) object, indent);
+    }
+    if (Is.prioritisedItem(object))
+    {
+      return To.string((PrioritisedItem<?, ?>) object, indent);
     }
     if (Is.container(object))
     {
@@ -258,6 +268,91 @@ public class To
     return To.string(item.key(), indent) + " => " + To.string(
       item.value(),
       indent);
+  }
+
+  public static <Priority extends Comparable<Priority>, Item> String string(
+    PrioritisedItem<Priority, Item> item)
+  {
+    return To.string(item, "");
+  }
+
+  public static <Priority extends Comparable<Priority>, Item> String string(
+    PrioritisedItem<Priority, Item> item,
+    String indent)
+  {
+    return "Priority " + To.string(item.priority(), indent) + ": " + To.string(
+      item.item(),
+      indent);
+  }
+
+  public static <Item, Node> String string(BinaryTree<Item> tree)
+  {
+    return To.string(tree, "");
+  }
+
+  public static <Item, Node> String string(BinaryTree<Item> tree, String indent)
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append(tree.getClass().getSimpleName());
+    sb.append('(');
+    if (!tree.isEmpty())
+    {
+      sb.append('\n');
+      String itemIndent = indent + "  ";
+      sb.append(itemIndent);
+      sb.append(To.string(tree, tree.root(), itemIndent));
+      sb.append('\n');
+      sb.append(indent);
+    }
+    sb.append(')');
+    return sb.toString();
+  }
+
+  public static <Item> String string(
+    BinaryTree<Item> tree,
+    BinaryTree.Node<Item> node)
+  {
+    return To.string(tree, node, "");
+  }
+
+  public static <Item> String string(
+    BinaryTree<Item> tree,
+    BinaryTree.Node<Item> node,
+    String indent)
+  {
+    if (node == null)
+    {
+      return "null";
+    }
+    StringBuilder sb = new StringBuilder();
+    String item = To.string(node.item(), indent);
+    String spaces = item.substring(item.lastIndexOf('\n') + 1)
+      .replaceFirst("^ +", "")
+      .replaceAll(".", " ");
+    sb.append(item);
+    if (!node.isLeaf())
+    {
+      sb.append(" <-P-+-L-> ");
+      if (node.hasLeft())
+      {
+        sb.append(To.string(
+          tree,
+          node.left(),
+          indent + spaces + "     |     "));
+      }
+      sb.append('\n');
+      sb.append(indent);
+      sb.append(spaces);
+      sb.append("     '-R-> ");
+      if (node.hasRight())
+      {
+        sb.append(To.string(
+          tree,
+          node.right(),
+          indent + spaces + "           "));
+      }
+    }
+    return sb.toString();
   }
 
   private static String typedString(Object object, String string)
