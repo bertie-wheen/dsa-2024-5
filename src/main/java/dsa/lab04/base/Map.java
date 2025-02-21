@@ -24,9 +24,11 @@ public interface Map<Key, Value>
    * Find the item with the given key.
    *
    * @param key the item's key
-   * @return the item, or {@code null} if no item has key {@code key}
+   * @return the item
+   * @throws NoSuchElementException if no item has key {@code key}
    */
-  MapItem<Key, Value> find(Key key);
+  MapItem<Key, Value> find(Key key)
+    throws NoSuchElementException;
 
   /**
    * Insert the given item.
@@ -64,9 +66,11 @@ public interface Map<Key, Value>
    * Decrements the size (assuming the item was actually in the map).
    *
    * @param key the item's key
-   * @return the item, or {@code null} if no item had key {@code key}
+   * @return the item
+   * @throws NoSuchElementException if {@code key} is not contained
    */
-  MapItem<Key, Value> remove(Key key);
+  MapItem<Key, Value> remove(Key key)
+    throws NoSuchElementException;
 
   /**
    * Check if the given key is equal to any of those contained.
@@ -114,12 +118,7 @@ public interface Map<Key, Value>
   default Value get(Key key)
     throws NoSuchElementException
   {
-    MapItem<Key, Value> item = this.find(key);
-    if (item == null)
-    {
-      throw new NoSuchElementException();
-    }
-    return item.value();
+    return this.find(key).value();
   }
 
   //<editor-fold defaultstate="collapsed" desc="Iteration">
