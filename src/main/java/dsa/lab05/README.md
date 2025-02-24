@@ -137,7 +137,7 @@ ourselves by calculating a long integer `initialHash` from the `object`
 passed as input. Now implement the hash function $h_{a,b}(k)$ we saw in 
 Lecture 8, namely:
 
-$h_{a,b}(k) = ( ( ak + b) \bmod p) \bmod N) $
+$h_{a,b}(k) = ( ( ak + b) \bmod p) \bmod N $
 
 using `initialHash` as $k$, `this.a` and `this.b` as $a$ and $b$, 
 `HashFunction.LARGE_PRIME` as $p$, and `this.size` as $N$.
