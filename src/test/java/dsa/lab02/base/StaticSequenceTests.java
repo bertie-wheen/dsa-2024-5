@@ -44,12 +44,9 @@ public class StaticSequenceTests
       StaticSequence<Item> nonEmptyStaticSequence,
       int index)
     {
-      int size = nonEmptyStaticSequence.size();
-      Item[] items = Iterators.toArray(nonEmptyStaticSequence, size);
+      Item[] items = Iterators.toArray(nonEmptyStaticSequence);
       nonEmptyStaticSequence.get(index);
-      assertArrayEquals(
-        items,
-        Iterators.toArray(nonEmptyStaticSequence, size));
+      assertArrayEquals(items, Iterators.toArray(nonEmptyStaticSequence));
     }
 
     public static <Item> void doesNotChangeSize(
@@ -103,17 +100,12 @@ public class StaticSequenceTests
       int index,
       Item item)
     {
-      int size = nonEmptyStaticSequence.size();
       Item[] others =
-        Iterators.toArray(
-          Iterators.skipIndex(index, nonEmptyStaticSequence),
-          size - 1);
+        Iterators.toArray(Iterators.skipIndex(index, nonEmptyStaticSequence));
       nonEmptyStaticSequence.set(index, item);
       assertArrayEquals(
         others,
-        Iterators.toArray(
-          Iterators.skipIndex(index, nonEmptyStaticSequence),
-          size - 1));
+        Iterators.toArray(Iterators.skipIndex(index, nonEmptyStaticSequence)));
     }
 
     public static <Item> void doesNotChangeSize(

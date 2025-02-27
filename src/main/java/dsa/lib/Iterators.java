@@ -153,6 +153,22 @@ public final class Iterators
     };
   }
 
+  @SuppressWarnings("unchecked")
+  public static <T> T[] cycle(Class<?> class_, T[] array, int offset)
+  {
+    if (offset == 0)
+    {
+      return array;
+    }
+    int size = array.length;
+    T[] newArray = (T[]) newTypedArray(class_).apply(size);
+    for (int i = 0; i < size; i++)
+    {
+      newArray[i] = array[(i + offset) % size];
+    }
+    return newArray;
+  }
+
   public static <T> int fillArray(T[] array, Iterable<T> iterable)
   {
     int i = 0;
@@ -625,6 +641,59 @@ public final class Iterators
     };
   }
 
+  public static <T> Iterable<T> repeat(int n, Iterable<T> iterable)
+  {
+    return () -> new Iterator<T>()
+    {
+      private int i = 0;
+      private Iterator<T> iterator = iterable.iterator();
+      private T next = null;
+
+      {
+        if (this.iterator.hasNext())
+        {
+          this.next = this.iterator.next();
+        }
+        else
+        {
+          this.i = n;
+        }
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return this.iterator.hasNext() || this.i < n;
+      }
+
+      @Override
+      public T next()
+      {
+        if (!this.hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+        T next = this.next;
+        if (++this.i == n && this.iterator.hasNext())
+        {
+          this.i = 0;
+          this.next = this.iterator.next();
+        }
+        return next;
+      }
+    };
+  }
+
+  public static <T> Iterable<T[]> repeatCycled(
+    Class<?> class_,
+    int n,
+    Iterable<T[]> iterable)
+  {
+    return applyEach(
+      repeat(n, iterable),
+      (array, index) -> cycle(class_, array, index % n));
+  }
+
   public static <T> Iterable<T> reversed(Iterable<T> iterable)
   {
     List<T> list = asList(iterable);
@@ -776,6 +845,14 @@ public final class Iterators
     throws IllegalArgumentException
   {
     return toArray(newObjectArray(), iterable, size);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <A, B> B[] toArray(Class<?> class_, A[] array)
+  {
+    B[] newArray = (B[]) newTypedArray(class_).apply(array.length);
+    System.arraycopy(array, 0, newArray, 0, array.length);
+    return newArray;
   }
 
   public static <T> T[] toArray(Class<?> class_, Iterable<T> iterable)

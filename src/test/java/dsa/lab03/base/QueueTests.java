@@ -44,11 +44,11 @@ public class QueueTests
       Item item)
     {
       int size = queue.size();
-      Item[] others = Iterators.toArray(queue, size);
+      Item[] others = Iterators.toArray(queue);
       queue.enqueue(item);
       assertArrayEquals(
         others,
-        Iterators.toArray(Iterators.skipIndex(size, queue), size));
+        Iterators.toArray(Iterators.skipIndex(size, queue)));
     }
 
     public static <Item> void incrementsSize(
@@ -80,12 +80,9 @@ public class QueueTests
     public static <Item> void doesNotChangeItems(
       Queue<Item> nonEmptyQueue)
     {
-      int size = nonEmptyQueue.size();
-      Item[] items = Iterators.toArray(nonEmptyQueue, size);
+      Item[] items = Iterators.toArray(nonEmptyQueue);
       nonEmptyQueue.front();
-      assertArrayEquals(
-        items,
-        Iterators.toArray(nonEmptyQueue, size));
+      assertArrayEquals(items, Iterators.toArray(nonEmptyQueue));
     }
 
     public static <Item> void doesNotChangeSize(
@@ -109,14 +106,9 @@ public class QueueTests
     public static <Item> void doesNotChangeOthers(
       Queue<Item> nonEmptyQueue)
     {
-      int size = nonEmptyQueue.size();
-      Item[] others = Iterators.toArray(
-        Iterators.skipIndex(0, nonEmptyQueue),
-        size - 1);
+      Item[] others = Iterators.toArray(Iterators.skipIndex(0, nonEmptyQueue));
       nonEmptyQueue.dequeue();
-      assertArrayEquals(
-        others,
-        Iterators.toArray(nonEmptyQueue, size - 1));
+      assertArrayEquals(others, Iterators.toArray(nonEmptyQueue));
     }
 
     public static <Item> void decrementsSize(

@@ -3,6 +3,7 @@ package dsa.lib;
 import dsa.lab02.base.Container;
 import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
+import dsa.lab06.solutions.BinaryTree;
 
 import java.util.Arrays;
 
@@ -96,6 +97,16 @@ public class Is
   public static boolean map(Class<?> class_)
   {
     return Is.interface_(class_, Map.class);
+  }
+
+  public static boolean binaryTree(Object object)
+  {
+    return object != null && Is.binaryTree(object.getClass());
+  }
+
+  public static boolean binaryTree(Class<?> class_)
+  {
+    return Is.interface_(class_, BinaryTree.class);
   }
 
   private static boolean interface_(Class<?> class_, Class<?> interface_)

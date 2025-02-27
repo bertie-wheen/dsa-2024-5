@@ -16,12 +16,11 @@ public class SorterTests
     Item[] items,
     Comparator<Item> comparator)
   {
-    int size = items.length;
-    Item[] sortedItems = Arrays.copyOf(items, size);
+    Item[] sortedItems = Arrays.copyOf(items, items.length);
     Arrays.sort(sortedItems, comparator);
     StaticSequence<Item> sequence = new StaticArray<>(items);
     sorter.sort(sequence, comparator);
-    assertArrayEquals(sortedItems, Iterators.toArray(sequence, size));
+    assertArrayEquals(sortedItems, Iterators.toArray(sequence));
   }
 
   public static <Item extends Comparable<Item>> void sortsInNaturalOrder(

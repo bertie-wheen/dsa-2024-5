@@ -22,14 +22,11 @@ public class DynamicSequenceTests
       int validIndex,
       Item item)
     {
-      int size = dynamicSequence.size();
-      Item[] others = Iterators.toArray(dynamicSequence, size);
+      Item[] others = Iterators.toArray(dynamicSequence);
       dynamicSequence.insert(validIndex, item);
       assertArrayEquals(
         others,
-        Iterators.toArray(
-          Iterators.skipIndex(validIndex, dynamicSequence),
-          size));
+        Iterators.toArray(Iterators.skipIndex(validIndex, dynamicSequence)));
     }
 
     public static <Item> void incrementsSize(
@@ -67,14 +64,10 @@ public class DynamicSequenceTests
       DynamicSequence<Item> nonEmptyDynamicSequence,
       int validIndex)
     {
-      int size = nonEmptyDynamicSequence.size();
       Item[] others = Iterators.toArray(
-        Iterators.skipIndex(validIndex, nonEmptyDynamicSequence),
-        size - 1);
+        Iterators.skipIndex(validIndex, nonEmptyDynamicSequence));
       nonEmptyDynamicSequence.remove(validIndex);
-      assertArrayEquals(
-        others,
-        Iterators.toArray(nonEmptyDynamicSequence, size - 1));
+      assertArrayEquals(others, Iterators.toArray(nonEmptyDynamicSequence));
     }
 
     public static <Item> void decrementsSize(

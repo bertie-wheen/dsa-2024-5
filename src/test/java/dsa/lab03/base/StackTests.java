@@ -21,12 +21,11 @@ public class StackTests
       Stack<Item> stack,
       Item item)
     {
-      int size = stack.size();
-      Item[] others = Iterators.toArray(stack, size);
+      Item[] others = Iterators.toArray(stack);
       stack.push(item);
       assertArrayEquals(
         others,
-        Iterators.toArray(Iterators.skipIndex(0, stack), size));
+        Iterators.toArray(Iterators.skipIndex(0, stack)));
     }
 
     public static <Item> void incrementsSize(
@@ -58,12 +57,9 @@ public class StackTests
     public static <Item> void doesNotChangeItems(
       Stack<Item> nonEmptyStack)
     {
-      int size = nonEmptyStack.size();
-      Item[] items = Iterators.toArray(nonEmptyStack, size);
+      Item[] items = Iterators.toArray(nonEmptyStack);
       nonEmptyStack.top();
-      assertArrayEquals(
-        items,
-        Iterators.toArray(nonEmptyStack, size));
+      assertArrayEquals(items, Iterators.toArray(nonEmptyStack));
     }
 
     public static <Item> void doesNotChangeSize(
@@ -87,14 +83,9 @@ public class StackTests
     public static <Item> void doesNotChangeOthers(
       Stack<Item> nonEmptyStack)
     {
-      int size = nonEmptyStack.size();
-      Item[] others = Iterators.toArray(
-        Iterators.skipIndex(0, nonEmptyStack),
-        size - 1);
+      Item[] others = Iterators.toArray(Iterators.skipIndex(0, nonEmptyStack));
       nonEmptyStack.pop();
-      assertArrayEquals(
-        others,
-        Iterators.toArray(nonEmptyStack, size - 1));
+      assertArrayEquals(others, Iterators.toArray(nonEmptyStack));
     }
 
     public static <Item> void decrementsSize(

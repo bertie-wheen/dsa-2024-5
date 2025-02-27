@@ -1,9 +1,11 @@
 package dsa.lib;
 
 import dsa.lab04.base.MapItem;
+import dsa.lab06.exercises.BinaryTree;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Random;
 
 import static dsa.lib.Iterators.*;
 
@@ -43,7 +45,7 @@ public class Data
           "foo",
           "bar",
           "testing testing 123",
-          ")(*&^%$£\"!"),
+          "*&^%$£!"),
       NON_NULL = chain(EMPTY, NON_EMPTY),
       ALL = chain(NON_NULL, NULL);
 
@@ -85,6 +87,100 @@ public class Data
     }
   }
 
+  public static class Lab06
+  {
+    public static class BinaryTrees
+    {
+      private static <T> BinaryTree<T> make(T[] items, long seed)
+      {
+        Random random = new Random(seed);
+        BinaryTree<T> tree = new BinaryTree<>();
+        if (items.length != 0)
+        {
+          tree.insertRoot(new BinaryTree.Node<>(tree, items[0]));
+          for (int i = 1; i < items.length; i++)
+          {
+            BinaryTree.Node<T> parent = tree.root();
+            BinaryTree.Node<T> node =
+              new BinaryTree.Node<>(tree, items[i]);
+            if (random.nextBoolean())
+            {
+              while (parent.hasLeft())
+              {
+                parent = parent.hasRight() && random.nextBoolean()
+                  ? parent.right() : parent.left();
+              }
+              parent.insertLeft(node);
+            }
+            else
+            {
+              while (parent.hasRight())
+              {
+                parent = parent.hasLeft() && random.nextBoolean()
+                  ? parent.left() : parent.right();
+              }
+              parent.insertRight(node);
+            }
+          }
+        }
+        return tree;
+      }
+
+      private static <T> boolean equals(BinaryTree<T> a, BinaryTree<T> b)
+      {
+        return a.isEmpty() ? b.isEmpty() : equals(a.root(), b.root());
+      }
+
+      private static <T> boolean equals(
+        BinaryTree.Node<T> a,
+        BinaryTree.Node<T> b)
+      {
+        return (a == null && b == null) ||
+          (a != null && b != null &&
+            java.util.Objects.equals(a.item(), b.item()) &&
+            (a.hasLeft() ? a.left().equals(b.left()) : !b.hasLeft()) &&
+            (a.hasRight() ? a.right().equals(b.right()) : !b.hasRight()));
+      }
+
+      public static class Ints
+      {
+        public static final Iterable<BinaryTree<Object>>
+          EMPTY = singletonIterable(new BinaryTree<>()),
+          NON_EMPTY =
+            uniques(
+              applyEach(
+                repeatCycled(
+                  Integer.class,
+                  6,
+                  Data.Arrays.Uniques.Ints.NON_EMPTY),
+                BinaryTrees::make),
+              BinaryTrees::equals),
+          ALL = chain(EMPTY, NON_EMPTY);
+      }
+
+      public static class Strings
+      {
+        public static final Iterable<BinaryTree<Object>>
+          EMPTY = singletonIterable(new BinaryTree<>()),
+          NON_EMPTY =
+            uniques(
+              applyEach(
+                repeatCycled(
+                  String.class,
+                  6,
+                  Data.Arrays.Uniques.Strings.NON_EMPTY),
+                BinaryTrees::make),
+              BinaryTrees::equals),
+          ALL = chain(EMPTY, NON_EMPTY);
+      }
+
+      public static final Iterable<BinaryTree<Object>>
+        EMPTY = singletonIterable(new BinaryTree<>()),
+        NON_EMPTY = chain(Ints.NON_EMPTY, Strings.NON_EMPTY),
+        ALL = chain(EMPTY, NON_EMPTY);
+    }
+  }
+
   public static class Arrays
   {
     public static class Ints
@@ -94,7 +190,8 @@ public class Data
         SINGLETON = singletonIterable(new Integer[]{2}),
         MULTI_ITEM = iterable(
           new Integer[]{1, 42, 1, 3},
-          new Integer[]{Integer.MAX_VALUE, 0, Integer.MIN_VALUE, -1, -2}),
+          new Integer[]{Integer.MAX_VALUE, 0, Integer.MIN_VALUE, -1, -2},
+          new Integer[]{0, 1, 2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29}),
         NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
         ALL = chain(EMPTY, NON_EMPTY);
     }
@@ -108,7 +205,25 @@ public class Data
         MULTI_ITEM = iterable(
           new String[]{"foo", "bar", "quux", "quux"},
           new String[]{"Hello", null},
-          new String[]{"LOREM", "IPSUM", "DOLOR", "SIT", "AMET!"}),
+          new String[]{"LOREM", "IPSUM", "DOLOR", "SIT", "AMET!"},
+          new String[]{
+            "the",
+            "quick",
+            "brown",
+            "fox",
+            "jumped",
+            "over",
+            "the",
+            "lazy",
+            "dog",
+            "and",
+            "the",
+            "cow",
+            "jumped",
+            "over",
+            "the",
+            "moon"
+          }),
         NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
         ALL = chain(EMPTY, NON_EMPTY);
     }
@@ -126,14 +241,54 @@ public class Data
 
     public static class Uniques
     {
+      public static class Ints
+      {
+        public static final Iterable<Integer[]>
+          EMPTY = singletonIterable(new Integer[]{}),
+          SINGLETON = uniquesEach(Integer.class, Arrays.Ints.SINGLETON),
+          MULTI_ITEM = uniquesEach(Integer.class, Arrays.Ints.MULTI_ITEM),
+          NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+          ALL = chain(EMPTY, NON_EMPTY);
+      }
+
+      public static class Strings
+      {
+        public static final Iterable<String[]>
+          EMPTY = singletonIterable(new String[]{}),
+          SINGLETON = uniquesEach(String.class, Arrays.Strings.SINGLETON),
+          MULTI_ITEM = uniquesEach(String.class, Arrays.Strings.MULTI_ITEM),
+          NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+          ALL = chain(EMPTY, NON_EMPTY);
+      }
+
+      /*
       public static final Iterable<Object[]>
         EMPTY = singletonIterable(new Object[]{}),
-        SINGLETON = Iterators.<Object[]>chain(
-          uniquesEach(Arrays.Ints.SINGLETON),
-          uniquesEach(Arrays.Strings.SINGLETON)),
-        MULTI_ITEM = Iterators.<Object[]>chain(
-          uniquesEach(Arrays.Ints.MULTI_ITEM),
-          uniquesEach(Arrays.Strings.MULTI_ITEM)),
+        SINGLETON =
+          Iterators.<Object[]>chain(
+            applyEach(
+              Ints.SINGLETON,
+              (array) -> toArray(Object.class, array)),
+            applyEach(
+              Strings.SINGLETON,
+              (array) -> toArray(Object.class, array))),
+        MULTI_ITEM =
+          Iterators.<Object[]>chain(
+            applyEach(
+              Ints.MULTI_ITEM,
+              (array) -> toArray(Object.class, array)),
+            applyEach(
+              Strings.MULTI_ITEM,
+              (array) -> toArray(Object.class, array))),
+        NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
+        ALL = chain(EMPTY, NON_EMPTY);
+      */
+      public static final Iterable<Object[]>
+        EMPTY = singletonIterable(new Object[]{}),
+        SINGLETON =
+          Iterators.<Object[]>chain(Ints.SINGLETON, Strings.SINGLETON),
+        MULTI_ITEM =
+          Iterators.<Object[]>chain(Ints.MULTI_ITEM, Strings.MULTI_ITEM),
         NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
         ALL = chain(EMPTY, NON_EMPTY);
     }
