@@ -312,23 +312,23 @@ public class To
     sb.append(item);
     if (!node.isLeaf())
     {
-      sb.append(" <-P-+-L-> ");
-      if (node.hasLeft())
-      {
-        sb.append(To.string(
-          tree,
-          node.left(),
-          indent + spaces + "     |     "));
-      }
-      sb.append('\n');
-      sb.append(indent);
-      sb.append(spaces);
-      sb.append("     '-R-> ");
+      sb.append(" <-P-+-R-> ");
       if (node.hasRight())
       {
         sb.append(To.string(
           tree,
           node.right(),
+          indent + spaces + "     |     "));
+      }
+      sb.append('\n');
+      sb.append(indent);
+      sb.append(spaces);
+      sb.append("     '-L-> ");
+      if (node.hasLeft())
+      {
+        sb.append(To.string(
+          tree,
+          node.left(),
           indent + spaces + "           "));
       }
     }
