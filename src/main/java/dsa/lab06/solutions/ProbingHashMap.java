@@ -125,7 +125,10 @@ public class ProbingHashMap<Key, Value>
       MapItem<Key, Value> item = this.items[index];
       if (item == null)
       {
-        availableIndex = index;
+        if (availableIndex == -1)
+        {
+          availableIndex = index;
+        }
         break;
       }
       if (item == this.REMOVED)
