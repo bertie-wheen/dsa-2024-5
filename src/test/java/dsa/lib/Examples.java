@@ -102,11 +102,11 @@ public class Examples
       (array, index) -> Arguments.of(array, array[index]));
   }
 
-  public static <A, B> Iterable<Arguments> andOnValidIndices(
+  public static <A, B> Iterable<B> andOnValidIndices(
     Iterable<A[]> arrays,
-    BiFunction<A[], Integer, Arguments> argumentsOf)
+    BiFunction<A[], Integer, B> argumentsOf)
   {
-    return () -> new Iterator<Arguments>()
+    return () -> new Iterator<B>()
     {
       private Iterator<A[]> arraysIterator = arrays.iterator();
       private A[] array = null;
@@ -132,14 +132,14 @@ public class Examples
       }
 
       @Override
-      public Arguments next()
+      public B next()
       {
         if (!this.hasNext())
         {
           throw new NoSuchElementException();
         }
         int index = this.index();
-        Arguments arrayAndItem = argumentsOf.apply(this.array, index);
+        B arrayAndItem = argumentsOf.apply(this.array, index);
         do
         {
           this.numerator++;
@@ -169,9 +169,10 @@ public class Examples
 
   public static Arguments flatten(Arguments[] array)
   {
-    return Arguments.of(toArray(Object.class, Iterators.flatten(applyEach(
-      iterable(array),
-      arguments -> iterable(arguments.get())))));
+    return Arguments.of(toArray(
+      Object.class, Iterators.flatten(applyEach(
+        iterable(array),
+        arguments -> iterable(arguments.get())))));
   }
 
   @SafeVarargs

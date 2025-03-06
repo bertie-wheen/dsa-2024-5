@@ -377,7 +377,8 @@ public class Data
             EMPTY = UniqueMapItems.IntsToStrings.EMPTY,
             SINGLETON = UniqueMapItems.IntsToStrings.SINGLETON,
             MULTI_ITEM =
-              sortedEach(
+              sortedUniquesEach(
+                MapItem.class,
                 UniqueMapItems.IntsToStrings.MULTI_ITEM,
                 Comparator.comparing(MapItem::key)),
             NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
@@ -390,7 +391,8 @@ public class Data
             EMPTY = UniqueMapItems.StringsToInts.EMPTY,
             SINGLETON = UniqueMapItems.StringsToInts.SINGLETON,
             MULTI_ITEM =
-              sortedEach(
+              sortedUniquesEach(
+                MapItem.class,
                 UniqueMapItems.StringsToInts.MULTI_ITEM,
                 Comparator.comparing(MapItem::key)),
             NON_EMPTY = chain(SINGLETON, MULTI_ITEM),
