@@ -778,12 +778,12 @@ public final class Iterators
     return sorted(iterable, Comparator.nullsFirst(Comparator.naturalOrder()));
   }
 
-  public static <T extends Comparable<T>> Iterable<T> sorted(
+  public static <T> Iterable<T> sorted(
     Iterable<T> iterable, Comparator<T> comparator)
   {
     List<T> sorted = asList(iterable);
     int size = sorted.size();
-    T[] temp = toArray(Comparable.class, sorted, size);
+    T[] temp = toArray(sorted, size);
     Arrays.sort(temp, comparator);
     for (int i = 0; i < size; i++)
     {
@@ -824,15 +824,70 @@ public final class Iterators
     return sorted(uniques(iterable));
   }
 
+  public static <T> Iterable<T> sortedUniques(
+    Iterable<T> iterable,
+    Comparator<T> comparator)
+  {
+    return sorted(
+      uniques(iterable, (a, b) -> comparator.compare(a, b) == 0),
+      comparator);
+  }
+
+  public static <T extends Comparable<T>> T[] sortedUniques(
+    Class<?> class_,
+    T[] array)
+  {
+    return toArray(class_, sortedUniques(asList(array)));
+  }
+
   public static <T extends Comparable<T>> T[] sortedUniques(T[] array)
   {
-    return toArray(Comparable.class, sortedUniques(asList(array)));
+    return sortedUniques(Comparable.class, array);
+  }
+
+  public static <T> T[] sortedUniques(
+    T[] array,
+    Comparator<T> comparator)
+  {
+    return toArray(sortedUniques(asList(array), comparator));
+  }
+
+  public static <T> T[] sortedUniques(
+    Class<?> class_,
+    T[] array,
+    Comparator<T> comparator)
+  {
+    return toArray(class_, sortedUniques(asList(array), comparator));
   }
 
   public static <T extends Comparable<T>> Iterable<T[]> sortedUniquesEach(
     Iterable<T[]> iterable)
   {
     return applyEach(iterable, (array) -> sortedUniques(array));
+  }
+
+  public static <T extends Comparable<T>> Iterable<T[]> sortedUniquesEach(
+    Class<?> class_,
+    Iterable<T[]> iterable)
+  {
+    return applyEach(iterable, (array) -> sortedUniques(class_, array));
+  }
+
+  public static <T> Iterable<T[]> sortedUniquesEach(
+    Iterable<T[]> iterable,
+    Comparator<T> comparator)
+  {
+    return applyEach(iterable, (array) -> sortedUniques(array, comparator));
+  }
+
+  public static <T> Iterable<T[]> sortedUniquesEach(
+    Class<?> class_,
+    Iterable<T[]> iterable,
+    Comparator<T> comparator)
+  {
+    return applyEach(
+      iterable,
+      (array) -> sortedUniques(class_, array, comparator));
   }
 
   public static <T> T[] toArray(Iterable<T> iterable)

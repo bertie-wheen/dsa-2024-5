@@ -16,6 +16,7 @@
 4. [Sorting, Searching & Maps](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab04)
 5. [Ordered Maps, Hashing & Chaining](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab05)
 6. [Probing & Binary Trees](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab06)
+7. [Binary Search Trees](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab07)
 
 
 ## Setup

@@ -81,6 +81,7 @@
  * <li>{@linkplain dsa.lab04 Lab 4}</li>
  * <li>{@linkplain dsa.lab05 Lab 5}</li>
  * <li>{@linkplain dsa.lab06 Lab 6}</li>
+ * <li>{@linkplain dsa.lab07 Lab 7}</li>
  * </ul>
  */
 package dsa;
