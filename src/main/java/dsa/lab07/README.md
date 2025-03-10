@@ -88,8 +88,15 @@ This method corresponds to `subtreeSearch(x,k)` that we have seen in the
 lectures, and it works essentially like binary search: compare `key` with
 `this.item.key()` (using `key.compareTo(this.item.key())`): if the result is
 positive and `this.right` is not `null`, then recursively return
-`this.right.findNode(key)`; analogously if the result is negative; and just
-return `this` if the result is `0`.
+`this.right.findNode(key)`, but if `this.right` *is* null, then you need to
+*throw an exception*, that is you need to type:
+```Java
+throw new NoSuchElementException();
+```
+(you'll see how to handle exceptions properly in Further Programming, so don't
+worry for now if you don't know what exceptions are for now). If the result of
+the comparison is negative, do something analogous to the above; and just return
+`this` if the result is `0`.
 
 Remember to `Run Lab 7 tests` and to compare your code with the solutions, which
 you can find in `lab07\solutions`.
