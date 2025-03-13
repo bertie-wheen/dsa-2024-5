@@ -62,10 +62,10 @@ the $\Theta(n \log n)$ algorithm we saw at the end of Lecture 11 to build a
 binary search tree from an array of items.
 
 Similarly to last week's `BinaryTree<Key, Value>` class, this class also
-contains a nested class, `Node<Key, Value>`, which you can find at around line 193.
-Indeed, `BinarySearchTree<Key, Value>` features several methods, all of which
-are already implemented, and most of them call analogous methods defined in the
-`Node<Key, Value>` nested class on the `root` object.
+contains a nested class, `Node<Key, Value>`, which you can find at around line
+193. Indeed, `BinarySearchTree<Key, Value>` features several methods, all of
+which are already implemented, and most of them call analogous methods defined
+in the `Node<Key, Value>` nested class on the `root` object.
 
 Let's then have a proper look at the nested class `Node<Key, Value>`. As you can
 see, each object of this class keeps a reference to the parent node, to the left
@@ -90,7 +90,7 @@ lectures, and it works essentially like binary search: compare `key` with
 positive and `this.right` is not `null`, then recursively return
 `this.right.findNode(key)`, but if `this.right` *is* null, then you need to
 *throw an exception*, that is you need to type:
-```Java
+```java
 throw new NoSuchElementException();
 ```
 (you'll see how to handle exceptions properly in Further Programming, so don't
@@ -190,7 +190,3 @@ to amend the code of `next(key)` to make it work correctly for
 
 Remember to `Run Lab 7 tests` and to compare your code with the solutions, which
 you can find in `lab07\solutions`.
-
-
-
-
