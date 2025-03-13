@@ -1,6 +1,6 @@
 package dsa.lib;
 
-public class Misc
+public class MathUtils
 {
   public static int addSaturating(int a, int b)
   {

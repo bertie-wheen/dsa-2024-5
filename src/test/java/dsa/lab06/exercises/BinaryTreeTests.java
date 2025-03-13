@@ -2,38 +2,42 @@ package dsa.lab06.exercises;
 
 import dsa.lab03.base.Stack;
 import dsa.lab03.solutions.ArrayStack;
+import dsa.lib.DefaultMethodSource;
+import dsa.lib.Source;
 import dsa.lib.To;
+import dsa.lib.lab06.BinaryTreeData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.FieldSource;
+import org.junit.jupiter.params.provider.Arguments;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("BinaryTree")
 public class BinaryTreeTests
 {
-  @ParameterizedTest
   @DisplayName("level")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void level(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
   {
     dsa.lab06.solutions.BinaryTree<Item> solutionTree =
       similarSolution(tree);
     dsa.lab06.solutions.BinaryTree.Node<Item> solutionNode =
       fromPath(solutionTree, toPath(node));
-    int correctLevel = solutionNode.level();
-    assertEquals(correctLevel, node.level());
+    int solutionLevel = solutionNode.level();
+    assertEquals(solutionLevel, node.level());
   }
 
-  @ParameterizedTest
   @DisplayName("calculate size")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void calculateSize(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
     throws
     NoSuchMethodException,
@@ -51,13 +55,13 @@ public class BinaryTreeTests
     solutionCalculateSize.setAccessible(true);
     calculateSize.setAccessible(true);
     //</editor-fold>
-    int correctSize = (int) solutionCalculateSize.invoke(solutionNode);
-    assertEquals(correctSize, (int) calculateSize.invoke(node));
+    int solutionSize = (int) solutionCalculateSize.invoke(solutionNode);
+    assertEquals(solutionSize, (int) calculateSize.invoke(node));
   }
 
-  @ParameterizedTest
   @DisplayName("calculate height")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void calculateHeight(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
     throws
     NoSuchMethodException,
@@ -76,49 +80,68 @@ public class BinaryTreeTests
     solutionCalculateHeight.setAccessible(true);
     calculateHeight.setAccessible(true);
     //</editor-fold>
-    int correctHeight = (int) solutionCalculateHeight.invoke(solutionNode);
-    assertEquals(correctHeight, (int) calculateHeight.invoke(node));
+    int solutionHeight = (int) solutionCalculateHeight.invoke(solutionNode);
+    assertEquals(solutionHeight, (int) calculateHeight.invoke(node));
   }
 
-  @ParameterizedTest
   @DisplayName("print pre order")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void printPreOrder(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
   {
     dsa.lab06.solutions.BinaryTree<Item> solutionTree =
       similarSolution(tree);
     dsa.lab06.solutions.BinaryTree.Node<Item> solutionNode =
       fromPath(solutionTree, toPath(node));
-    String correctOutput = captureOutput(solutionNode::printPreOrder);
-    assertEquals(correctOutput, captureOutput(node::printPreOrder));
+    String solutionOutput = captureOutput(solutionNode::printPreOrder);
+    assertEquals(solutionOutput, captureOutput(node::printPreOrder));
   }
 
-  @ParameterizedTest
   @DisplayName("print in order")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void printInOrder(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
   {
     dsa.lab06.solutions.BinaryTree<Item> solutionTree =
       similarSolution(tree);
     dsa.lab06.solutions.BinaryTree.Node<Item> solutionNode =
       fromPath(solutionTree, toPath(node));
-    String correctOutput = captureOutput(solutionNode::printInOrder);
-    assertEquals(correctOutput, captureOutput(node::printInOrder));
+    String solutionOutput = captureOutput(solutionNode::printInOrder);
+    assertEquals(solutionOutput, captureOutput(node::printInOrder));
   }
 
-  @ParameterizedTest
   @DisplayName("print post order")
-  @FieldSource("dsa.lib.examples.lab06.BinaryTrees#AND_NODES")
+  @ParameterizedTest
+  @DefaultMethodSource
   <Item> void printPostOrder(BinaryTree<Item> tree, BinaryTree.Node<Item> node)
   {
     dsa.lab06.solutions.BinaryTree<Item> solutionTree =
       similarSolution(tree);
     dsa.lab06.solutions.BinaryTree.Node<Item> solutionNode =
       fromPath(solutionTree, toPath(node));
-    String correctOutput = captureOutput(solutionNode::printPostOrder);
-    assertEquals(correctOutput, captureOutput(node::printPostOrder));
+    String solutionOutput = captureOutput(solutionNode::printPostOrder);
+    assertEquals(solutionOutput, captureOutput(node::printPostOrder));
   }
 
+  //<editor-fold defaultstate="collapsed" desc="arguments">
+  static Source<Arguments> arguments()
+  {
+    return BinaryTreeData.NON_EMPTY.replace((tree, index) ->
+    {
+      Random random = new Random(index);
+      BinaryTree.Node<Object> node = tree.root();
+      while (!node.isLeaf() && random.nextBoolean())
+      {
+        node = node.hasLeft() && node.hasRight()
+          ? random.nextBoolean() ? node.left() : node.right()
+          : node.hasLeft() ? node.left() : node.right();
+      }
+      return Arguments.of(tree, node);
+    });
+  }
+  //</editor-fold>
+
+  //<editor-fold defaultstate="collapsed" desc="helper functions">
   private static <Item> dsa.lab06.solutions.BinaryTree<Item> similarSolution(
     BinaryTree<Item> tree)
   {
@@ -183,4 +206,5 @@ public class BinaryTreeTests
     }
     return String.join(",", lines);
   }
+  //</editor-fold>
 }

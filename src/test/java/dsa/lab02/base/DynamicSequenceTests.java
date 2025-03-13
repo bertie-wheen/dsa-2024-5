@@ -1,82 +1,171 @@
 package dsa.lab02.base;
 
-import dsa.lib.Iterators;
+import dsa.lib.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.function.BiFunction;
+
+import static dsa.lib.ClassUtils.construct;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
-public class DynamicSequenceTests
+public interface DynamicSequenceTests
 {
-  public static class Insert
+  @DisplayName("insert")
+  @DefaultDisplayNameGeneration
+  interface Insert
   {
-    public static <Item> void insertsIntoCorrectIndex(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void insertsIntoCorrectIndex(
       DynamicSequence<Item> dynamicSequence,
-      int validIndex,
+      int index,
       Item item)
     {
-      dynamicSequence.insert(validIndex, item);
-      assertEquals(item, dynamicSequence.get(validIndex));
+      dynamicSequence.insert(index, item);
+      assertEquals(item, dynamicSequence.get(index));
     }
 
-    public static <Item> void doesNotChangeOthers(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOthers(
       DynamicSequence<Item> dynamicSequence,
-      int validIndex,
+      int index,
       Item item)
     {
-      Item[] others = Iterators.toArray(dynamicSequence);
-      dynamicSequence.insert(validIndex, item);
-      assertArrayEquals(
-        others,
-        Iterators.toArray(Iterators.skipIndex(validIndex, dynamicSequence)));
+      Item[] oldOtherItems =
+        Source.from(dynamicSequence).array();
+      dynamicSequence.insert(index, item);
+      Item[] newOtherItems =
+        Source.from(dynamicSequence).skipIndex(index).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    public static <Item> void incrementsSize(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void incrementsSize(
       DynamicSequence<Item> dynamicSequence,
-      int validIndex,
+      int index,
       Item item)
     {
-      int size = dynamicSequence.size();
-      dynamicSequence.insert(validIndex, item);
-      assertEquals(size + 1, dynamicSequence.size());
+      int oldSize = dynamicSequence.size();
+      dynamicSequence.insert(index, item);
+      int newSize = dynamicSequence.size();
+      assertEquals(oldSize + 1, newSize);
     }
+
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> sequenceClass)
+    {
+      BiFunction<Source<Source<?>>, Source<?>, Source<Arguments>> forType =
+        (sources, items) ->
+          sources.flatReplace((source) ->
+              source.validInsertIndices().flatReplace((index) ->
+                items.replace((item) -> new Object[]{
+                  construct(sequenceClass, source),
+                  index,
+                  item})))
+            .quadratic()
+            .limit()
+            .replace((arguments) -> argumentSet(
+              TestNames.format(
+                TestNames.constructorFor(sequenceClass, arguments[0]),
+                TestNames.method("insert", arguments[1], arguments[2])),
+              arguments));
+      return Source.chain(
+        forType.apply(SourceData.Strings.ALL.cast(), StringData.ALL),
+        forType.apply(SourceData.Ints.ALL.cast(), IntData.ALL));
+    }
+    //</editor-fold>
   }
 
-  public static class Remove
+  @DisplayName("remove")
+  @DefaultDisplayNameGeneration
+  interface Remove
   {
-    // TODO: generalise to OOB
-    public static <Item> void throwsIfEmpty(
-      DynamicSequence<Item> emptyDynamicSequence,
+    @ParameterizedTest
+    @MethodSource
+    default <Item> void throwsIfEmpty(
+      DynamicSequence<Item> dynamicSequence,
       int index)
     {
       assertThrows(
         IndexOutOfBoundsException.class,
-        () -> emptyDynamicSequence.remove(index));
+        () -> dynamicSequence.remove(index));
     }
 
-    public static <Item> void removesFromCorrectIndex(
-      DynamicSequence<Item> nonEmptyDynamicSequence,
-      int validIndex)
+    //<editor-fold defaultstate="collapsed" desc="throwsIfEmpty arguments">
+    static Source<Arguments> throwsIfEmpty(
+      Class<?> sequenceClass)
     {
-      Item item = nonEmptyDynamicSequence.get(validIndex);
-      assertEquals(item, nonEmptyDynamicSequence.remove(validIndex));
+      return IntData.ALL.quadratic().limit()
+        .replace((index) -> argumentSet(
+          TestNames.format(
+            TestNames.constructor(sequenceClass),
+            TestNames.method("remove", index)),
+          construct(sequenceClass),
+          index));
+    }
+    //</editor-fold>
+
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void removesFromCorrectIndex(
+      DynamicSequence<Item> dynamicSequence,
+      int index)
+    {
+      Item item = dynamicSequence.get(index);
+      assertEquals(item, dynamicSequence.remove(index));
     }
 
-    public static <Item> void doesNotChangeOthers(
-      DynamicSequence<Item> nonEmptyDynamicSequence,
-      int validIndex)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOthers(
+      DynamicSequence<Item> dynamicSequence,
+      int index)
     {
-      Item[] others = Iterators.toArray(
-        Iterators.skipIndex(validIndex, nonEmptyDynamicSequence));
-      nonEmptyDynamicSequence.remove(validIndex);
-      assertArrayEquals(others, Iterators.toArray(nonEmptyDynamicSequence));
+      Item[] oldOtherItems =
+        Source.from(dynamicSequence).skipIndex(index).array();
+      dynamicSequence.remove(index);
+      Item[] newOtherItems =
+        Source.from(dynamicSequence).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    public static <Item> void decrementsSize(
-      DynamicSequence<Item> nonEmptyDynamicSequence,
-      int validIndex)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void decrementsSize(
+      DynamicSequence<Item> dynamicSequence,
+      int index)
     {
-      int size = nonEmptyDynamicSequence.size();
-      nonEmptyDynamicSequence.remove(validIndex);
-      assertEquals(size - 1, nonEmptyDynamicSequence.size());
+      int oldSize = dynamicSequence.size();
+      dynamicSequence.remove(index);
+      int newSize = dynamicSequence.size();
+      assertEquals(oldSize - 1, newSize);
     }
+
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> sequenceClass)
+    {
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              source.validIndices().replace((index) -> new Object[]{
+                construct(sequenceClass, source),
+                index}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(sequenceClass, arguments[0]),
+            TestNames.method("remove", arguments[1])),
+          arguments));
+    }
+    //</editor-fold>
   }
 }

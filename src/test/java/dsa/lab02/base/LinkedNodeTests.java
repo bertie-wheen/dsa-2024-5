@@ -1,888 +1,472 @@
 package dsa.lab02.base;
 
-import java.util.NoSuchElementException;
+import dsa.lib.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
-public class LinkedNodeTests
+public interface LinkedNodeTests
 {
-  public static class InsertPrevious
+  @DisplayName("insertPrevious")
+  @DefaultDisplayNameGeneration
+  interface InsertPrevious
   {
-    private static <Item> void insertsAsPrevious(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void insertsAsPrevious(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      linkedNode.insertPrevious(previous);
-      assertEquals(previous, linkedNode.previous().item());
+      LinkedNode<Item> node = linkedList.node(index);
+      node.insertPrevious(item);
+      assertEquals(item, node.previous().item());
     }
 
-    private static <Item> void changesFirstNodeOnlyIfShould(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void changesFirstNodeOnlyIfShould(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      LinkedNode<Item> firstNode = linkedNode.list().firstNode();
-      linkedNode.insertPrevious(previous);
-      if (linkedNode == firstNode)
-      {
-        assertSame(linkedNode.previous(), linkedNode.list().firstNode());
-      }
-      else
-      {
-        assertSame(firstNode, linkedNode.list().firstNode());
-      }
+      LinkedNode<Item> node = linkedList.node(index);
+      LinkedNode<Item> oldFirstNode = linkedList.firstNode();
+      node.insertPrevious(item);
+      LinkedNode<Item> newFirstNode = linkedList.firstNode();
+      LinkedNode<Item> newPreviousNode = node.previous();
+      assertSame(
+        node == oldFirstNode ? newPreviousNode : oldFirstNode,
+        newFirstNode);
     }
 
-    private static <Item> void doesNotChangeLastNode(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeLastNode(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      LinkedNode<Item> lastNode = linkedNode.list().lastNode();
-      linkedNode.insertPrevious(previous);
-      assertSame(lastNode, linkedNode.list().lastNode());
+      LinkedNode<Item> oldLastNode = linkedList.lastNode();
+      linkedList.node(index).insertPrevious(item);
+      LinkedNode<Item> newLastNode = linkedList.lastNode();
+      assertSame(oldLastNode, newLastNode);
     }
 
-    private static <Item> void doesNotChangeOtherItems(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      @SuppressWarnings("unchecked")
-      Item[] items = (Item[]) new Object[linkedNode.list().size()];
-      {
-        int i = 0;
-        for (Item item : linkedNode.list())
-        {
-          items[i++] = item;
-        }
-      }
-      linkedNode.insertPrevious(previous);
-      {
-        LinkedNode<Item> previousNode = linkedNode.previous();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != previousNode)
-          {
-            assertEquals(items[i++], node.item());
-          }
-        }
-      }
+      Item[] oldOtherItems =
+        Source.from(linkedList).array();
+      linkedList.node(index).insertPrevious(item);
+      Item[] newOtherItems =
+        Source.from(linkedList).skipIndex(index).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    private static <Item> void doesNotChangeOtherNodes(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      @SuppressWarnings("unchecked")
-      LinkedNode<Item>[] nodes =
-        (LinkedNode<Item>[]) new LinkedNode[linkedNode.list().size()];
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          nodes[i++] = node;
-        }
-      }
-      linkedNode.insertPrevious(previous);
-      {
-        LinkedNode<Item> previousNode = linkedNode.previous();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != previousNode)
-          {
-            assertSame(nodes[i++], node);
-          }
-        }
-      }
+      LinkedNode<Item>[] oldOtherNodes =
+        Source.from(linkedList.nodes())
+          .array(LinkedNode.class);
+      linkedList.node(index).insertPrevious(item);
+      LinkedNode<Item>[] newOtherNodes =
+        Source.from(linkedList.nodes())
+          .skipIndex(index)
+          .array(LinkedNode.class);
+      assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
-    private static <Item> void incrementsSize(
-      LinkedNode<Item> linkedNode,
-      Item previous)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void incrementsSize(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      int size = linkedNode.list().size();
-      linkedNode.insertPrevious(previous);
-      assertEquals(size + 1, linkedNode.list().size());
+      int oldSize = linkedList.size();
+      linkedList.node(index).insertPrevious(item);
+      int newSize = linkedList.size();
+      assertEquals(oldSize + 1, newSize);
     }
 
-    public static <Item> void insertsAsPrevious(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      InsertPrevious.insertsAsPrevious(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
+      BiFunction<Source<Source<?>>, Source<?>, Source<Arguments>> forType =
+        (sources, items) ->
+          sources.flatReplace((source) ->
+              source.validIndices().flatReplace((index) ->
+                items.replace((item) -> new Object[]{
+                  ClassUtils.construct(linkedListClass, source),
+                  index,
+                  item})))
+            .quadratic()
+            .limit()
+            .replace((arguments) -> argumentSet(
+              TestNames.format(
+                TestNames.constructorFor(linkedListClass, arguments[0]),
+                TestNames.method("node", arguments[1]),
+                TestNames.method("insertPrevious", arguments[2])),
+              arguments));
+      return Source.chain(
+        forType.apply(SourceData.Strings.NON_EMPTY.cast(), StringData.ALL),
+        forType.apply(SourceData.Ints.NON_EMPTY.cast(), IntData.ALL));
     }
-
-    public static <Item> void changesFirstNodeOnlyIfShould(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
-    {
-      InsertPrevious.changesFirstNodeOnlyIfShould(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
-    }
-
-    public static <Item> void doesNotChangeLastNode(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
-    {
-      InsertPrevious.doesNotChangeLastNode(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
-    }
-
-    public static <Item> void doesNotChangeOtherItems(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
-    {
-      InsertPrevious.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
-    }
-
-    public static <Item> void doesNotChangeOtherNodes(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
-    {
-      InsertPrevious.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
-    }
-
-    public static <Item> void incrementsSize(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item previous)
-    {
-      InsertPrevious.incrementsSize(
-        nonEmptyLinkedList.node(validIndex),
-        previous);
-    }
+    //</editor-fold>
   }
 
-  public static class InsertNext
+  @DisplayName("insertNext")
+  @DefaultDisplayNameGeneration
+  interface InsertNext
   {
-    private static <Item> void insertsAsNext(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void insertsAsNext(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      linkedNode.insertNext(next);
-      assertEquals(next, linkedNode.next().item());
+      LinkedNode<Item> node = linkedList.node(index);
+      node.insertNext(item);
+      assertEquals(item, node.next().item());
     }
 
-    private static <Item> void doesNotChangeFirstNode(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeFirstNode(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      LinkedNode<Item> firstNode = linkedNode.list().firstNode();
-      linkedNode.insertNext(next);
-      assertSame(firstNode, linkedNode.list().firstNode());
+      LinkedNode<Item> oldFirstNode = linkedList.firstNode();
+      linkedList.node(index).insertNext(item);
+      LinkedNode<Item> newFirstNode = linkedList.firstNode();
+      assertSame(oldFirstNode, newFirstNode);
     }
 
-    private static <Item> void changesLastNodeOnlyIfShould(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void changesLastNodeOnlyIfShould(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      LinkedNode<Item> lastNode = linkedNode.list().lastNode();
-      linkedNode.insertNext(next);
-      if (linkedNode == lastNode)
-      {
-        assertSame(linkedNode.next(), linkedNode.list().lastNode());
-      }
-      else
-      {
-        assertSame(lastNode, linkedNode.list().lastNode());
-      }
+      LinkedNode<Item> node = linkedList.node(index);
+      LinkedNode<Item> oldLastNode = linkedList.lastNode();
+      node.insertNext(item);
+      LinkedNode<Item> newLastNode = linkedList.lastNode();
+      LinkedNode<Item> newNextNode = node.next();
+      assertSame(
+        node == oldLastNode ? newNextNode : oldLastNode,
+        newLastNode);
     }
 
-    private static <Item> void doesNotChangeOtherItems(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      @SuppressWarnings("unchecked")
-      Item[] items = (Item[]) new Object[linkedNode.list().size()];
-      {
-        int i = 0;
-        for (Item item : linkedNode.list())
-        {
-          items[i++] = item;
-        }
-      }
-      linkedNode.insertNext(next);
-      {
-        LinkedNode<Item> nextNode = linkedNode.next();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != nextNode)
-          {
-            assertEquals(items[i++], node.item());
-          }
-        }
-      }
+      Item[] oldOtherItems =
+        Source.from(linkedList).array();
+      linkedList.node(index).insertNext(item);
+      Item[] newOtherItems =
+        Source.from(linkedList).skipIndex(index + 1).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    private static <Item> void doesNotChangeOtherNodes(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      @SuppressWarnings("unchecked")
-      LinkedNode<Item>[] nodes =
-        (LinkedNode<Item>[]) new LinkedNode[linkedNode.list().size()];
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          nodes[i++] = node;
-        }
-      }
-      linkedNode.insertNext(next);
-      {
-        LinkedNode<Item> nextNode = linkedNode.next();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != nextNode)
-          {
-            assertSame(nodes[i++], node);
-          }
-        }
-      }
+      LinkedNode<Item>[] oldOtherNodes =
+        Source.from(linkedList.nodes())
+          .array(LinkedNode.class);
+      linkedList.node(index).insertNext(item);
+      LinkedNode<Item>[] newOtherNodes =
+        Source.from(linkedList.nodes())
+          .skipIndex(index + 1)
+          .array(LinkedNode.class);
+      assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
-    private static <Item> void incrementsSize(
-      LinkedNode<Item> linkedNode,
-      Item next)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void incrementsSize(
+      LinkedList<Item> linkedList,
+      int index,
+      Item item)
     {
-      int size = linkedNode.list().size();
-      linkedNode.insertNext(next);
-      assertEquals(size + 1, linkedNode.list().size());
+      int oldSize = linkedList.size();
+      linkedList.node(index).insertNext(item);
+      int newSize = linkedList.size();
+      assertEquals(oldSize + 1, newSize);
     }
 
-    public static <Item> void insertsAsNext(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      InsertNext.insertsAsNext(
-        nonEmptyLinkedList.node(validIndex),
-        next);
+      BiFunction<Source<Source<?>>, Source<?>, Source<Arguments>> forType =
+        (sources, items) ->
+          sources.flatReplace((source) ->
+              source.validIndices().flatReplace((index) ->
+                items.replace((item) -> new Object[]{
+                  ClassUtils.construct(linkedListClass, source),
+                  index,
+                  item})))
+            .quadratic()
+            .limit()
+            .replace((arguments) -> argumentSet(
+              TestNames.format(
+                TestNames.constructorFor(linkedListClass, arguments[0]),
+                TestNames.method("node", arguments[1]),
+                TestNames.method("insertNext", arguments[2])),
+              arguments));
+      return Source.chain(
+        forType.apply(SourceData.Strings.NON_EMPTY.cast(), StringData.ALL),
+        forType.apply(SourceData.Ints.NON_EMPTY.cast(), IntData.ALL));
     }
-
-    public static <Item> void doesNotChangeFirstNode(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
-    {
-      InsertNext.doesNotChangeFirstNode(
-        nonEmptyLinkedList.node(validIndex),
-        next);
-    }
-
-    public static <Item> void changesLastNodeOnlyIfShould(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
-    {
-      InsertNext.changesLastNodeOnlyIfShould(
-        nonEmptyLinkedList.node(validIndex),
-        next);
-    }
-
-    public static <Item> void doesNotChangeOtherItems(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
-    {
-      InsertNext.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex),
-        next);
-    }
-
-    public static <Item> void doesNotChangeOtherNodes(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
-    {
-      InsertNext.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex),
-        next);
-    }
-
-    public static <Item> void incrementsSize(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex,
-      Item next)
-    {
-      InsertNext.incrementsSize(
-        nonEmptyLinkedList.node(validIndex),
-        next);
-    }
+    //</editor-fold>
   }
 
-  public static class Remove
+  @DisplayName("remove")
+  @DefaultDisplayNameGeneration
+  interface Remove
   {
-    private static <Item> void returnsItem(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void returnsItem(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      Item next = linkedNode.item();
-      assertEquals(next, linkedNode.remove());
+      LinkedNode<Item> node = linkedList.node(index);
+      Item next = node.item();
+      assertEquals(next, node.remove());
     }
 
-    private static <Item> void changesFirstNodeOnlyIfShould(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void changesFirstNodeOnlyIfShould(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      LinkedNode<Item> firstNode = linkedNode.list().firstNode();
-      LinkedNode<Item> nextNode = linkedNode.next();
-      linkedNode.remove();
-      if (linkedNode == firstNode)
-      {
-        assertSame(
-          nextNode,
-          linkedNode.list().firstNode());
-      }
-      else
-      {
-        assertSame(
-          firstNode,
-          linkedNode.list().firstNode());
-      }
+      LinkedNode<Item> node = linkedList.node(index);
+      LinkedNode<Item> oldNextNode = node.next();
+      LinkedNode<Item> oldFirstNode = linkedList.firstNode();
+      node.remove();
+      LinkedNode<Item> newFirstNode = linkedList.firstNode();
+      assertSame(
+        node == oldFirstNode ? oldNextNode : oldFirstNode,
+        newFirstNode);
     }
 
-    private static <Item> void changesLastNodeOnlyIfShould(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void changesLastNodeOnlyIfShould(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      LinkedNode<Item> lastNode = linkedNode.list().lastNode();
-      LinkedNode<Item> previousNode = linkedNode.previous();
-      linkedNode.remove();
-      if (linkedNode == lastNode)
-      {
-        assertSame(
-          previousNode,
-          linkedNode.list().lastNode());
-      }
-      else
-      {
-        assertSame(
-          lastNode,
-          linkedNode.list().lastNode());
-      }
+      LinkedNode<Item> node = linkedList.node(index);
+      LinkedNode<Item> oldPreviousNode = node.previous();
+      LinkedNode<Item> oldLastNode = linkedList.lastNode();
+      node.remove();
+      LinkedNode<Item> newLastNode = linkedList.lastNode();
+      assertSame(
+        node == oldLastNode ? oldPreviousNode : oldLastNode,
+        newLastNode);
     }
 
-    private static <Item> void doesNotChangeOtherItems(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      @SuppressWarnings("unchecked")
-      Item[] items = (Item[]) new Object[linkedNode.list().size() - 1];
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != linkedNode)
-          {
-            items[i++] = node.item();
-          }
-        }
-      }
-      linkedNode.remove();
-      {
-        int i = 0;
-        for (Item item : linkedNode.list())
-        {
-          assertEquals(items[i++], item);
-        }
-      }
+      Item[] oldOtherItems =
+        Source.from(linkedList).skipIndex(index).array();
+      linkedList.node(index).remove();
+      Item[] newOtherItems =
+        Source.from(linkedList).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    private static <Item> void doesNotChangeOtherNodes(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      @SuppressWarnings("unchecked")
-      LinkedNode<Item>[] nodes =
-        (LinkedNode<Item>[]) new LinkedNode[linkedNode.list().size()];
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != linkedNode)
-          {
-            nodes[i++] = node;
-          }
-        }
-      }
-      linkedNode.remove();
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          assertSame(nodes[i++], node);
-        }
-      }
+      LinkedNode<Item>[] oldOtherNodes =
+        Source.from(linkedList.nodes())
+          .skipIndex(index)
+          .array(LinkedNode.class);
+      linkedList.node(index).remove();
+      LinkedNode<Item>[] newOtherNodes =
+        Source.from(linkedList.nodes())
+          .array(LinkedNode.class);
+      assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
-    private static <Item> void decrementsSize(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void decrementsSize(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      int size = linkedNode.list().size();
-      linkedNode.remove();
-      assertEquals(size - 1, linkedNode.list().size());
+      int oldSize = linkedList.size();
+      linkedList.node(index).remove();
+      int newSize = linkedList.size();
+      assertEquals(oldSize - 1, newSize);
     }
 
-    public static <Item> void returnsItem(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      Remove.returnsItem(
-        nonEmptyLinkedList.node(validIndex));
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              source.validIndices().replace((index) -> new Object[]{
+                ClassUtils.construct(linkedListClass, source),
+                index}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(linkedListClass, arguments[0]),
+            TestNames.method("node", arguments[1]),
+            TestNames.method("remove")),
+          arguments));
     }
-
-    public static <Item> void changesFirstNodeOnlyIfShould(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      Remove.changesFirstNodeOnlyIfShould(
-        nonEmptyLinkedList.node(validIndex));
-    }
-
-    public static <Item> void changesLastNodeOnlyIfShould(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      Remove.changesLastNodeOnlyIfShould(
-        nonEmptyLinkedList.node(validIndex));
-    }
-
-    public static <Item> void doesNotChangeOtherItems(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      Remove.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex));
-    }
-
-    public static <Item> void doesNotChangeOtherNodes(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      Remove.doesNotChangeOtherNodes(
-        nonEmptyLinkedList.node(validIndex));
-    }
-
-    public static <Item> void decrementsSize(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      Remove.decrementsSize(
-        nonEmptyLinkedList.node(validIndex));
-    }
+    //</editor-fold>
   }
 
-  public static class RemoveNext
+  @DisplayName("removeNext")
+  @DefaultDisplayNameGeneration
+  interface RemoveNext
   {
-    private static <Item> void returnsNext(
-      LinkedNode<Item> linkedNodeWithNext)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void returnsNext(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      Item next = linkedNodeWithNext.next().item();
-      assertEquals(next, linkedNodeWithNext.removeNext());
+      LinkedNode<Item> node = linkedList.node(index);
+      Item nextItem = node.next().item();
+      assertEquals(nextItem, node.removeNext());
     }
 
-    private static <Item> void doesNotChangeFirstNode(
-      LinkedNode<Item> linkedNodeWithNext)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeFirstNode(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      LinkedNode<Item> firstNode = linkedNodeWithNext.list().firstNode();
-      linkedNodeWithNext.removeNext();
-      assertSame(firstNode, linkedNodeWithNext.list().firstNode());
+      LinkedNode<Item> oldFirstNode = linkedList.firstNode();
+      linkedList.node(index).removeNext();
+      LinkedNode<Item> newFirstNode = linkedList.firstNode();
+      assertSame(oldFirstNode, newFirstNode);
     }
 
-    private static <Item> void changesLastNodeOnlyIfShould(
-      LinkedNode<Item> linkedNodeWithNext)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void changesLastNodeOnlyIfShould(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      LinkedNode<Item> lastNode = linkedNodeWithNext.list().lastNode();
-      LinkedNode<Item> nextNode = linkedNodeWithNext.next();
-      linkedNodeWithNext.removeNext();
-      if (nextNode == lastNode)
-      {
-        assertSame(
-          linkedNodeWithNext,
-          linkedNodeWithNext.list().lastNode());
-      }
-      else
-      {
-        assertSame(
-          lastNode,
-          linkedNodeWithNext.list().lastNode());
-      }
+      LinkedNode<Item> oldLastNode = linkedList.lastNode();
+      LinkedNode<Item> node = linkedList.node(index);
+      LinkedNode<Item> nextNode = node.next();
+      node.removeNext();
+      LinkedNode<Item> newLastNode = linkedList.lastNode();
+      assertSame(
+        nextNode == oldLastNode ? node : oldLastNode,
+        newLastNode);
     }
 
-    private static <Item> void doesNotChangeOtherItems(
-      LinkedNode<Item> linkedNodeWithNext)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherItems(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      @SuppressWarnings("unchecked")
-      Item[] items = (Item[]) new Object[linkedNodeWithNext.list().size() - 1];
-      {
-        LinkedNode<Item> nextNode = linkedNodeWithNext.next();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNodeWithNext.list().nodes())
-        {
-          if (node != nextNode)
-          {
-            items[i++] = node.item();
-          }
-        }
-      }
-      linkedNodeWithNext.removeNext();
-      {
-        int i = 0;
-        for (Item item : linkedNodeWithNext.list())
-        {
-          assertEquals(items[i++], item);
-        }
-      }
+      Item[] oldOtherItems =
+        Source.from(linkedList).skipIndex(index + 1).array();
+      linkedList.node(index).removeNext();
+      Item[] newOtherItems =
+        Source.from(linkedList).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    private static <Item> void doesNotChangeOtherNodes(
-      LinkedNode<Item> linkedNode)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOtherNodes(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      @SuppressWarnings("unchecked")
-      LinkedNode<Item>[] nodes =
-        (LinkedNode<Item>[]) new LinkedNode[linkedNode.list().size()];
-      {
-        LinkedNode<Item> nextNode = linkedNode.next();
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          if (node != nextNode)
-          {
-            nodes[i++] = node;
-          }
-        }
-      }
-      linkedNode.removeNext();
-      {
-        int i = 0;
-        for (LinkedNode<Item> node : linkedNode.list().nodes())
-        {
-          assertSame(nodes[i++], node);
-        }
-      }
+      LinkedNode<Item>[] oldOtherNodes =
+        Source.from(linkedList.nodes())
+          .skipIndex(index + 1)
+          .array(LinkedNode.class);
+      linkedList.node(index).removeNext();
+      LinkedNode<Item>[] newOtherNodes =
+        Source.from(linkedList.nodes())
+          .array(LinkedNode.class);
+      assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
-    private static <Item> void decrementsSize(
-      LinkedNode<Item> linkedNodeWithNext)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void decrementsSize(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      int size = linkedNodeWithNext.list().size();
-      linkedNodeWithNext.removeNext();
-      assertEquals(size - 1, linkedNodeWithNext.list().size());
+      int oldSize = linkedList.size();
+      linkedList.node(index).removeNext();
+      int newSize = linkedList.size();
+      assertEquals(oldSize - 1, newSize);
     }
 
-    public static class OnFirst
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      public static <Item> void returnsNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.returnsNext(
-          multiItemLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeFirstNode(
-          multiItemLinkedList.firstNode());
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.changesLastNodeOnlyIfShould(
-          multiItemLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherItems(
-          multiItemLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherNodes(
-          multiItemLinkedList.firstNode());
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.decrementsSize(
-          multiItemLinkedList.firstNode());
-      }
+      return Source.from(
+          SourceData.Strings.MULTI_ITEM,
+          SourceData.Ints.MULTI_ITEM)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              source.validNonLastIndices().replace((index) -> new Object[]{
+                ClassUtils.construct(linkedListClass, source),
+                index}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(linkedListClass, arguments[0]),
+            TestNames.method("node", arguments[1]),
+            TestNames.method("removeNext")),
+          arguments));
     }
-
-    public static class InFirstHalf
-    {
-      public static <Item> void returnsNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.returnsNext(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeFirstNode(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.changesLastNodeOnlyIfShould(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherNodes(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherNodes(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.decrementsSize(
-          multiItemLinkedList.node(multiItemLinkedList.size() / 4));
-      }
-    }
-
-    public static class InMiddle
-    {
-      private static <Item> LinkedNode<Item> linkedNodeWithNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        int size = multiItemLinkedList.size();
-        return multiItemLinkedList.node((size / 2) % (size - 1));
-      }
-
-      public static <Item> void returnsNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.returnsNext(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeFirstNode(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.changesLastNodeOnlyIfShould(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherItems(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherNodes(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.decrementsSize(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-    }
-
-    public static class InSecondHalf
-    {
-      private static <Item> LinkedNode<Item> linkedNodeWithNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        int size = multiItemLinkedList.size();
-        return multiItemLinkedList.node((3 * size / 4) % (size - 1));
-      }
-
-      public static <Item> void returnsNext(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.returnsNext(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeFirstNode(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void changesLastNodeOnlyIfShould(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.changesLastNodeOnlyIfShould(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeOtherItems(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherItems(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void doesNotChangeOtherNodes(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.doesNotChangeOtherNodes(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-
-      public static <Item> void decrementsSize(
-        LinkedList<Item> multiItemLinkedList)
-      {
-        RemoveNext.decrementsSize(
-          linkedNodeWithNext(multiItemLinkedList));
-      }
-    }
-
-    public static class OnLast
-    {
-      public static <Item> void throws_(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        assertThrows(
-          NoSuchElementException.class,
-          () -> nonEmptyLinkedList.lastNode().removeNext());
-      }
-
-      public static <Item> void doesNotChangeFirstNode(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        LinkedNode<Item> firstNode = nonEmptyLinkedList.firstNode();
-        try
-        {
-          nonEmptyLinkedList.lastNode().removeNext();
-        }
-        catch (NoSuchElementException ignored)
-        {
-        }
-        assertSame(firstNode, nonEmptyLinkedList.firstNode());
-      }
-
-      public static <Item> void doesNotChangeLastNode(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        LinkedNode<Item> lastNode = nonEmptyLinkedList.lastNode();
-        try
-        {
-          lastNode.removeNext();
-        }
-        catch (NoSuchElementException ignored)
-        {
-        }
-        assertSame(lastNode, nonEmptyLinkedList.lastNode());
-      }
-
-      public static <Item> void doesNotChangeItems(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        @SuppressWarnings("unchecked")
-        Item[] items = (Item[]) new Object[nonEmptyLinkedList.size()];
-        {
-          int i = 0;
-          for (Item item : nonEmptyLinkedList)
-          {
-            items[i++] = item;
-          }
-        }
-        try
-        {
-          nonEmptyLinkedList.lastNode().removeNext();
-        }
-        catch (NoSuchElementException ignored)
-        {
-        }
-        {
-          int i = 0;
-          for (Item item : nonEmptyLinkedList)
-          {
-            assertSame(items[i++], item);
-          }
-        }
-      }
-
-      public static <Item> void doesNotChangeNodes(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        @SuppressWarnings("unchecked")
-        LinkedNode<Item>[] nodes =
-          (LinkedNode<Item>[]) new LinkedNode[nonEmptyLinkedList.size()];
-        {
-          int i = 0;
-          for (LinkedNode<Item> node : nonEmptyLinkedList.nodes())
-          {
-            nodes[i++] = node;
-          }
-        }
-        try
-        {
-          nonEmptyLinkedList.lastNode().removeNext();
-        }
-        catch (NoSuchElementException ignored)
-        {
-        }
-        {
-          int i = 0;
-          for (LinkedNode<Item> node : nonEmptyLinkedList.nodes())
-          {
-            assertSame(nodes[i++], node);
-          }
-        }
-      }
-
-      public static <Item> void doesNotChangeSize(
-        LinkedList<Item> nonEmptyLinkedList)
-      {
-        int size = nonEmptyLinkedList.size();
-        try
-        {
-          nonEmptyLinkedList.lastNode().removeNext();
-        }
-        catch (NoSuchElementException ignored)
-        {
-        }
-        assertEquals(size, nonEmptyLinkedList.size());
-      }
-    }
+    //</editor-fold>
   }
 }

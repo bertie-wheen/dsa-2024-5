@@ -90,8 +90,9 @@ public class To
 
   public static String string(String string, String indent)
   {
-    return "\"" + string.replaceAll("\"", Matcher.quoteReplacement("\\\""))
-      .replaceAll("\n", Matcher.quoteReplacement("\\n")) + "\"";
+    return string == null ? "null" :
+      "\"" + string.replaceAll("\"", Matcher.quoteReplacement("\\\""))
+        .replaceAll("\n", Matcher.quoteReplacement("\\n")) + "\"";
   }
 
   public static String string(Object[] array)
@@ -104,7 +105,7 @@ public class To
     return To.typedString(
       array,
       To.untypedString(
-        Iterators.iterable(array),
+        Arrays.asList(array),
         indent));
   }
 
@@ -354,7 +355,23 @@ public class To
     }
     catch (NoSuchFieldException | IllegalAccessException e)
     {
-      throw new RuntimeException("ERROR: Please let the module staff know!", e);
+      throw new ImpossibleException(e);
+    }
+  }
+
+  public static class PassthroughString
+  {
+    private String string;
+
+    public PassthroughString(String string)
+    {
+      this.string = string;
+    }
+
+    @Override
+    public String toString()
+    {
+      return this.string;
     }
   }
 }

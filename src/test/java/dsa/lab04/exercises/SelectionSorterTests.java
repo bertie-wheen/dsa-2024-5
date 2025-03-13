@@ -1,26 +1,22 @@
 package dsa.lab04.exercises;
 
 import dsa.lab04.base.SorterTests;
+import dsa.lib.ClassUtils;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.FieldSource;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.extension.ParameterResolver;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 @DisplayName("SelectionSorter")
 public class SelectionSorterTests
 {
-  @ParameterizedTest
-  @DisplayName("sorts in natural order")
-  @FieldSource("dsa.lib.examples.arrays.Comparables#ALL")
-  <Item extends Comparable<Item>> void sortsInNaturalOrder(Item[] items)
-  {
-    SorterTests.sortsInNaturalOrder(new SelectionSorter(), items);
-  }
+  @RegisterExtension
+  static final ParameterResolver classResolver =
+    ClassUtils.resolver(SelectionSorter.class);
 
-  @ParameterizedTest
-  @DisplayName("sorts in reverse order")
-  @FieldSource("dsa.lib.examples.arrays.Comparables#ALL")
-  <Item extends Comparable<Item>> void sortsInReverseOrder(Item[] items)
+  @Nested
+  public class Sort
+    implements SorterTests.Sort
   {
-    SorterTests.sortsInReverseOrder(new SelectionSorter(), items);
   }
 }

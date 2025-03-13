@@ -1,15 +1,29 @@
 package dsa.lab03.base;
 
-import dsa.lib.Iterators;
+import dsa.lib.*;
+import dsa.lib.IntData;
+import dsa.lib.SourceData;
+import dsa.lib.StringData;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
-public class StackTests
+public interface StackTests
 {
-  public static class Push
+  @DisplayName("push")
+  @DefaultDisplayNameGeneration
+  interface Push
   {
-    public static <Item> void pushesAsTop(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void pushesAsTop(
       Stack<Item> stack,
       Item item)
     {
@@ -17,83 +31,185 @@ public class StackTests
       assertEquals(item, stack.top());
     }
 
-    public static <Item> void doesNotChangeOthers(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOthers(
       Stack<Item> stack,
       Item item)
     {
-      Item[] others = Iterators.toArray(stack);
+      Item[] oldOtherItems = Source.from(stack).array();
       stack.push(item);
-      assertArrayEquals(
-        others,
-        Iterators.toArray(Iterators.skipIndex(0, stack)));
+      Item[] newOtherItems = Source.from(stack).skipFirst().array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    public static <Item> void incrementsSize(
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void incrementsSize(
       Stack<Item> stack,
       Item item)
+    {
+      int oldSize = stack.size();
+      stack.push(item);
+      int newSize = stack.size();
+      assertEquals(oldSize + 1, newSize);
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> stackClass)
+    {
+      BiFunction<Source<Source<?>>, Source<?>, Source<Arguments>> forType =
+        (sources, items) ->
+          sources.flatReplace((source) ->
+              source.validIndices().flatReplace((index) ->
+                items.replace((item) -> new Object[]{
+                  ClassUtils.construct(stackClass, source),
+                  item})))
+            .quadratic()
+            .limit()
+            .replace((arguments) -> argumentSet(
+              TestNames.format(
+                TestNames.constructorFor(stackClass, arguments[0]),
+                TestNames.method("push", arguments[1])),
+              arguments));
+      return Source.chain(
+        forType.apply(SourceData.Strings.ALL.cast(), StringData.ALL),
+        forType.apply(SourceData.Ints.ALL.cast(), IntData.ALL));
+    }
+    //</editor-fold>
+  }
+
+  @DisplayName("top")
+  @DefaultDisplayNameGeneration
+  interface Top
+  {
+    @ParameterizedTest
+    @MethodSource
+    default <Item> void returnsTop(
+      Stack<Item> stack,
+      Item topItem)
+    {
+      assertEquals(topItem, stack.top());
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="returnsTop arguments">
+    static Source<Arguments> returnsTop(Class<?> stackClass)
+    {
+      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.replace((source) -> new Object[]{
+              ClassUtils.construct(stackClass, source),
+              source.getAt(0)})
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(stackClass, arguments[0]),
+            TestNames.method("top")),
+          arguments));
+    }
+    //</editor-fold>
+
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeTop(
+      Stack<Item> stack)
+    {
+      Item topItem = stack.top();
+      assertEquals(topItem, stack.top());
+    }
+
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeItems(
+      Stack<Item> stack)
+    {
+      Item[] oldItems = Source.from(stack).array();
+      stack.top();
+      Item[] newItems = Source.from(stack).array();
+      assertArrayEquals(oldItems, newItems);
+    }
+
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeSize(
+      Stack<Item> stack)
     {
       int size = stack.size();
-      stack.push(item);
-      assertEquals(size + 1, stack.size());
+      stack.top();
+      assertEquals(size, stack.size());
     }
+
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> stackClass)
+    {
+      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.replace((source) -> new Object[]{
+              ClassUtils.construct(stackClass, source)})
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(stackClass, arguments[0]),
+            TestNames.method("top")),
+          arguments));
+    }
+    //</editor-fold>
   }
 
-  public static class Top
+  @DisplayName("pop")
+  @DefaultDisplayNameGeneration
+  interface Pop
   {
-    public static <Item> void returnsTop(
-      Stack<Item> nonEmptyStack,
-      Item top)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void returnsTop(
+      Stack<Item> stack)
     {
-      assertEquals(top, nonEmptyStack.top());
+      Item topItem = stack.top();
+      assertEquals(topItem, stack.pop());
     }
 
-    public static <Item> void doesNotChangeTop(
-      Stack<Item> nonEmptyStack)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeOthers(
+      Stack<Item> stack)
     {
-      Item top = nonEmptyStack.top();
-      assertEquals(top, nonEmptyStack.top());
+      Item[] oldOtherItems =
+        Source.from(stack).skipFirst().array();
+      stack.pop();
+      Item[] newOtherItems =
+        Source.from(stack).array();
+      assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
-    public static <Item> void doesNotChangeItems(
-      Stack<Item> nonEmptyStack)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void decrementsSize(
+      Stack<Item> stack)
     {
-      Item[] items = Iterators.toArray(nonEmptyStack);
-      nonEmptyStack.top();
-      assertArrayEquals(items, Iterators.toArray(nonEmptyStack));
+      int oldSize = stack.size();
+      stack.pop();
+      int newSize = stack.size();
+      assertEquals(oldSize - 1, newSize);
     }
 
-    public static <Item> void doesNotChangeSize(
-      Stack<Item> nonEmptyStack)
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> stackClass)
     {
-      int size = nonEmptyStack.size();
-      nonEmptyStack.top();
-      assertEquals(size, nonEmptyStack.size());
+      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.replace((source) -> new Object[]{
+              ClassUtils.construct(stackClass, source)})
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(stackClass, arguments[0]),
+            TestNames.method("pop")),
+          arguments));
     }
-  }
-
-  public static class Pop
-  {
-    public static <Item> void returnsTop(
-      Stack<Item> nonEmptyStack,
-      Item top)
-    {
-      assertEquals(top, nonEmptyStack.pop());
-    }
-
-    public static <Item> void doesNotChangeOthers(
-      Stack<Item> nonEmptyStack)
-    {
-      Item[] others = Iterators.toArray(Iterators.skipIndex(0, nonEmptyStack));
-      nonEmptyStack.pop();
-      assertArrayEquals(others, Iterators.toArray(nonEmptyStack));
-    }
-
-    public static <Item> void decrementsSize(
-      Stack<Item> nonEmptyStack)
-    {
-      int size = nonEmptyStack.size();
-      nonEmptyStack.pop();
-      assertEquals(size - 1, nonEmptyStack.size());
-    }
+    //</editor-fold>
   }
 }

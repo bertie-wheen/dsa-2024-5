@@ -1,81 +1,144 @@
 package dsa.lab02.base;
 
-import static dsa.lib.Misc.addSaturating;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import dsa.lib.*;
+import dsa.lib.IntData;
+import dsa.lib.SourceData;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class LinkedListTests
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.argumentSet;
+
+public interface LinkedListTests
 {
-  public static class Node
+  @DisplayName("node")
+  @DefaultDisplayNameGeneration
+  interface Node
   {
-    private static <Item> int indexOf(LinkedNode<Item> node)
+    @ParameterizedTest
+    @MethodSource
+    default <Item> void throwsIfIndexBelowBound(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      int index = 0;
-      for (LinkedNode<Item> n : node.list().nodes())
+      assertThrows(
+        IndexOutOfBoundsException.class,
+        () -> linkedList.node(index));
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
+    static Source<Arguments> throwsIfIndexBelowBound(
+      Class<?> linkedListClass)
+    {
+      return Source.from(SourceData.Strings.ALL, SourceData.Ints.ALL)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              IntData.NEGATIVE.replace((index) -> new Object[]{
+                ClassUtils.construct(linkedListClass, source),
+                index}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(linkedListClass, arguments[0]),
+            TestNames.method("node", arguments[1])),
+          arguments));
+    }
+    //</editor-fold>
+
+    @ParameterizedTest
+    @MethodSource
+    default <Item> void throwsIfIndexAboveBound(
+      LinkedList<Item> linkedList,
+      int index)
+    {
+      assertThrows(
+        IndexOutOfBoundsException.class,
+        () -> linkedList.node(index));
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
+    static Source<Arguments> throwsIfIndexAboveBound(
+      Class<?> linkedListClass)
+    {
+      return Source.from(SourceData.Strings.ALL, SourceData.Ints.ALL)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              IntData.NON_NEGATIVE.replace((offset) -> new Object[]{
+                ClassUtils.construct(linkedListClass, source),
+                MathUtils.addSaturating(source.size(), offset)}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(linkedListClass, arguments[0]),
+            TestNames.method("node", arguments[1])),
+          arguments));
+    }
+    //</editor-fold>
+
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void getsCorrectIndex(
+      LinkedList<Item> linkedList,
+      int index)
+    {
+      LinkedNode<Item> node = linkedList.node(index);
+      int nodeIndex = 0;
+      for (LinkedNode<Item> n : linkedList.nodes())
       {
         if (node == n)
         {
-          return index;
+          break;
         }
-        index++;
+        nodeIndex++;
       }
-      return -1;
+      assertEquals(index, nodeIndex);
     }
 
-    public static class Throws
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeItems(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      public static <Item> void ifIndexBelowBound(
-        LinkedList<Item> linkedList,
-        int negativeIndex)
-      {
-        assertThrows(
-          IndexOutOfBoundsException.class,
-          () -> linkedList.node(negativeIndex));
-      }
-
-      public static <Item> void ifIndexAboveBound(
-        LinkedList<Item> linkedList,
-        int nonNegativeOffset)
-      {
-        int index = addSaturating(linkedList.size(), nonNegativeOffset);
-        assertThrows(
-          IndexOutOfBoundsException.class,
-          () -> linkedList.node(index));
-      }
+      Item[] oldItems = Source.from(linkedList).array();
+      linkedList.node(index);
+      Item[] newItems = Source.from(linkedList).array();
+      assertArrayEquals(oldItems, newItems);
     }
 
-    public static <Item> void getsCorrectIndex(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
+    @ParameterizedTest
+    @DefaultMethodSource
+    default <Item> void doesNotChangeSize(
+      LinkedList<Item> linkedList,
+      int index)
     {
-      assertEquals(validIndex, indexOf(nonEmptyLinkedList.node(validIndex)));
+      int oldSize = linkedList.size();
+      linkedList.node(index);
+      int newSize = linkedList.size();
+      assertEquals(oldSize, newSize);
     }
 
-    public static <Item> void doesNotChangeItems(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
+    //<editor-fold defaultstate="collapsed" desc="arguments">
+    static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      int size = nonEmptyLinkedList.size();
-      @SuppressWarnings("unchecked")
-      Item[] items = (Item[]) new Object[size];
-      for (int i = 0; i < size; i++)
-      {
-        items[i] = nonEmptyLinkedList.get(i);
-      }
-      nonEmptyLinkedList.node(validIndex);
-      for (int i = 0; i < size; i++)
-      {
-        assertEquals(items[i], nonEmptyLinkedList.get(i));
-      }
+      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+        .flatReplace((sources) ->
+          sources.flatReplace((source) ->
+              source.validIndices().replace((index) -> new Object[]{
+                ClassUtils.construct(linkedListClass, source),
+                index}))
+            .quadratic()
+            .limit())
+        .replace((arguments) -> argumentSet(
+          TestNames.format(
+            TestNames.constructorFor(linkedListClass, arguments[0]),
+            TestNames.method("node", arguments[1])),
+          arguments));
     }
-
-    public static <Item> void doesNotChangeSize(
-      LinkedList<Item> nonEmptyLinkedList,
-      int validIndex)
-    {
-      int size = nonEmptyLinkedList.size();
-      nonEmptyLinkedList.node(validIndex);
-      assertEquals(size, nonEmptyLinkedList.size());
-    }
+    //</editor-fold>
   }
 }
