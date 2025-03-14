@@ -3,7 +3,6 @@ package dsa.lab08.exercises;
 import dsa.lab04.base.MapItem;
 import dsa.lab05.solutions.ChainingHashMap;
 import dsa.lab07.solutions.BinarySearchTree;
-import dsa.lib.TODO;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -67,8 +66,7 @@ public class AVLTree<Key extends Comparable<Key>, Value>
     else
     {
       Node<Key, Value> inserted = this.root.insert(item);
-      this.heights.insert(inserted, 0);
-      this.updateAncestors(inserted.parent, true);
+      this.updateAncestors(inserted, true);
     }
   }
 
