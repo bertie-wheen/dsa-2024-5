@@ -65,8 +65,13 @@ public class AVLTree<Key extends Comparable<Key>, Value>
     }
     else
     {
+      int oldSize = this.size();
       Node<Key, Value> inserted = this.root.insert(item);
-      this.updateAncestors(inserted, true);
+      if (this.size() != oldSize)
+      {
+        this.heights.insert(inserted, 0);
+        this.updateAncestors(inserted.parent, true);
+      }
     }
   }
 
