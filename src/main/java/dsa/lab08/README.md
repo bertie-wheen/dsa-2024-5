@@ -1,44 +1,47 @@
 # Data Structures and Algorithms Lab 8
 
+
 In this lab we work only on one data structure: AVL trees.
 
+
 ## Setup
+
 
 What to do at the start of EVERY lab session:
 
 * Open the Software Hub and launch:
-    * Git for Windows
-    * IntelliJ Community Edition
+  * Git for Windows
+  * IntelliJ Community Edition
 * Open PowerShell and run:
-    * If you have never cloned this repository before:
-        * `N:` and `Enter` if using lab computers, otherwise pick a location you
-          like
-        * `git clone https://github.com/bertie-wheen/dsa-2024-5 dsa` and `Enter`
-    * Else:
-        * `cd N:/dsa` then `Enter` if using lab computer, or `cd` to the
-          location
-          where you cloned the repository before
-        * `git pull` then `Enter`
-        * If you get an error "fatal: detected dubious ownership in
-          repository ..." (which you likely will):
-            * copy and paste the line that the terminal suggests you to run,
-              then
-              `Enter`
-            * `git pull` then `Enter`
+  * If you have never cloned this repository before:
+    * `N:` and `Enter` if using lab computers, otherwise pick a location you
+      like
+    * `git clone https://github.com/bertie-wheen/dsa-2024-5 dsa` and `Enter`
+  * Else:
+    * `cd N:/dsa` then `Enter` if using lab computer, or `cd` to the location
+      where you cloned the repository before
+    * `git pull` then `Enter`
+    * If you get an error "fatal: detected dubious ownership in
+      repository ..." (which you likely will):
+      * copy and paste the line that the terminal suggests you to run, then
+        `Enter`
+      * `git pull` then `Enter`
 * Open IntelliJ IDEA and:
-    * Open `N:/dsa` as a project if using lab computers, or the folder where you
-      cloned your repository
-    * In the menu, select `File -> Project Structure` (or press
-      `Ctrl+Alt+Shift+S`)
-    * Select `Project` in the left sidebar (if it isn't already selected)
-    * If there is no SDK:
-        * Click on the dropdown, and select `Download JDK`
-        * Choose `Amazon Corretto` as the vendor, and click `Download`
-        * Click `Apply`, then `OK` to close the project structure dialog
+  * Open `N:/dsa` as a project if using lab computers, or the folder where you
+    cloned your repository
+  * In the menu, select `File -> Project Structure` (or press
+    `Ctrl+Alt+Shift+S`)
+  * Select `Project` in the left sidebar (if it isn't already selected)
+  * If there is no SDK:
+    * Click on the dropdown, and select `Download JDK`
+    * Choose `Amazon Corretto` as the vendor, and click `Download`
+    * Click `Apply`, then `OK` to close the project structure dialog
 
 Open the `src\main\java\dsa\lab08` folder.
 
+
 ## Introduction
+
 
 Also in this lab there is only one class file for you to examine and work on:
 `AVLTree.java`, featuring the `AVLTree<Key, Value>` class, which extends the
@@ -77,27 +80,25 @@ You'll see immediately that the `insert(item)` method is already implemented. It
 works as we discussed in the lectures:
 
 * if the tree is empty,
-    * it creates a new node containing `item` and makes that the root;
-    * it sets the size to 1;
-    * and it adds the newly inserted node -- that is,
-      `this.root` -- in the map `heights` using the `insert(key, value)`
-      method from the `Map<Key, Value>` interface (which you can find in
-      `lab04\base`), which effectively creates a new `MapItem` object whose key
-      is
-      `inserted` and whose value is its height, namely 0;
+  * it creates a new node containing `item` and makes that the root;
+  * it sets the size to 1;
+  * and it adds the newly inserted node -- that is,
+    `this.root` -- in the map `heights` using the `insert(key, value)`
+    method from the `Map<Key, Value>` interface (which you can find in
+    `lab04\base`), which effectively creates a new `MapItem` object whose key is
+    `inserted` and whose value is its height, namely 0;
 * otherwise,
-    * it inserts a new node containing `item` using the `insert(item)` of the
-      `Node<Key, Value>` inner class inherited from
-      `BinarySearchTree<Key, Value>`
-      on `this.root`, which takes care of updating the tree's `size`;
-    * if the size has changed compared to before insertion, then it means we
-      have effectively inserted a new node containing `item` (in other words, we
-      haven't overwritten another already-present node with the same key as
-      `item`'s key), in which case it adds the newly inserted node `inserted` in
-      the map `heights` as the key of a `MapItem` with associated value 0 (as
-      it's necessarily a leaf, see lecture slides for the intuition); and
-      finally it calls the `updateAncestors(node, canStopAfterRebalance)` method
-      with input `inserted.parent` and `True`.
+  * it inserts a new node containing `item` using the `insert(item)` of the
+    `Node<Key, Value>` inner class inherited from `BinarySearchTree<Key, Value>`
+    on `this.root`, which takes care of updating the tree's `size`;
+  * if the size has changed compared to before insertion, then it means we have
+    effectively inserted a new node containing `item` (in other words, we
+    haven't overwritten another already-present node with the same key as
+    `item`'s key), in which case it adds the newly inserted node `inserted` in
+    the map `heights` as the key of a `MapItem` with associated value 0 (as it's
+    necessarily a leaf, see lecture slides for the intuition); and finally it
+    calls the `updateAncestors(node, canStopAfterRebalance)` method with input
+    `inserted.parent` and `True`.
 
 The `remove(key)` method is very similar in spirit, the main difference being
 that in there we call `updateAncestors` with inputs the removed node and
@@ -117,15 +118,35 @@ cached height of this new/removed node, which is correctly 0, and that of its
 sibling, which has not changed since before the insertion or removal operation).
 
 ***REMARK.*** Our implementation, that relies on storing the heights of the
-nodes
-in a hash map, actually has all the Ordered Map methods perform in
+nodes in a hash map, actually has all the Ordered Map methods perform in
 $\mathcal{O}(\log n)$ *expected* time, rather than in worst case scenario. An
 alternative strategy would be to store the heights of a node within the node
 itself, but this would've made both `BinarySearchTree<Key, Value>` and
 `AVLTree<Key, Value>` more complicated, therefore we decided against it for
 pedagogical reasons.
 
+## Testing
+The way we write tests this week might seem a bit impenetrable at the first 
+sight, so in this section, we provide information for you to understand the 
+tests a bit more.
+Feel free to skip it during the first reading and come back when you 
+actually want to start testing. 
+
+If you run the tests without starting the exercises, you might be surprised 
+that you pass almost all the tests – this is because of most of the tests 
+are testing behaviour of binary search methods that we implemented for you. 
+However, once you start doing the exercises, you might fail some of those 
+previously passed tests, so don't be surprised by that.
+
+Also, the tests are unfortunately not independent, so you need to complete 
+both exercises to obtain a feedback that is telling more than just syntax
+errors. This is because the only method that is supposed to call rotations
+is `rebalance(node)`, and `rebalance(node)` cannot work properly without 
+a correct implementation of rotations.  
+
+
 ## Exercise 1: rotations
+
 
 The `updateAncestors(node, canStopAfterRebalance)` method not only recalculates
 the height of `node`, but it also calls `rebalance(node)`, which is for you to
@@ -133,13 +154,11 @@ implement. Before you can do that though, you must work on `rotateC(node)`
 and `rotateA(node)`. This is the main task for you in this lab: you can see the
 pictorial representation of these two methods in the slides (again at the end of
 Lecture 14), and what you need to do is to delete the lines
-
 ```java
 // TODO: Implement AVLTree.rotateC(Node node)
 // NOTE: You will need to do a LOT of link juggling!
 // NOTE: Expect to write approx 10+ lines.
 ```
-
 and translate the picture in the slides in actual code that updates all the
 pointers of the appropriate nodes.
 
@@ -149,20 +168,23 @@ rotation, because their heights might have changed and, after the rotation,
 `node` is now below `left`. Don't delete these two lines of code! Same for
 `rotateA(node)`.
 
-Remember to `Run Lab 8 tests` and to compare your code with the solutions, which
+Remember to `Run Lab 8 
+tests` (be sure that you understand our comments about testing above) 
+and to 
+compare your code with the solutions, which
 you can find in `lab08\solutions`.
+
 
 ## Exercise 2: rebalancing
 
+
 *Now* you're ready to implement `rebalance(node)`. We have discussed this method
 and its pseudocode at the end of Lecture 14. Just delete the lines
-
 ```java
 // TODO: Implement AVLTree.rebalance(Node node)
 // NOTE: There are two cases to consider here!
 ```
-
 and translate the pseudocode in Java code.
 
-Remember to `Run Lab 8 tests` and to compare your code with the solutions, which
+Remember to `Run Lab 8 tests` (be sure that you understand our comments about testing above) and to compare your code with the solutions, which
 you can find in `lab08\solutions`.
