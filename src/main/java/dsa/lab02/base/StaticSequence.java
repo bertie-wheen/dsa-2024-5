@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 public interface StaticSequence<Item>
   extends Container<Item>
 {
+
   /**
    * Get the item at the given index.
    *
@@ -26,6 +27,7 @@ public interface StaticSequence<Item>
    */
   Item get(int index)
     throws IndexOutOfBoundsException;
+
 
   /**
    * Set the item at the given index.
@@ -41,6 +43,7 @@ public interface StaticSequence<Item>
   void set(int index, Item item)
     throws IndexOutOfBoundsException;
 
+
   /**
    * Get the first item.
    *
@@ -51,12 +54,16 @@ public interface StaticSequence<Item>
   default Item first()
     throws NoSuchElementException
   {
+    // NOTE: This is likely about as good as is possible. If a better
+    //       implementation is possible, get(0) should be implemented that way,
+    //       as then both that and this will improve (and it saves overriding).
     if (this.isEmpty())
     {
       throw new NoSuchElementException();
     }
     return this.get(0);
   }
+
 
   /**
    * Get the last item.
@@ -68,12 +75,14 @@ public interface StaticSequence<Item>
   default Item last()
     throws NoSuchElementException
   {
+    // NOTE: Similar comments apply as with first(), but with get(size() - 1).
     if (this.isEmpty())
     {
       throw new NoSuchElementException();
     }
     return this.get(this.size() - 1);
   }
+
 
   /**
    * Set the first item.
@@ -87,12 +96,14 @@ public interface StaticSequence<Item>
   default void setFirst(Item item)
     throws NoSuchElementException
   {
+    // NOTE: Similar comments as with first(), but with set(0, item).
     if (this.isEmpty())
     {
       throw new NoSuchElementException();
     }
     this.set(0, item);
   }
+
 
   /**
    * Set the last item.
@@ -106,12 +117,14 @@ public interface StaticSequence<Item>
   default void setLast(Item item)
     throws NoSuchElementException
   {
+    // NOTE: Similar comments as with last(), setFirst()...
     if (this.isEmpty())
     {
       throw new NoSuchElementException();
     }
     this.set(this.size() - 1, item);
   }
+
 
   /**
    * Swaps the two items at the given indices.
@@ -124,12 +137,15 @@ public interface StaticSequence<Item>
   default void swap(int indexA, int indexB)
     throws IndexOutOfBoundsException
   {
+    // NOTE: Useful for implementing swap-based sorting algorithms in terms of.
+    // NOTE: Unlikely to be improvable by an override.
     Item temp = this.get(indexA);
     this.set(indexA, this.get(indexB));
     this.set(indexB, temp);
   }
 
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   /**
    * Get a forward iterable that yields each item once.
@@ -144,6 +160,7 @@ public interface StaticSequence<Item>
     return () -> new ForwardIterator<>(this);
   }
 
+
   /**
    * Get a reverse iterable that yields each item once.
    * <p>
@@ -156,6 +173,7 @@ public interface StaticSequence<Item>
     return () -> new ReverseIterator<>(this);
   }
 
+
   /**
    * A forward iterator over the items in a sequence.
    *
@@ -164,8 +182,12 @@ public interface StaticSequence<Item>
   class ForwardIterator<Item>
     implements Iterator<Item>
   {
+
     private StaticSequence<Item> sequence;
+
+
     private int index;
+
 
     /**
      * Construct a forward iterator over the items in the given sequence.
@@ -178,11 +200,13 @@ public interface StaticSequence<Item>
       this.index = 0;
     }
 
+
     @Override
     public boolean hasNext()
     {
       return this.index < this.sequence.size();
     }
+
 
     @Override
     public Item next()
@@ -190,6 +214,7 @@ public interface StaticSequence<Item>
     {
       return this.sequence.get(this.index++);
     }
+
   }
 
   /**
@@ -200,8 +225,12 @@ public interface StaticSequence<Item>
   class ReverseIterator<Item>
     implements Iterator<Item>
   {
+
     private StaticSequence<Item> sequence;
+
+
     private int index;
+
 
     /**
      * Construct a reverse iterator over the items in the given sequence.
@@ -214,11 +243,13 @@ public interface StaticSequence<Item>
       this.index = sequence.size() - 1;
     }
 
+
     @Override
     public boolean hasNext()
     {
       return this.index >= 0;
     }
+
 
     @Override
     public Item next()
@@ -226,7 +257,10 @@ public interface StaticSequence<Item>
     {
       return this.sequence.get(this.index--);
     }
+
   }
 
+
   //</editor-fold>
+
 }

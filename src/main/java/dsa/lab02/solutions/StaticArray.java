@@ -18,9 +18,13 @@ import java.util.Arrays;
 public class StaticArray<Item>
   implements DynamicSequence<Item>
 {
+
+  /** The backing array - the Java array this wraps and is implemented using. */
   private Item[] items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty static array.
@@ -30,6 +34,7 @@ public class StaticArray<Item>
   {
     this.items = (Item[]) new Object[0];
   }
+
 
   /**
    * Construct a static array containing the given items.
@@ -44,6 +49,7 @@ public class StaticArray<Item>
       this.insertLast(item);
     }
   }
+
 
   /**
    * Construct a static array containing the given items
@@ -74,6 +80,7 @@ public class StaticArray<Item>
     }
   }
 
+
   /**
    * Construct a static array containing the given items.
    *
@@ -85,27 +92,35 @@ public class StaticArray<Item>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
+    // NOTE: Java arrays already store their size, so we don't have to.
     return this.items.length;
   }
+
 
   @Override
   public Item get(int index)
     throws IndexOutOfBoundsException
   {
+    // NOTE: Java arrays have O(1) random access, so this will be O(1).
     return this.items[index];
   }
+
 
   @Override
   public void set(int index, Item item)
     throws IndexOutOfBoundsException
   {
+    // NOTE: Similar comments to get().
     this.items[index] = item;
   }
+
 
   @Override
   @SuppressWarnings("unchecked")
@@ -116,21 +131,29 @@ public class StaticArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
-    int oldSize = this.size();
-    int newSize = oldSize + 1;
-    Item[] oldArray = this.items;
-    Item[] newArray = (Item[]) new Object[newSize];
+
+    // NOTE: Save a reference to the old backing array.
+    Item[] oldItems = this.items;
+
+    // NOTE: Allocate a new (larger) backing array.
+    this.items = (Item[]) new Object[this.size() + 1];
+
+    // NOTE: Copy the earlier items across.
     for (int i = 0; i < index; i++)
     {
-      newArray[i] = oldArray[i];
+      this.items[i] = oldItems[i];
     }
-    newArray[index] = item;
-    for (int i = index; i < oldSize; i++)
+
+    // NOTE: Insert the new item.
+    this.items[index] = item;
+
+    // NOTE: Copy the later items across.
+    for (int i = index + 1; i < this.size(); i++)
     {
-      newArray[i + 1] = oldArray[i];
+      this.items[i] = oldItems[i - 1];
     }
-    this.items = newArray;
   }
+
 
   @Override
   @SuppressWarnings("unchecked")
@@ -141,19 +164,27 @@ public class StaticArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
-    int oldSize = this.size();
-    int newSize = oldSize - 1;
+
+    // NOTE: Save a reference to the old backing array.
     Item[] oldArray = this.items;
-    Item[] newArray = (Item[]) new Object[newSize];
+
+    // NOTE: Allocate a new (smaller) backing array.
+    this.items = (Item[]) new Object[this.size() - 1];
+
+    // NOTE: Copy the earlier items across.
     for (int i = 0; i < index; i++)
     {
-      newArray[i] = oldArray[i];
+      this.items[i] = oldArray[i];
     }
-    for (int i = index; i < newSize; i++)
+
+    // NOTE: Copy the later items across.
+    for (int i = index; i < this.size(); i++)
     {
-      newArray[i] = oldArray[i + 1];
+      this.items[i] = oldArray[i + 1];
     }
-    this.items = newArray;
+
+    // NOTE: Return the removed item.
     return oldArray[index];
   }
+
 }

@@ -8,12 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("StringArray")
 public class StringArrayTests
 {
+
   @Test
   void sizeOfEmptyStringArrayIsZero()
   {
     StringArray stringArray = new StringArray();
     assertEquals(0, stringArray.size());
   }
+
 
   @Test
   void sizeOfOneItemStringArrayIsOne()
@@ -22,6 +24,7 @@ public class StringArrayTests
     assertEquals(1, stringArray.size());
   }
 
+
   @Test
   void sizeOfTwoItemStringArrayIsTwo()
   {
@@ -29,10 +32,12 @@ public class StringArrayTests
     assertEquals(2, stringArray.size());
   }
 
+
   @Test
   void sizeOfThreeItemStringArrayIsThree()
   {
     StringArray stringArray = new StringArray("foo", "bar", "quux");
     assertEquals(3, stringArray.size());
   }
+
 }

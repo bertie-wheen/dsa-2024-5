@@ -7,7 +7,9 @@ import java.util.stream.Stream;
 public class Source<Item>
   implements Iterable<Item>
 {
+
   private static final int DEFAULT_LIMIT = 100;
+
 
   private Item[] items;
 
@@ -23,15 +25,18 @@ public class Source<Item>
     return new Source<>(ArrayUtils.empty());
   }
 
+
   public static <Item> Source<Item> singleton(Item item)
   {
     return new Source<>(ArrayUtils.singleton(item));
   }
 
+
   public static <Item> Source<Item> repeat(int repetitions, Item item)
   {
     return new Source<>(ArrayUtils.repeat(repetitions, item));
   }
+
 
   @SafeVarargs
   public static <Item> Source<Item> from(Item... items)
@@ -39,27 +44,32 @@ public class Source<Item>
     return new Source<>(ArrayUtils.copy(items));
   }
 
+
   @SuppressWarnings("unchecked")
   public static <Item> Source<Item> from(Collection<Item> items)
   {
     return new Source<>((Item[]) items.toArray());
   }
 
+
   public static <Item> Source<Item> from(Iterable<Item> items)
   {
     return new Source<>(ArrayUtils.from(items));
   }
+
 
   public static <Item> Source<Item> from(Iterator<Item> items)
   {
     return Source.from(() -> items);
   }
 
+
   @SuppressWarnings("unchecked")
   public static <Item> Source<Item> from(Stream<Item> items)
   {
     return new Source<>((Item[]) items.toArray());
   }
+
 
   public static <Item> Source<Item> from(int size, IntFunction<Item> item)
   {
@@ -72,6 +82,7 @@ public class Source<Item>
   {
     return flatten(Source.from(sources));
   }
+
 
   public static <Item> Source<Item> flatten(Source<Source<Item>> sources)
   {
@@ -90,11 +101,13 @@ public class Source<Item>
     return new Source<>(items);
   }
 
+
   @SafeVarargs
   public static Source<Object[]> flatProductEach(Source<Source<?>>... sources)
   {
     return flatten(productEach(sources));
   }
+
 
   public static <Item> Source<Item> getAtEach(
     Source<Source<Item>> sources,
@@ -108,6 +121,7 @@ public class Source<Item>
       sources.items,
       (source, index) -> source.getAt(indices.items[index])));
   }
+
 
   @SafeVarargs
   @SuppressWarnings("unchecked")
@@ -133,6 +147,7 @@ public class Source<Item>
     }
     return new Source<>(products);
   }
+
 
   @SafeVarargs
   @SuppressWarnings("unchecked")
@@ -163,12 +178,13 @@ public class Source<Item>
       {
         Source<? extends Item> source = sources[s];
         int sourceSize = source.size();
-        products[p][s] = source.getAt((p*p / d) % sourceSize);
+        products[p][s] = source.getAt((p * p / d) % sourceSize);
         d *= sourceSize;
       }
     }
     return new Source<>(products);
   }
+
 
   @SafeVarargs
   @SuppressWarnings("unchecked")
@@ -178,12 +194,14 @@ public class Source<Item>
     return productQuadraticLimit(DEFAULT_LIMIT, sources);
   }
 
+
   public static <Item> Source<Source<Item>> productSource(
     Source<Source<Item>> sources)
   {
     return product(sources.array(Source.class))
       .replace((items) -> new Source<>(items));
   }
+
 
   public static <Item> Source<Source<Item>> productSourceQuadraticLimit(
     int limit,
@@ -193,12 +211,14 @@ public class Source<Item>
       .replace((items) -> new Source<>(items));
   }
 
+
   public static <Item> Source<Source<Item>> productSourceQuadraticLimit(
     Source<Source<Item>> sources)
   {
     return productQuadraticLimit(sources.array(Source.class))
       .replace((items) -> new Source<>(items));
   }
+
 
   @SafeVarargs
   @SuppressWarnings("unchecked")
@@ -231,6 +251,49 @@ public class Source<Item>
       });
   }
 
+
+  public static <Item> Source<Source<Item>> powerSet(
+    int limit,
+    Source<Item> source,
+    int minSize,
+    int maxSize)
+  {
+    List<Source<Source<Item>>> sources = new ArrayList<>();
+    for (int size = minSize; size <= maxSize; size++)
+    {
+      sources.add(
+        productSourceQuadraticLimit(limit, Source.from(size, source::cycle)));
+    }
+    return Source.flatten(Source.from(sources));
+  }
+
+
+  public static <Item> Source<Source<Item>> powerSet(
+    int limit,
+    Source<Item> source,
+    int maxSize)
+  {
+    return powerSet(limit, source, 0, maxSize);
+  }
+
+
+  public static <Item> Source<Source<Item>> powerSet(
+    Source<Item> source,
+    int minSize,
+    int maxSize)
+  {
+    return powerSet(DEFAULT_LIMIT, source, minSize, maxSize);
+  }
+
+
+  public static <Item> Source<Source<Item>> powerSet(
+    Source<Item> source,
+    int maxSize)
+  {
+    return powerSet(source, 0, maxSize);
+  }
+
+
   public static <Item> Source<Source<Item>> repeatCycled(
     Source<Source<Item>> sources,
     int repetitions)
@@ -238,11 +301,13 @@ public class Source<Item>
     return sources.repeat(repetitions).replace(Source::cycle);
   }
 
+
   public static <Item> Source<Source<Item>> singletonEach(
     Source<Item> sources)
   {
     return sources.replace(Source::singleton);
   }
+
 
   public static <Item> Source<Source<Item>> sortedEach(
     Source<Source<Item>> sources)
@@ -250,12 +315,14 @@ public class Source<Item>
     return sources.replace((source) -> source.sorted());
   }
 
+
   public static <Item> Source<Source<Item>> sortedEach(
     Source<Source<Item>> sources,
     Comparator<Item> comparator)
   {
     return sources.replace((source) -> source.sorted(comparator));
   }
+
 
   @SafeVarargs
   public static <Item> Source<Item[]> transpose(
@@ -281,11 +348,13 @@ public class Source<Item>
         ArrayUtils.from(makeArray, sourcesSize, (j) -> sources[j].getAt(i)));
   }
 
+
   @SafeVarargs
   public static <Item> Source<Item[]> transpose(Source<Item>... sources)
   {
     return transpose(ArrayUtils.makeUntyped(), sources);
   }
+
 
   @SafeVarargs
   public static <Item> Source<Item[]> transpose(
@@ -295,11 +364,13 @@ public class Source<Item>
     return transpose(ArrayUtils.makeTyped(itemClass), sources);
   }
 
+
   public static <Item> Source<Source<Item>> uniquesEach(
     Source<Source<Item>> sources)
   {
     return sources.replace((source) -> source.uniques());
   }
+
 
   public static <Item> Source<Source<Item>> uniquesEach(
     Source<Source<Item>> sources,
@@ -308,11 +379,13 @@ public class Source<Item>
     return sources.replace((source) -> source.uniques(equals));
   }
 
+
   public static <Item> Source<Source<Integer>> validIndicesEach(
     Source<Source<Item>> sources)
   {
     return sources.replace(Source::validIndices);
   }
+
 
   public static <Item> Source<Source<Integer>> validInsertIndicesEach(
     Source<Source<Item>> sources)
@@ -326,10 +399,12 @@ public class Source<Item>
     return new Source<>(ArrayUtils.replace(this.items, function));
   }
 
+
   public <Result> Source<Result> replace(Function<Item, Result> function)
   {
     return this.replace((item, ignored) -> function.apply(item));
   }
+
 
   public Source<Item> cycle(int offset)
   {
@@ -341,10 +416,26 @@ public class Source<Item>
     return new Source<>(items);
   }
 
+
+  public int firstIndexSame(Item item)
+  {
+    int size = this.size();
+    for (int i = 0; i < size; i++)
+    {
+      if (item == this.items[i])
+      {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+
   public Source<Item> filter(Predicate<Item> predicate)
   {
     return this.filter((item, ignored) -> predicate.test(item));
   }
+
 
   @SuppressWarnings("unchecked")
   public Source<Item> filter(BiPredicate<Item, Integer> predicate)
@@ -361,6 +452,7 @@ public class Source<Item>
     return new Source<>((Item[]) items.toArray());
   }
 
+
   public <Result> Source<Result> flatReplace(
     BiFunction<Item, Integer, Source<Result>> function)
   {
@@ -373,15 +465,18 @@ public class Source<Item>
     return Source.from(results);
   }
 
+
   public <Result> Source<Result> flatReplace(Function<Item, Source<Result>> function)
   {
     return this.flatReplace((item, ignored) -> function.apply(item));
   }
 
+
   public Item getAt(int index)
   {
     return this.items[index];
   }
+
 
   public <Group> Source<Source<Item>> group(Function<Item, Group> grouper)
   {
@@ -394,6 +489,7 @@ public class Source<Item>
     }
     return Source.from(map.values()).replace((items) -> Source.from(items));
   }
+
 
   public Source<Item> limit(int size)
   {
@@ -411,17 +507,21 @@ public class Source<Item>
     return new Source<>(items);
   }
 
+
   public Source<Item> limit()
   {
     return this.limit(DEFAULT_LIMIT);
   }
 
+
   public Source<Item> quadratic()
   {
     List<Item> itemsList = new ArrayList<>(this.list());
-    return Source.from(this.size(), (i) ->
-      itemsList.remove((i * i - i) % itemsList.size()));
+    return Source.from(
+      Math.min(this.size(), (int) Math.sqrt(Integer.MAX_VALUE)),
+      (i) -> itemsList.remove((i * i - i) % itemsList.size()));
   }
+
 
   public Source<Item> repeat(int repetitions)
   {
@@ -435,15 +535,18 @@ public class Source<Item>
       (i) -> this.items[i % size]);
   }
 
+
   public Source<Item> reversed()
   {
     return new Source<>(ArrayUtils.reversed(this.items));
   }
 
+
   public Source<Item> shuffle()
   {
     return this.shuffle(new Random());
   }
+
 
   public Source<Item> shuffle(Random random)
   {
@@ -452,20 +555,30 @@ public class Source<Item>
     return Source.from(items);
   }
 
+
   public Source<Item> skipIndex(int index)
   {
     return this.filter((ignored, i) -> i != index);
   }
+
 
   public Source<Item> skipFirst()
   {
     return this.skipIndex(0);
   }
 
+
   public Source<Item> skipLast()
   {
     return this.skipIndex(this.size() - 1);
   }
+
+
+  public Source<Item> skipFirstSame(Item item)
+  {
+    return this.skipIndex(this.firstIndexSame(item));
+  }
+
 
   public Source<Item> sorted()
   {
@@ -474,12 +587,14 @@ public class Source<Item>
     return new Source<>(items);
   }
 
+
   public Source<Item> sorted(Comparator<Item> comparator)
   {
     Item[] items = ArrayUtils.copy(this.items);
     Arrays.sort(items, comparator);
     return new Source<>(items);
   }
+
 
   public Source<Item> step(int step)
   {
@@ -490,15 +605,18 @@ public class Source<Item>
     return Source.from(this.size() / step, (i) -> this.items[i * step]);
   }
 
+
   public Source<Item> then(Source<Item> that)
   {
     return new Source<>(ArrayUtils.chain(this.items, that.items));
   }
 
+
   public Source<Item> uniques()
   {
     return Source.from(new LinkedHashSet<>(this.list()));
   }
+
 
   public Source<Item> uniques(BiPredicate<Item, Item> equals)
   {
@@ -513,20 +631,24 @@ public class Source<Item>
     return Source.from(list);
   }
 
+
   public Source<Integer> validIndices()
   {
     return Source.from(this.size(), (i) -> i);
   }
+
 
   public Source<Integer> validNonFirstIndices()
   {
     return Source.from(this.size() - 1, (i) -> i + 1);
   }
 
+
   public Source<Integer> validNonLastIndices()
   {
     return Source.from(this.size() - 1, (i) -> i);
   }
+
 
   public Source<Integer> validInsertIndices()
   {
@@ -539,15 +661,18 @@ public class Source<Item>
     return ArrayUtils.copy(this.items);
   }
 
+
   public Item[] array(Class<?> itemClass)
   {
     return ArrayUtils.copy(itemClass, this.items);
   }
 
+
   public List<Item> list()
   {
     return Arrays.asList(this.array());
   }
+
 
   public Stream<Item> stream()
   {
@@ -567,11 +692,13 @@ public class Source<Item>
     return this.items.length;
   }
 
+
   @Override
   public Iterator<Item> iterator()
   {
     return new ArrayIterator<>(this.array());
   }
+
 
   @Override
   public String toString()
@@ -583,4 +710,5 @@ public class Source<Item>
         this.items,
         (item) -> To.string(item)));
   }
+
 }

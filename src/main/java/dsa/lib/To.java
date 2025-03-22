@@ -33,10 +33,12 @@ import java.util.regex.Matcher;
  */
 public class To
 {
+
   public static String string(Object object)
   {
     return To.string(object, "");
   }
+
 
   public static String string(Object object, String indent)
   {
@@ -83,10 +85,12 @@ public class To
     return object == null ? "null" : object.toString();
   }
 
+
   public static String string(String string)
   {
     return To.string(string, "");
   }
+
 
   public static String string(String string, String indent)
   {
@@ -95,10 +99,12 @@ public class To
         .replaceAll("\n", Matcher.quoteReplacement("\\n")) + "\"";
   }
 
+
   public static String string(Object[] array)
   {
     return To.string(array, "");
   }
+
 
   public static String string(Object[] array, String indent)
   {
@@ -109,20 +115,24 @@ public class To
         indent));
   }
 
+
   public static <Item> String string(Iterable<Item> iterable)
   {
     return To.string(iterable, "");
   }
+
 
   public static <Item> String string(Iterable<Item> iterable, String indent)
   {
     return To.typedString(iterable, To.untypedString(iterable, indent));
   }
 
+
   public static <Item> String untypedString(Iterable<Item> iterable)
   {
     return To.untypedString(iterable, "");
   }
+
 
   public static <Item> String untypedString(
     Iterable<Item> iterable,
@@ -148,10 +158,12 @@ public class To
     return sb.toString();
   }
 
+
   public static String string(dsa.lab01.exercises.StringArray stringArray)
   {
     return To.string(stringArray, "");
   }
+
 
   public static String string(
     dsa.lab01.exercises.StringArray stringArray,
@@ -165,10 +177,12 @@ public class To
           "strings")), indent));
   }
 
+
   public static String string(dsa.lab01.solutions.StringArray stringArray)
   {
     return To.string(stringArray, "");
   }
+
 
   public static String string(
     dsa.lab01.solutions.StringArray stringArray,
@@ -182,10 +196,12 @@ public class To
           "strings")), indent));
   }
 
+
   public static <Item> String string(dsa.lab01.exercises.Array<Item> array)
   {
     return To.string(array, "");
   }
+
 
   public static <Item> String string(
     dsa.lab01.exercises.Array<Item> array,
@@ -199,10 +215,12 @@ public class To
           "items")), indent));
   }
 
+
   public static <Item> String string(dsa.lab01.solutions.Array<Item> array)
   {
     return To.string(array, "");
   }
+
 
   public static <Item> String string(
     dsa.lab01.solutions.Array<Item> array,
@@ -216,20 +234,24 @@ public class To
           "items")), indent));
   }
 
+
   public static <Item> String string(Container<Item> container)
   {
     return To.string(container, "");
   }
+
 
   public static <Item> String string(Container<Item> container, String indent)
   {
     return To.string((Iterable<Item>) container, indent);
   }
 
+
   public static <Key, Value> String string(Map<Key, Value> map)
   {
     return To.string(map, "");
   }
+
 
   public static <Key, Value> String string(Map<Key, Value> map, String indent)
   {
@@ -252,10 +274,12 @@ public class To
     return sb.toString();
   }
 
+
   public static <Key, Value> String string(MapItem<Key, Value> item)
   {
     return To.string(item, "");
   }
+
 
   public static <Key, Value> String string(
     MapItem<Key, Value> item,
@@ -266,10 +290,12 @@ public class To
       indent);
   }
 
+
   public static <Item, Node> String string(BinaryTree<Item> tree)
   {
     return To.string(tree, "");
   }
+
 
   public static <Item, Node> String string(BinaryTree<Item> tree, String indent)
   {
@@ -289,12 +315,14 @@ public class To
     return sb.toString();
   }
 
+
   public static <Item> String string(
     BinaryTree<Item> tree,
     BinaryTree.Node<Item> node)
   {
     return To.string(tree, node, "");
   }
+
 
   public static <Item> String string(
     BinaryTree<Item> tree,
@@ -336,10 +364,12 @@ public class To
     return sb.toString();
   }
 
+
   private static String typedString(Object object, String string)
   {
     return object.getClass().getSimpleName() + string;
   }
+
 
   @SuppressWarnings("unchecked")
   private static <FieldType> FieldType field(
@@ -359,19 +389,25 @@ public class To
     }
   }
 
+
   public static class PassthroughString
   {
+
     private String string;
+
 
     public PassthroughString(String string)
     {
       this.string = string;
     }
 
+
     @Override
     public String toString()
     {
       return this.string;
     }
+
   }
+
 }

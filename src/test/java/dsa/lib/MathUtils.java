@@ -2,6 +2,7 @@ package dsa.lib;
 
 public class MathUtils
 {
+
   public static int addSaturating(int a, int b)
   {
     try
@@ -13,4 +14,5 @@ public class MathUtils
       return Integer.MAX_VALUE;
     }
   }
+
 }

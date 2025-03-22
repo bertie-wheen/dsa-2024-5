@@ -21,11 +21,21 @@ import java.util.Arrays;
 public class CircularDynamicArray<Item>
   implements DynamicSequence<Item>
 {
+
+  /** The backing array. */
   private Item[] items;
+
+
+  /** The index of the first item (or where it will be if currently empty). */
   private int start = 0;
+
+
+  /** The number of contained items. */
   private int size;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty circular dynamic array.
@@ -36,6 +46,7 @@ public class CircularDynamicArray<Item>
     this.items = (Item[]) new Object[0];
     this.size = 0;
   }
+
 
   /**
    * Construct a circular dynamic array containing the given items.
@@ -50,6 +61,7 @@ public class CircularDynamicArray<Item>
       this.insertLast(item);
     }
   }
+
 
   /**
    * Construct a circular dynamic array containing the given items
@@ -81,6 +93,7 @@ public class CircularDynamicArray<Item>
     }
   }
 
+
   /**
    * Construct a circular dynamic array containing the given items.
    *
@@ -92,13 +105,16 @@ public class CircularDynamicArray<Item>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
     return this.size;
   }
+
 
   /**
    * Get the maximum number of items that can be contained without reallocation.
@@ -109,6 +125,7 @@ public class CircularDynamicArray<Item>
   {
     return this.items.length;
   }
+
 
   /**
    * Return the backing array index of the given logical index.
@@ -132,6 +149,7 @@ public class CircularDynamicArray<Item>
     return (capacity + this.start + index) % capacity;
   }
 
+
   @Override
   public Item get(int index)
     throws IndexOutOfBoundsException
@@ -140,8 +158,10 @@ public class CircularDynamicArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
+
     return this.items[this.index(index)];
   }
+
 
   @Override
   public void set(int index, Item item)
@@ -151,8 +171,10 @@ public class CircularDynamicArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
+
     this.items[this.index(index)] = item;
   }
+
 
   /**
    * Resize the backing array.
@@ -167,15 +189,22 @@ public class CircularDynamicArray<Item>
   @SuppressWarnings("unchecked")
   private void resize(int capacity)
   {
-    int oldCapacity = this.capacity();
-    Item[] items = (Item[]) new Object[capacity];
+    // NOTE: Save a reference to the old backing array and start index.
+    Item[] oldItems = this.items;
+    int oldStart = this.start;
+
+    // NOTE: Allocate a new array with the desired capacity and reset start.
+    this.items = (Item[]) new Object[capacity];
+    this.start = 0;
+
+    // NOTE: Copy the items across.
+    int oldCapacity = oldItems.length;
     for (int i = 0; i < this.size; i++)
     {
-      items[i] = this.items[(oldCapacity + this.start + i) % oldCapacity];
+      this.items[i] = oldItems[(oldCapacity + oldStart + i) % oldCapacity];
     }
-    this.items = items;
-    this.start = 0;
   }
+
 
   @Override
   public void insert(int index, Item item)
@@ -185,28 +214,37 @@ public class CircularDynamicArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
+
     if (this.size == this.capacity())
     {
       this.resize(Math.max(1, 2 * this.capacity()));
     }
+
+    // NOTE: We can do better than DynamicArray.insert if inserting near the
+    //       start of the sequence, as - with the start index not necessarily
+    //       being 0 - we can shift earlier items left instead of later items
+    //       right. (This is a similar improvement to that in DoublyLinkedList.)
     if (index < this.size / 2)
     {
-      this.start = this.index(-1);
-      for (int i = 0; i < index; i++)
+      for (int i = -1; i < index - 1; i++)
       {
         this.items[this.index(i)] = this.items[this.index(i + 1)];
       }
+      this.start = this.index(-1);
     }
     else
     {
-      for (int i = this.size - 1; i >= index; i--)
+      for (int i = this.size; i > index; i--)
       {
-        this.items[this.index(i + 1)] = this.items[this.index(i)];
+        this.items[this.index(i)] = this.items[this.index(i - 1)];
       }
     }
+
     this.items[this.index(index)] = item;
+
     this.size++;
   }
+
 
   @Override
   public Item remove(int index)
@@ -216,16 +254,37 @@ public class CircularDynamicArray<Item>
     {
       throw new IndexOutOfBoundsException();
     }
+
     Item item = this.items[index];
-    this.size--;
-    for (int i = index; i < this.size; i++)
+
+    // NOTE: Similarly to insert(), we can do better than DynamicArray for low
+    //       indices by shifting the earlier rather than later items.
+    if (index < this.size / 2)
     {
-      this.items[i] = this.items[i + 1];
+      for (int i = index; i > 0; i--)
+      {
+        this.items[this.index(i)] = this.items[this.index(i - 1)];
+      }
+      this.items[this.index(0)] = null;
+      this.start = this.index(+1);
     }
+    else
+    {
+      for (int i = index; i < this.size - 1; i++)
+      {
+        this.items[this.index(i)] = this.items[this.index(i + 1)];
+      }
+      this.items[this.index(this.size - 1)] = null;
+    }
+
+    this.size--;
+
     if (this.size <= this.capacity() / 4)
     {
       this.resize(this.capacity() / 2);
     }
+
     return item;
   }
+
 }

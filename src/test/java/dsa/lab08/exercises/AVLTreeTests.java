@@ -2,7 +2,10 @@ package dsa.lab08.exercises;
 
 import dsa.lab04.base.MapItem;
 import dsa.lab04.base.MapTests;
-import dsa.lib.*;
+import dsa.lib.ClassUtils;
+import dsa.lib.DefaultDisplayNameGeneration;
+import dsa.lib.Source;
+import dsa.lib.TestNames;
 import dsa.lib.lab04.MapItemSourceData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,6 +24,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 @DisplayName("AVLTree")
 public class AVLTreeTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(AVLTree.class);
@@ -29,6 +33,7 @@ public class AVLTreeTests
   @DefaultDisplayNameGeneration
   interface HeightsTests
   {
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void remainCorrectInserting(
@@ -41,6 +46,7 @@ public class AVLTreeTests
         assertTrue(avlTree._isHeightCacheCorrect(), "after inserting " + item);
       }
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="remainCorrectInserting arguments">
     static Source<Arguments> remainCorrectInserting(Class<?> avlTreeClass)
@@ -64,6 +70,7 @@ public class AVLTreeTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void remainCorrectRemoving(
@@ -76,6 +83,7 @@ public class AVLTreeTests
         assertTrue(avlTree._isHeightCacheCorrect(), "after removing " + key);
       }
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="remainCorrectRemoving arguments">
     static Source<Arguments> remainCorrectRemoving(Class<?> avlTreeClass)
@@ -99,12 +107,14 @@ public class AVLTreeTests
             items.replace(MapItem::key)));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("avl condition")
   @DefaultDisplayNameGeneration
   interface AVLConditionTests
   {
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void remainsSatisfiedInserting(
@@ -119,6 +129,7 @@ public class AVLTreeTests
           "after inserting " + item);
       }
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="remainsSatisfiedInserting arguments">
     static Source<Arguments> remainsSatisfiedInserting(Class<?> avlTreeClass)
@@ -142,6 +153,7 @@ public class AVLTreeTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void remainsSatisfiedRemoving(
@@ -154,6 +166,7 @@ public class AVLTreeTests
         assertTrue(avlTree._isAVLConditionSatisfied(), "after removing " + key);
       }
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="remainsSatisfiedRemoving arguments">
     static Source<Arguments> remainsSatisfiedRemoving(Class<?> avlTreeClass)
@@ -177,12 +190,14 @@ public class AVLTreeTests
             items.replace(MapItem::key)));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("bst condition")
   @DefaultDisplayNameGeneration
   interface BSTConditionTests
   {
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void remainsSatisfiedInserting(
@@ -206,6 +221,7 @@ public class AVLTreeTests
       }
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="remainsSatisfiedInserting arguments">
     static Source<Arguments> remainsSatisfiedInserting(Class<?> avlTreeClass)
     {
@@ -227,6 +243,7 @@ public class AVLTreeTests
             items));
     }
     //</editor-fold>
+
 
     @ParameterizedTest
     @MethodSource
@@ -251,6 +268,7 @@ public class AVLTreeTests
       }
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="remainsSatisfiedRemoving arguments">
     static Source<Arguments> remainsSatisfiedRemoving(Class<?> avlTreeClass)
     {
@@ -273,41 +291,49 @@ public class AVLTreeTests
             items.replace(MapItem::key)));
     }
     //</editor-fold>
+
   }
 
   @Nested
   class Find
     implements MapTests.Find
   {
+
   }
 
   @Nested
   class Insert
     implements MapTests.Insert
   {
+
   }
 
   @Nested
   class Remove
     implements MapTests.Remove
   {
+
   }
 
   @Nested
   class Heights
     implements HeightsTests
   {
+
   }
 
   @Nested
   class AVLCondition
     implements AVLConditionTests
   {
+
   }
 
   @Nested
   class BSTCondition
     implements BSTConditionTests
   {
+
   }
+
 }

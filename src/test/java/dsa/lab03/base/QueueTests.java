@@ -1,9 +1,6 @@
 package dsa.lab03.base;
 
 import dsa.lib.*;
-import dsa.lib.IntData;
-import dsa.lib.SourceData;
-import dsa.lib.StringData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,10 +13,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface QueueTests
 {
+
   @DisplayName("enqueue")
   @DefaultDisplayNameGeneration
   interface Enqueue
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void enqueuesAsBack(
@@ -44,6 +43,7 @@ public interface QueueTests
       }
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void changesFrontOnlyIfShould(
@@ -57,6 +57,7 @@ public interface QueueTests
       assertEquals(wasEmpty ? item : oldFrontItem, newFrontItem);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeOthers(
@@ -69,6 +70,7 @@ public interface QueueTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void incrementsSize(
@@ -80,6 +82,7 @@ public interface QueueTests
       int newSize = queue.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> queueClass)
@@ -103,12 +106,14 @@ public interface QueueTests
         forType.apply(SourceData.Ints.ALL.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("front")
   @DefaultDisplayNameGeneration
   interface Front
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void returnsFront(
@@ -118,10 +123,13 @@ public interface QueueTests
       assertEquals(frontItem, queue.front());
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="returnsFront arguments">
     static Source<Arguments> returnsFront(Class<?> queueClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(queueClass, source),
@@ -136,6 +144,7 @@ public interface QueueTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeFront(
@@ -144,6 +153,7 @@ public interface QueueTests
       Item frontItem = queue.front();
       assertEquals(frontItem, queue.front());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -156,6 +166,7 @@ public interface QueueTests
       assertArrayEquals(oldItems, newItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeSize(
@@ -167,10 +178,13 @@ public interface QueueTests
       assertEquals(oldSize, newSize);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> queueClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(queueClass, source)})
@@ -183,12 +197,14 @@ public interface QueueTests
           arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("dequeue")
   @DefaultDisplayNameGeneration
   interface Dequeue
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void returnsFront(
@@ -197,6 +213,7 @@ public interface QueueTests
       Item frontItem = queue.front();
       assertEquals(frontItem, queue.dequeue());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -209,6 +226,7 @@ public interface QueueTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void decrementsSize(
@@ -220,10 +238,13 @@ public interface QueueTests
       assertEquals(oldSize - 1, newSize);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> queueClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(queueClass, source)})
@@ -236,5 +257,7 @@ public interface QueueTests
           arguments));
     }
     //</editor-fold>
+
   }
+
 }

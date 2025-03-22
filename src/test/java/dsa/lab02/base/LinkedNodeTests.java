@@ -12,10 +12,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface LinkedNodeTests
 {
+
   @DisplayName("insertPrevious")
   @DefaultDisplayNameGeneration
   interface InsertPrevious
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void insertsAsPrevious(
@@ -27,6 +29,7 @@ public interface LinkedNodeTests
       node.insertPrevious(item);
       assertEquals(item, node.previous().item());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -45,6 +48,7 @@ public interface LinkedNodeTests
         newFirstNode);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeLastNode(
@@ -57,6 +61,7 @@ public interface LinkedNodeTests
       LinkedNode<Item> newLastNode = linkedList.lastNode();
       assertSame(oldLastNode, newLastNode);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -72,6 +77,7 @@ public interface LinkedNodeTests
         Source.from(linkedList).skipIndex(index).array();
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -91,6 +97,7 @@ public interface LinkedNodeTests
       assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void incrementsSize(
@@ -103,6 +110,7 @@ public interface LinkedNodeTests
       int newSize = linkedList.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> linkedListClass)
@@ -128,12 +136,14 @@ public interface LinkedNodeTests
         forType.apply(SourceData.Ints.NON_EMPTY.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("insertNext")
   @DefaultDisplayNameGeneration
   interface InsertNext
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void insertsAsNext(
@@ -145,6 +155,7 @@ public interface LinkedNodeTests
       node.insertNext(item);
       assertEquals(item, node.next().item());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -158,6 +169,7 @@ public interface LinkedNodeTests
       LinkedNode<Item> newFirstNode = linkedList.firstNode();
       assertSame(oldFirstNode, newFirstNode);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -176,6 +188,7 @@ public interface LinkedNodeTests
         newLastNode);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeOtherItems(
@@ -190,6 +203,7 @@ public interface LinkedNodeTests
         Source.from(linkedList).skipIndex(index + 1).array();
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -209,6 +223,7 @@ public interface LinkedNodeTests
       assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void incrementsSize(
@@ -221,6 +236,7 @@ public interface LinkedNodeTests
       int newSize = linkedList.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> linkedListClass)
@@ -246,12 +262,14 @@ public interface LinkedNodeTests
         forType.apply(SourceData.Ints.NON_EMPTY.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("remove")
   @DefaultDisplayNameGeneration
   interface Remove
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void returnsItem(
@@ -262,6 +280,7 @@ public interface LinkedNodeTests
       Item next = node.item();
       assertEquals(next, node.remove());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -279,6 +298,7 @@ public interface LinkedNodeTests
         newFirstNode);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void changesLastNodeOnlyIfShould(
@@ -295,6 +315,7 @@ public interface LinkedNodeTests
         newLastNode);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeOtherItems(
@@ -308,6 +329,7 @@ public interface LinkedNodeTests
         Source.from(linkedList).array();
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -326,6 +348,7 @@ public interface LinkedNodeTests
       assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void decrementsSize(
@@ -337,6 +360,7 @@ public interface LinkedNodeTests
       int newSize = linkedList.size();
       assertEquals(oldSize - 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> linkedListClass)
@@ -359,12 +383,14 @@ public interface LinkedNodeTests
           arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("removeNext")
   @DefaultDisplayNameGeneration
   interface RemoveNext
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void returnsNext(
@@ -375,6 +401,7 @@ public interface LinkedNodeTests
       Item nextItem = node.next().item();
       assertEquals(nextItem, node.removeNext());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -387,6 +414,7 @@ public interface LinkedNodeTests
       LinkedNode<Item> newFirstNode = linkedList.firstNode();
       assertSame(oldFirstNode, newFirstNode);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -404,6 +432,7 @@ public interface LinkedNodeTests
         newLastNode);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeOtherItems(
@@ -417,6 +446,7 @@ public interface LinkedNodeTests
         Source.from(linkedList).array();
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -435,6 +465,7 @@ public interface LinkedNodeTests
       assertArrayEquals(oldOtherNodes, newOtherNodes);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void decrementsSize(
@@ -446,6 +477,7 @@ public interface LinkedNodeTests
       int newSize = linkedList.size();
       assertEquals(oldSize - 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> linkedListClass)
@@ -468,5 +500,7 @@ public interface LinkedNodeTests
           arguments));
     }
     //</editor-fold>
+
   }
+
 }

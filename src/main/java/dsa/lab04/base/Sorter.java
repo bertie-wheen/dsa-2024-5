@@ -9,6 +9,7 @@ import java.util.Comparator;
  */
 public interface Sorter
 {
+
   /**
    * Sorts the given sequence according to the given comparator.
    *
@@ -17,6 +18,7 @@ public interface Sorter
    * @param <Item>     the item type
    */
   <Item> void sort(StaticSequence<Item> items, Comparator<Item> comparator);
+
 
   /**
    * Sorts the given sequence.
@@ -28,4 +30,5 @@ public interface Sorter
   {
     this.sort(items, Comparator.nullsFirst(Comparator.naturalOrder()));
   }
+
 }

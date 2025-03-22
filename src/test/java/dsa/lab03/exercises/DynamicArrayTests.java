@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("DynamicArray")
 public class DynamicArrayTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(DynamicArray.class);
@@ -18,11 +19,14 @@ public class DynamicArrayTests
   public class Insert
     implements DynamicSequenceTests.Insert
   {
+
   }
 
   @Nested
   public class Remove
     implements DynamicSequenceTests.Remove
   {
+
   }
+
 }

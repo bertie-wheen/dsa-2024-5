@@ -16,6 +16,7 @@ import dsa.lib.Iterators;
 public interface OrderedMap<Key extends Comparable<Key>, Value>
   extends Map<Key, Value>
 {
+
   /**
    * Get the item that would be the predecessor of one with the given key.
    * <p>
@@ -25,6 +26,7 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
    * @return the previous item (by key), or {@code null} if there is none
    */
   MapItem<Key, Value> previous(Key key);
+
 
   /**
    * Get the item that would be the successor of one with the given key.
@@ -36,12 +38,14 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
    */
   MapItem<Key, Value> next(Key key);
 
+
   /**
    * Get the item with the least key.
    *
    * @return the minimum item (by key), or {@code null} if there is none
    */
   MapItem<Key, Value> min();
+
 
   /**
    * Get the item with the greatest key.
@@ -50,7 +54,9 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
    */
   MapItem<Key, Value> max();
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   /**
    * Get a forward iterable that yields each item once.
@@ -62,6 +68,7 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
   @Override
   Iterable<MapItem<Key, Value>> items();
 
+
   /**
    * Get a reverse iterable that yields each item once.
    * <p>
@@ -70,6 +77,7 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
    * @return an iterable over the items
    */
   Iterable<MapItem<Key, Value>> reversed();
+
 
   /**
    * Get a forward iterable that yields each key once.
@@ -84,6 +92,7 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
     return Iterators.applyEach(this, MapItem::key);
   }
 
+
   /**
    * Get a reverse iterable that yields each key once.
    * <p>
@@ -96,5 +105,7 @@ public interface OrderedMap<Key extends Comparable<Key>, Value>
     return Iterators.applyEach(this.reversed(), MapItem::key);
   }
 
+
   //</editor-fold>
+
 }

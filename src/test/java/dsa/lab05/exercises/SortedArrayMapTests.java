@@ -22,6 +22,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 @DisplayName("SortedArrayMap")
 public class SortedArrayMapTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(SortedArrayMap.class);
@@ -30,6 +31,7 @@ public class SortedArrayMapTests
   @DefaultDisplayNameGeneration
   interface IndexForTests
   {
+
     static <Key extends Comparable<Key>> int callIndexFor(
       Object sortedArrayMap,
       Key key)
@@ -55,6 +57,7 @@ public class SortedArrayMapTests
       return (int) indexForMethod.invoke(sortedArrayMap, key);
     }
 
+
     @ParameterizedTest
     @MethodSource
     default <Key extends Comparable<Key>, Value> void returnsCorrectIndexIfContained(
@@ -70,6 +73,7 @@ public class SortedArrayMapTests
       int index = callIndexFor(map, key);
       assertEquals(solutionIndex, index);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="returnsCorrectIndexIfContained arguments">
     static Source<Arguments> returnsCorrectIndexIfContained(
@@ -98,6 +102,7 @@ public class SortedArrayMapTests
     }
     //</editor-fold>
 
+
     @DisplayName("returns -1 if not contained")
     @ParameterizedTest
     @MethodSource
@@ -114,6 +119,7 @@ public class SortedArrayMapTests
       int index = callIndexFor(map, key);
       assertEquals(solutionIndex, index);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="returnsNegativeOneIfNotContained arguments">
     static Source<Arguments> returnsNegativeOneIfNotContained(
@@ -142,11 +148,14 @@ public class SortedArrayMapTests
             arguments));
     }
     //</editor-fold>
+
   }
 
   @Nested
   class IndexFor
     implements IndexForTests
   {
+
   }
+
 }

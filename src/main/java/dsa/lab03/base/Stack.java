@@ -15,12 +15,18 @@ import java.util.NoSuchElementException;
 public interface Stack<Item>
   extends Container<Item>
 {
+
+  // NOTE: Some people will include additional methods/operations, but here we
+  //       include only the core operations that define the essence of a stack.
+
+
   /**
    * Push (insert) the given item onto the top.
    *
    * @param item the new top item
    */
   void push(Item item);
+
 
   /**
    * Pop (remove and return) the given item from the top.
@@ -32,6 +38,7 @@ public interface Stack<Item>
   Item pop()
     throws NoSuchElementException;
 
+
   /**
    * Get the item on top.
    *
@@ -41,4 +48,6 @@ public interface Stack<Item>
    */
   Item top()
     throws NoSuchElementException;
+  // NOTE: Also called peek.
+
 }

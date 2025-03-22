@@ -15,9 +15,12 @@ import java.util.NoSuchElementException;
 public class ArrayQueue<Item>
   implements Queue<Item>
 {
+
   private CircularDynamicArray<Item> items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty array queue.
@@ -26,6 +29,7 @@ public class ArrayQueue<Item>
   {
     this.items = new CircularDynamicArray<>();
   }
+
 
   /**
    * Construct an array queue containing the given items.
@@ -36,6 +40,7 @@ public class ArrayQueue<Item>
   {
     this.items = new CircularDynamicArray<>(items);
   }
+
 
   /**
    * Construct an array queue containing the given items
@@ -52,6 +57,7 @@ public class ArrayQueue<Item>
     this.items = new CircularDynamicArray<>(items, size);
   }
 
+
   /**
    * Construct an array queue containing the given items.
    *
@@ -63,13 +69,16 @@ public class ArrayQueue<Item>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public void enqueue(Item item)
   {
     this.items.insertLast(item);
   }
+
 
   @Override
   public Item dequeue()
@@ -78,6 +87,7 @@ public class ArrayQueue<Item>
     return this.items.removeFirst();
   }
 
+
   @Override
   public Item front()
     throws NoSuchElementException
@@ -85,15 +95,18 @@ public class ArrayQueue<Item>
     return this.items.first();
   }
 
+
   @Override
   public int size()
   {
     return this.items.size();
   }
 
+
   @Override
   public Iterable<Item> items()
   {
     return this.items.items();
   }
+
 }

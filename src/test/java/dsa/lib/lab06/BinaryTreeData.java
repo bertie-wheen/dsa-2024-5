@@ -8,6 +8,7 @@ import java.util.Random;
 
 public class BinaryTreeData
 {
+
   private static <T> BinaryTree<T> make(Source<T> items, long seed)
   {
     Random random = new Random(seed);
@@ -43,10 +44,12 @@ public class BinaryTreeData
     return tree;
   }
 
+
   private static <T> boolean equals(BinaryTree<T> a, BinaryTree<T> b)
   {
     return a.isEmpty() ? b.isEmpty() : equals(a.root(), b.root());
   }
+
 
   private static <T> boolean equals(
     BinaryTree.Node<T> a,
@@ -59,8 +62,10 @@ public class BinaryTreeData
         (a.hasRight() ? a.right().equals(b.right()) : !b.hasRight()));
   }
 
+
   public static class Ints
   {
+
     public static final Source<BinaryTree<Integer>>
       EMPTY = Source.singleton(new BinaryTree<>()),
       NON_EMPTY =
@@ -68,10 +73,12 @@ public class BinaryTreeData
           .replace(BinaryTreeData::make)
           .uniques(BinaryTreeData::equals),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
 
   public static class Strings
   {
+
     public static final Source<BinaryTree<String>>
       EMPTY = Source.singleton(new BinaryTree<>()),
       NON_EMPTY =
@@ -79,10 +86,12 @@ public class BinaryTreeData
           .replace(BinaryTreeData::make)
           .uniques(BinaryTreeData::equals),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
 
   public static final Source<BinaryTree<Object>>
     EMPTY = Source.singleton(new BinaryTree<>()),
     NON_EMPTY = Source.chain(Ints.NON_EMPTY.cast(), Strings.NON_EMPTY.cast()),
     ALL = Source.chain(EMPTY, NON_EMPTY);
+
 }

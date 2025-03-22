@@ -1,8 +1,6 @@
 package dsa.lab02.base;
 
 import dsa.lib.*;
-import dsa.lib.IntData;
-import dsa.lib.SourceData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,10 +11,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface LinkedListTests
 {
+
   @DisplayName("node")
   @DefaultDisplayNameGeneration
   interface Node
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexBelowBound(
@@ -27,6 +27,7 @@ public interface LinkedListTests
         IndexOutOfBoundsException.class,
         () -> linkedList.node(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
     static Source<Arguments> throwsIfIndexBelowBound(
@@ -48,6 +49,7 @@ public interface LinkedListTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexAboveBound(
@@ -58,6 +60,7 @@ public interface LinkedListTests
         IndexOutOfBoundsException.class,
         () -> linkedList.node(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
     static Source<Arguments> throwsIfIndexAboveBound(
@@ -79,6 +82,7 @@ public interface LinkedListTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void getsCorrectIndex(
@@ -98,6 +102,7 @@ public interface LinkedListTests
       assertEquals(index, nodeIndex);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeItems(
@@ -109,6 +114,7 @@ public interface LinkedListTests
       Item[] newItems = Source.from(linkedList).array();
       assertArrayEquals(oldItems, newItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -122,10 +128,13 @@ public interface LinkedListTests
       assertEquals(oldSize, newSize);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> linkedListClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.flatReplace((source) ->
               source.validIndices().replace((index) -> new Object[]{
@@ -140,5 +149,7 @@ public interface LinkedListTests
           arguments));
     }
     //</editor-fold>
+
   }
+
 }

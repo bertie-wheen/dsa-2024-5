@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ClassUtils
 {
+
   public static <T> T construct(Class<T> container)
   {
     try
@@ -22,6 +23,7 @@ public class ClassUtils
         : new ImpossibleException(e);
     }
   }
+
 
   public static <T> T construct(Class<T> container, Source<?> items)
   {
@@ -39,6 +41,7 @@ public class ClassUtils
     }
   }
 
+
   public static ParameterResolver resolver(Class<?> class_)
   {
     return new ParameterResolver()
@@ -52,6 +55,7 @@ public class ClassUtils
         return parameterContext.getParameter().getType() == Class.class;
       }
 
+
       @Override
       public Object resolveParameter(
         ParameterContext parameterContext,
@@ -62,4 +66,5 @@ public class ClassUtils
       }
     };
   }
+
 }

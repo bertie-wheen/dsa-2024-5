@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("LinkedStack")
 public class LinkedStackTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(LinkedStack.class);
@@ -18,17 +19,21 @@ public class LinkedStackTests
   public class Push
     implements StackTests.Push
   {
+
   }
 
   @Nested
   public class Top
     implements StackTests.Top
   {
+
   }
 
   @Nested
   public class Pop
     implements StackTests.Pop
   {
+
   }
+
 }

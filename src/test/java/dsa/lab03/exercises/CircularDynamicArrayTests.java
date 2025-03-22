@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("CircularDynamicArray")
 public class CircularDynamicArrayTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(CircularDynamicArray.class);
@@ -19,23 +20,28 @@ public class CircularDynamicArrayTests
   public class Get
     implements StaticSequenceTests.Get
   {
+
   }
 
   @Nested
   public class Set
     implements StaticSequenceTests.Set
   {
+
   }
 
   @Nested
   public class Insert
     implements DynamicSequenceTests.Insert
   {
+
   }
 
   @Nested
   public class Remove
     implements DynamicSequenceTests.Remove
   {
+
   }
+
 }

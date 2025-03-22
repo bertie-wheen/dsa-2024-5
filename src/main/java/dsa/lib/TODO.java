@@ -6,6 +6,7 @@ package dsa.lib;
 public class TODO
   extends RuntimeException
 {
+
   /**
    * Construct a TODO.
    */
@@ -13,4 +14,5 @@ public class TODO
   {
     super("Not yet implemented.");
   }
+
 }

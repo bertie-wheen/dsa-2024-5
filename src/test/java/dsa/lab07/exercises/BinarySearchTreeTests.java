@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("BinarySearchTree")
 public class BinarySearchTreeTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(BinarySearchTree.class);
@@ -18,17 +19,21 @@ public class BinarySearchTreeTests
   class Find
     implements MapTests.Find
   {
+
   }
 
   @Nested
   class Insert
     implements MapTests.Insert
   {
+
   }
 
   @Nested
   class Remove
     implements MapTests.Remove
   {
+
   }
+
 }

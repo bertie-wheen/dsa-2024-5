@@ -2,8 +2,10 @@ package dsa.lib;
 
 public class SourceData
 {
+
   public static class Ints
   {
+
     public static final Source<Source<Integer>>
       EMPTY = Source.singleton(Source.empty()),
       SINGLETON = Source.singleton(Source.singleton(2)),
@@ -13,12 +15,15 @@ public class SourceData
         Source.from(0, 1, 2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29)),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
 
   public static class Strings
   {
+
     public static class NonNull
     {
+
       public static final Source<Source<String>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.singleton(Source.singleton(
@@ -46,6 +51,7 @@ public class SourceData
           )),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
 
     public static final Source<Source<String>>
@@ -56,6 +62,7 @@ public class SourceData
         Source.singleton(Source.from("Hello", null))),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
 
   public static final Source<Source<Object>>
@@ -88,24 +95,29 @@ public class SourceData
 
   public static class Uniques
   {
+
     public static class Ints
     {
+
       public static final Source<Source<Integer>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.uniquesEach(SourceData.Ints.SINGLETON),
         MULTI_ITEM = Source.uniquesEach(SourceData.Ints.MULTI_ITEM),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
 
     public static class Strings
     {
+
       public static final Source<Source<String>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.uniquesEach(SourceData.Strings.NonNull.SINGLETON),
         MULTI_ITEM = Source.uniquesEach(SourceData.Strings.NonNull.MULTI_ITEM),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
 
     @SuppressWarnings({"rawtypes", "RedundantSuppression"})
@@ -119,28 +131,34 @@ public class SourceData
         Strings.MULTI_ITEM.cast()),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
 
   public static class Sorted
   {
+
     public static class Ints
     {
+
       public static final Source<Source<Integer>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.sortedEach(SourceData.Ints.SINGLETON),
         MULTI_ITEM = Source.sortedEach(SourceData.Ints.MULTI_ITEM),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
 
     public static class Strings
     {
+
       public static final Source<Source<String>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.sortedEach(SourceData.Strings.NonNull.SINGLETON),
         MULTI_ITEM = Source.sortedEach(SourceData.Strings.NonNull.MULTI_ITEM),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
 
     @SuppressWarnings({"rawtypes", "RedundantSuppression"})
@@ -154,5 +172,7 @@ public class SourceData
         Strings.MULTI_ITEM.cast()),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
+
 }

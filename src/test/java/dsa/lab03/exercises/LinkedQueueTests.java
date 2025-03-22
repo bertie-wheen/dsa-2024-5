@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("LinkedQueue")
 public class LinkedQueueTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(LinkedQueue.class);
@@ -18,17 +19,21 @@ public class LinkedQueueTests
   public class Enqueue
     implements QueueTests.Enqueue
   {
+
   }
 
   @Nested
   public class Front
     implements QueueTests.Front
   {
+
   }
 
   @Nested
   public class Dequeue
     implements QueueTests.Dequeue
   {
+
   }
+
 }

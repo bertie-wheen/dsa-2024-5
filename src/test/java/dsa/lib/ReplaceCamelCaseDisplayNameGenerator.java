@@ -4,13 +4,16 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 
 import java.lang.reflect.Method;
 
-public class ReplaceCamelCaseDisplayNameGenerator implements DisplayNameGenerator
+public class ReplaceCamelCaseDisplayNameGenerator
+  implements DisplayNameGenerator
 {
+
   @Override
   public String generateDisplayNameForClass(Class<?> testClass)
   {
     return replaceCamelCase(testClass.getSimpleName());
   }
+
 
   @Override
   public String generateDisplayNameForNestedClass(
@@ -18,6 +21,7 @@ public class ReplaceCamelCaseDisplayNameGenerator implements DisplayNameGenerato
   {
     return replaceCamelCase(nestedClass.getSimpleName());
   }
+
 
   @Override
   public String generateDisplayNameForMethod(
@@ -27,8 +31,10 @@ public class ReplaceCamelCaseDisplayNameGenerator implements DisplayNameGenerato
     return replaceCamelCase(testMethod.getName());
   }
 
+
   private static String replaceCamelCase(String camelCase)
   {
     return camelCase.replaceAll("(?=[A-Z])", " ").toLowerCase();
   }
+
 }

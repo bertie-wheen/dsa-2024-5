@@ -2,24 +2,32 @@ package dsa.lib;
 
 public class TestNames
 {
+
   private static String argumentsToString(Object[] arguments)
   {
     return '(' + String.join(
       ", ",
-      ArrayUtils.replace(CharSequence.class, arguments,
+      ArrayUtils.replace(
+        CharSequence.class, arguments,
         (argument) -> To.string(argument))) + ')';
   }
 
+
   public static class ConstructorInvocation
   {
+
     private Class<?> class_;
+
+
     private Object[] arguments;
+
 
     private ConstructorInvocation(Class<?> class_, Object... arguments)
     {
       this.class_ = class_;
       this.arguments = arguments;
     }
+
 
     @Override
     public String toString()
@@ -34,12 +42,17 @@ public class TestNames
       sb.append(argumentsToString(this.arguments));
       return sb.toString();
     }
+
   }
 
   public static class MethodCall
   {
+
     private String name;
+
+
     private Object[] arguments;
+
 
     private MethodCall(String name, Object... arguments)
     {
@@ -47,12 +60,15 @@ public class TestNames
       this.arguments = arguments;
     }
 
+
     @Override
     public String toString()
     {
       return '.' + this.name + argumentsToString(this.arguments);
     }
+
   }
+
 
   public static ConstructorInvocation constructor(
     Class<?> class_,
@@ -60,6 +76,7 @@ public class TestNames
   {
     return new ConstructorInvocation(class_, arguments);
   }
+
 
   public static ConstructorInvocation constructorFor(
     Class<?> class_,
@@ -70,6 +87,7 @@ public class TestNames
       : constructor(class_, '<' + To.string(object) + '>');
   }
 
+
   public static ConstructorInvocation constructorFor(
     Class<?> class_,
     Iterable<?> object)
@@ -77,12 +95,14 @@ public class TestNames
     return constructor(class_, (Object[]) ArrayUtils.from(object));
   }
 
+
   public static MethodCall method(
     String name,
     Object... arguments)
   {
     return new MethodCall(name, arguments);
   }
+
 
   public static String format(
     ConstructorInvocation constructor,
@@ -96,4 +116,5 @@ public class TestNames
     }
     return sb.toString();
   }
+
 }

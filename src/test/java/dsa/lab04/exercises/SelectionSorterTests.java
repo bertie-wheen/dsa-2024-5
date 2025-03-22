@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("SelectionSorter")
 public class SelectionSorterTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(SelectionSorter.class);
@@ -18,5 +19,7 @@ public class SelectionSorterTests
   public class Sort
     implements SorterTests.Sort
   {
+
   }
+
 }

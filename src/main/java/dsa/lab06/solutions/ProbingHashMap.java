@@ -17,13 +17,24 @@ import java.util.NoSuchElementException;
 public class ProbingHashMap<Key, Value>
   implements Map<Key, Value>
 {
+
   private final MapItem<Key, Value> REMOVED = new MapItem<>(null, null);
+
+
   private MapItem<Key, Value>[] items;
+
+
   private HashFunction hashFunction;
+
+
   private int size = 0;
+
+
   private float maxLoadFactor = 0.8f;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty probing hash map.
@@ -34,6 +45,7 @@ public class ProbingHashMap<Key, Value>
     this.items = (MapItem<Key, Value>[]) new MapItem[1];
     this.hashFunction = new HashFunction(1);
   }
+
 
   /**
    * Construct a probing hash map containing the given items.
@@ -48,6 +60,7 @@ public class ProbingHashMap<Key, Value>
       this.insert(item);
     }
   }
+
 
   /**
    * Construct a probing hash map containing the given items
@@ -78,6 +91,7 @@ public class ProbingHashMap<Key, Value>
     }
   }
 
+
   /**
    * Construct a probing hash map containing the given items.
    *
@@ -89,13 +103,16 @@ public class ProbingHashMap<Key, Value>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
     return this.size;
   }
+
 
   @SuppressWarnings("unchecked")
   private void resize(int slotCount)
@@ -112,6 +129,7 @@ public class ProbingHashMap<Key, Value>
       }
     }
   }
+
 
   @Override
   public void insert(MapItem<Key, Value> newItem)
@@ -156,6 +174,7 @@ public class ProbingHashMap<Key, Value>
     }
   }
 
+
   @Override
   public MapItem<Key, Value> find(Key key)
     throws NoSuchElementException
@@ -177,6 +196,7 @@ public class ProbingHashMap<Key, Value>
     }
     throw new NoSuchElementException();
   }
+
 
   @Override
   public MapItem<Key, Value> remove(Key key)
@@ -206,7 +226,9 @@ public class ProbingHashMap<Key, Value>
     throw new NoSuchElementException();
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   @Override
   public Iterable<MapItem<Key, Value>> items()
@@ -216,5 +238,7 @@ public class ProbingHashMap<Key, Value>
       Arrays.asList(this.items));
   }
 
+
   //</editor-fold>
+
 }

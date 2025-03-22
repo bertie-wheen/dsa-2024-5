@@ -11,12 +11,14 @@ package dsa.lab01.base;
  */
 public interface BadStaticSequence<Item>
 {
+
   /**
    * Get the number of contained items.
    *
    * @return the size
    */
   int size();
+
 
   /**
    * Check if it's empty.
@@ -28,6 +30,7 @@ public interface BadStaticSequence<Item>
     return this.size() == 0;
   }
 
+
   /**
    * Check if the given item is equal to any of those contained.
    *
@@ -35,6 +38,7 @@ public interface BadStaticSequence<Item>
    * @return whether such an item is contained
    */
   boolean contains(Item item);
+
 
   /**
    * Get the item at the given index.
@@ -47,6 +51,7 @@ public interface BadStaticSequence<Item>
    */
   Item get(int index)
     throws IndexOutOfBoundsException;
+
 
   /**
    * Set the item at the given index.
@@ -61,4 +66,5 @@ public interface BadStaticSequence<Item>
    */
   void set(int index, Item item)
     throws IndexOutOfBoundsException;
+
 }

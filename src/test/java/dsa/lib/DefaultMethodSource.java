@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 @MethodSource("arguments")
 public @interface DefaultMethodSource
 {
+
 }

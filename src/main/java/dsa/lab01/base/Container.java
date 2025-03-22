@@ -10,12 +10,14 @@ package dsa.lab01.base;
  */
 public interface Container<Item>
 {
+
   /**
    * Get the number of contained items.
    *
    * @return the size
    */
   int size();
+
 
   /**
    * Check if it's empty.
@@ -27,6 +29,7 @@ public interface Container<Item>
     return this.size() == 0;
   }
 
+
   /**
    * Check if the given item is equal to any of those contained.
    *
@@ -34,4 +37,5 @@ public interface Container<Item>
    * @return whether such an item is contained
    */
   boolean contains(Item item);
+
 }

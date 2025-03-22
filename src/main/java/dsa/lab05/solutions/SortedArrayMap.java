@@ -19,9 +19,12 @@ import java.util.Objects;
 public class SortedArrayMap<Key extends Comparable<Key>, Value>
   implements OrderedMap<Key, Value>
 {
+
   private DynamicArray<MapItem<Key, Value>> items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty sorted array map.
@@ -30,6 +33,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
   {
     this.items = new DynamicArray<>();
   }
+
 
   /**
    * Construct a sorted array map containing the given items.
@@ -41,6 +45,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     this.items = new DynamicArray<>(items);
     new MergeSorter().sort(this.items, Comparator.comparing(MapItem::key));
   }
+
 
   /**
    * Construct a sorted array map containing the given items
@@ -58,6 +63,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     new MergeSorter().sort(this.items, Comparator.comparing(MapItem::key));
   }
 
+
   /**
    * Construct a sorted array map containing the given items.
    *
@@ -69,13 +75,16 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     this(Arrays.asList(items));
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
     return this.items.size();
   }
+
 
   /**
    * Get the index for an item with the given key.
@@ -90,6 +99,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
   {
     return this.indexFor(key, 0, this.size());
   }
+
 
   /**
    * Get the index for an item with the given key in the given slice.
@@ -127,6 +137,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return middleIndex;
   }
 
+
   /**
    * Get the item at the given index, or {@code null} if it's out of bounds.
    *
@@ -137,6 +148,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
   {
     return index < 0 || index >= this.size() ? null : this.items.get(index);
   }
+
 
   /**
    * Get the index of the item with the given key.
@@ -153,6 +165,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return item == null || !Objects.equals(key, item.key()) ? -1 : index;
   }
 
+
   @Override
   public MapItem<Key, Value> find(Key key)
     throws NoSuchElementException
@@ -164,6 +177,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     }
     return this.items.get(index);
   }
+
 
   @Override
   public void insert(MapItem<Key, Value> item)
@@ -181,6 +195,7 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     }
   }
 
+
   @Override
   public MapItem<Key, Value> remove(Key key)
     throws NoSuchElementException
@@ -193,11 +208,13 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return this.items.remove(index);
   }
 
+
   @Override
   public MapItem<Key, Value> previous(Key key)
   {
     return this.item(this.indexFor(key) - 1);
   }
+
 
   @Override
   public MapItem<Key, Value> next(Key key)
@@ -211,11 +228,13 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return item;
   }
 
+
   @Override
   public MapItem<Key, Value> min()
   {
     return this.isEmpty() ? null : this.items.first();
   }
+
 
   @Override
   public MapItem<Key, Value> max()
@@ -223,7 +242,9 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return this.isEmpty() ? null : this.items.last();
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   @Override
   public Iterable<MapItem<Key, Value>> items()
@@ -231,11 +252,14 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
     return this.items.items();
   }
 
+
   @Override
   public Iterable<MapItem<Key, Value>> reversed()
   {
     return this.items.reversed();
   }
 
+
   //</editor-fold>
+
 }

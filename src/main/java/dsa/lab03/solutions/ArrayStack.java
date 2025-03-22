@@ -16,9 +16,12 @@ import java.util.NoSuchElementException;
 public class ArrayStack<Item>
   implements Stack<Item>
 {
+
   private DynamicArray<Item> items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty array stack.
@@ -27,6 +30,7 @@ public class ArrayStack<Item>
   {
     this.items = new DynamicArray<>();
   }
+
 
   /**
    * Construct an array stack containing the given items.
@@ -37,6 +41,7 @@ public class ArrayStack<Item>
   {
     this.items = new DynamicArray<>(Iterators.reversed(items));
   }
+
 
   /**
    * Construct an array stack containing the given items
@@ -53,6 +58,7 @@ public class ArrayStack<Item>
     this.items = new DynamicArray<>(Iterators.reversed(items, size), size);
   }
 
+
   /**
    * Construct an array stack containing the given items.
    *
@@ -64,13 +70,16 @@ public class ArrayStack<Item>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public void push(Item item)
   {
     this.items.insertLast(item);
   }
+
 
   @Override
   public Item pop()
@@ -79,6 +88,7 @@ public class ArrayStack<Item>
     return this.items.removeLast();
   }
 
+
   @Override
   public Item top()
     throws NoSuchElementException
@@ -86,15 +96,18 @@ public class ArrayStack<Item>
     return this.items.last();
   }
 
+
   @Override
   public int size()
   {
     return this.items.size();
   }
 
+
   @Override
   public Iterable<Item> items()
   {
     return this.items.reversed();
   }
+
 }

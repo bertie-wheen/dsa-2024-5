@@ -12,6 +12,7 @@ import java.util.Comparator;
 public class MergeSorter
   implements Sorter
 {
+
   @Override
   @SuppressWarnings("unchecked")
   public <Item> void sort(
@@ -19,10 +20,18 @@ public class MergeSorter
     Comparator<Item> comparator)
   {
     int size = items.size();
+
+    // NOTE: If it's an empty or singleton sequence, it's already sorted, so
+    //       nothing to do.
     if (size <= 1)
     {
       return;
     }
+
+    // NOTE: Divide the sequence into two halves (not necessarily of exactly
+    //       equal size, if size is odd - in this case we take the convention
+    //       that the right "half" will be one item bigger, but you could
+    //       choose otherwise).
     int sizeL = size / 2;
     int sizeR = size - sizeL;
     StaticArray<Item> itemsL = new StaticArray<>((Item[]) new Object[sizeL]);
@@ -35,8 +44,20 @@ public class MergeSorter
     {
       itemsR.set(r, items.get(sizeL + r));
     }
+
+    // NOTE: Sort each half independently.
+    // NOTE: This could happen in parallel, if the overheads of parallelization
+    //       and the size of the sequence are such that that'd be worthwhile.
+    // NOTE: Sometimes people will create a hybrid sort where the halves aren't
+    //       necessarily sorted using merge sort. This is also true with
+    //       quicksort, and other divide-and-conquer sorts. For example, you
+    //       might recursively merge sort until you get to some small number of
+    //       items, and then switch to using e.g. insertion sort to sort
+    //       subsequences of less than that size.
     this.sort(itemsL, comparator);
     this.sort(itemsR, comparator);
+
+    // NOTE: Merge the two sorted halves into one sorted whole.
     int l = 0;
     int r = 0;
     for (int i = 0; i < size; i++)
@@ -52,4 +73,5 @@ public class MergeSorter
       }
     }
   }
+
 }

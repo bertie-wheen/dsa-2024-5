@@ -18,12 +18,21 @@ import java.util.Objects;
 public class ChainingHashMap<Key, Value>
   implements Map<Key, Value>
 {
+
   private ArrayMap<Key, Value>[] chains;
+
+
   private HashFunction hashFunction;
+
+
   private int size = 0;
+
+
   private float maxLoadFactor = 2;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty chaining hash map.
@@ -36,6 +45,7 @@ public class ChainingHashMap<Key, Value>
     this.chains[0] = new ArrayMap<>();
     this.hashFunction = new HashFunction(1);
   }
+
 
   /**
    * Construct a chaining hash map containing the given items.
@@ -50,6 +60,7 @@ public class ChainingHashMap<Key, Value>
       this.insert(item);
     }
   }
+
 
   /**
    * Construct a chaining hash map containing the given items
@@ -85,6 +96,7 @@ public class ChainingHashMap<Key, Value>
     }
   }
 
+
   /**
    * Construct a chaining hash map containing the given items.
    *
@@ -96,7 +108,9 @@ public class ChainingHashMap<Key, Value>
     this(Arrays.asList(items), items.length);
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
@@ -104,10 +118,12 @@ public class ChainingHashMap<Key, Value>
     return this.size;
   }
 
+
   private ArrayMap<Key, Value> chain(Key key)
   {
     return this.chains[this.hashFunction.hash(key)];
   }
+
 
   @Override
   public MapItem<Key, Value> find(Key key)
@@ -115,6 +131,7 @@ public class ChainingHashMap<Key, Value>
   {
     return this.chain(key).find(key);
   }
+
 
   @SuppressWarnings("unchecked")
   private void resize(int chainCount)
@@ -135,6 +152,7 @@ public class ChainingHashMap<Key, Value>
       }
     }
   }
+
 
   @Override
   public void insert(MapItem<Key, Value> item)
@@ -160,6 +178,7 @@ public class ChainingHashMap<Key, Value>
     }
   }
 
+
   @Override
   public MapItem<Key, Value> remove(Key key)
     throws NoSuchElementException
@@ -174,7 +193,9 @@ public class ChainingHashMap<Key, Value>
     return item;
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   @Override
   public Iterable<MapItem<Key, Value>> items()
@@ -182,5 +203,7 @@ public class ChainingHashMap<Key, Value>
     return Iterators.flatten(Arrays.asList(this.chains));
   }
 
+
   //</editor-fold>
+
 }

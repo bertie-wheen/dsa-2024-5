@@ -1,9 +1,6 @@
 package dsa.lab02.base;
 
 import dsa.lib.*;
-import dsa.lib.IntData;
-import dsa.lib.SourceData;
-import dsa.lib.StringData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,10 +13,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface StaticSequenceTests
 {
+
   @DisplayName("set")
   @DefaultDisplayNameGeneration
   interface Get
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexBelowBound(
@@ -30,6 +29,7 @@ public interface StaticSequenceTests
         IndexOutOfBoundsException.class,
         () -> staticSequence.get(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
     static Source<Arguments> throwsIfIndexBelowBound(
@@ -51,6 +51,7 @@ public interface StaticSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexAboveBound(
@@ -61,6 +62,7 @@ public interface StaticSequenceTests
         IndexOutOfBoundsException.class,
         () -> staticSequence.get(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexAboveBound arguments">
     static Source<Arguments> throwsIfIndexAboveBound(
@@ -82,6 +84,7 @@ public interface StaticSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Item> void getsCorrectIndex(
@@ -91,6 +94,7 @@ public interface StaticSequenceTests
     {
       assertEquals(item, staticSequence.get(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="getsCorrectIndex arguments">
     static Source<Arguments> getsCorrectIndex(
@@ -113,6 +117,7 @@ public interface StaticSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeItems(
@@ -124,6 +129,7 @@ public interface StaticSequenceTests
       Item[] newItems = Source.from(staticSequence).array();
       assertArrayEquals(oldItems, newItems);
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -137,10 +143,13 @@ public interface StaticSequenceTests
       assertEquals(oldSize, newSize);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> sequenceClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.flatReplace((source) ->
               source.validIndices().replace((index) -> new Object[]{
@@ -155,12 +164,14 @@ public interface StaticSequenceTests
           arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("set")
   @DefaultDisplayNameGeneration
   interface Set
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexBelowBound(
@@ -172,6 +183,7 @@ public interface StaticSequenceTests
         IndexOutOfBoundsException.class,
         () -> staticSequence.set(index, item));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexBelowBound arguments">
     static Source<Arguments> throwsIfIndexBelowBound(
@@ -198,6 +210,7 @@ public interface StaticSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfIndexAboveBound(
@@ -209,6 +222,7 @@ public interface StaticSequenceTests
         IndexOutOfBoundsException.class,
         () -> staticSequence.set(index, item));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfIndexAboveBound arguments">
     static Source<Arguments> throwsIfIndexAboveBound(
@@ -235,6 +249,7 @@ public interface StaticSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void setsCorrectIndex(
@@ -245,6 +260,7 @@ public interface StaticSequenceTests
       staticSequence.set(index, item);
       assertEquals(item, staticSequence.get(index));
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -261,6 +277,7 @@ public interface StaticSequenceTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeSize(
@@ -273,6 +290,7 @@ public interface StaticSequenceTests
       int newSize = staticSequence.size();
       assertEquals(oldSize, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> sequenceClass)
@@ -297,5 +315,7 @@ public interface StaticSequenceTests
         forType.apply(SourceData.Ints.NON_EMPTY.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
+
 }

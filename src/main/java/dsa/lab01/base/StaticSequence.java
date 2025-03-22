@@ -12,6 +12,7 @@ package dsa.lab01.base;
 public interface StaticSequence<Item>
   extends Container<Item>
 {
+
   /**
    * Get the item at the given index.
    *
@@ -23,6 +24,7 @@ public interface StaticSequence<Item>
    */
   Item get(int index)
     throws IndexOutOfBoundsException;
+
 
   /**
    * Set the item at the given index.
@@ -37,4 +39,5 @@ public interface StaticSequence<Item>
    */
   void set(int index, Item item)
     throws IndexOutOfBoundsException;
+
 }

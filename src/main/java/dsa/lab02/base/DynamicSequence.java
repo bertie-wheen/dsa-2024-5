@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 public interface DynamicSequence<Item>
   extends StaticSequence<Item>
 {
+
   /**
    * Insert the given item at the given index.
    * <p>
@@ -28,6 +29,7 @@ public interface DynamicSequence<Item>
    */
   void insert(int index, Item item)
     throws IndexOutOfBoundsException;
+
 
   /**
    * Remove and return the item at the given index.
@@ -44,6 +46,13 @@ public interface DynamicSequence<Item>
   Item remove(int index)
     throws IndexOutOfBoundsException;
 
+
+  // NOTE: We could provide default implementations of get and set in terms of
+  //       insert and remove, but they'd be so awful we'd realistically always
+  //       want to override them. (Partly because of the relative efficiencies,
+  //       but particularly simply because of our sensibilities.)
+
+
   /**
    * Insert the given item as the first.
    * <p>
@@ -53,8 +62,10 @@ public interface DynamicSequence<Item>
    */
   default void insertFirst(Item item)
   {
+    // NOTE: Similar comments to StaticSequence.setFirst(item).
     this.insert(0, item);
   }
+
 
   /**
    * Insert the given item as the last.
@@ -66,8 +77,10 @@ public interface DynamicSequence<Item>
    */
   default void insertLast(Item item)
   {
+    // NOTE: Similar comments to StaticSequence.setLast(item).
     this.insert(this.size(), item);
   }
+
 
   /**
    * Remove and return the first item.
@@ -81,6 +94,7 @@ public interface DynamicSequence<Item>
   default Item removeFirst()
     throws NoSuchElementException
   {
+    // NOTE: Similar comments to StaticSequence.first().
     try
     {
       return this.remove(0);
@@ -90,6 +104,7 @@ public interface DynamicSequence<Item>
       throw new NoSuchElementException();
     }
   }
+
 
   /**
    * Remove and return the last item.
@@ -104,6 +119,7 @@ public interface DynamicSequence<Item>
   default Item removeLast()
     throws NoSuchElementException
   {
+    // NOTE: Similar comments to StaticSequence.last().
     try
     {
       return this.remove(this.size() - 1);
@@ -113,4 +129,5 @@ public interface DynamicSequence<Item>
       throw new NoSuchElementException();
     }
   }
+
 }

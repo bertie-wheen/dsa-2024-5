@@ -17,11 +17,25 @@ import java.util.NoSuchElementException;
 public class DoublyLinkedList<Item>
   implements LinkedList<Item>
 {
+
+  /** The number of contained items/nodes. */
   private int size = 0;
+  // NOTE: Not all doubly-linked list implementations include this (for the same
+  //       reasons as with singly-linked lists).
+
+
+  /** The first node in the list (null if empty). */
   private Node<Item> first = null;
+
+
+  /** The last node in the list (null if empty). */
   private Node<Item> last = null;
+  // NOTE: Unlike singly-linked lists, _all_ doubly-linked list implementations
+  //       include this.
+
 
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty doubly-linked list.
@@ -29,6 +43,7 @@ public class DoublyLinkedList<Item>
   public DoublyLinkedList()
   {
   }
+
 
   /**
    * Construct a doubly-linked list containing the given items.
@@ -43,6 +58,7 @@ public class DoublyLinkedList<Item>
     }
   }
 
+
   /**
    * Construct a doubly-linked list containing the given items.
    *
@@ -54,7 +70,9 @@ public class DoublyLinkedList<Item>
     this(Arrays.asList(items));
   }
 
+
   //</editor-fold>
+
 
   @Override
   public int size()
@@ -62,14 +80,23 @@ public class DoublyLinkedList<Item>
     return this.size;
   }
 
+
   @Override
   public Node<Item> node(int index)
     throws IndexOutOfBoundsException
   {
+    // NOTE: This is still O(n), so is asymptotically the same as
+    //       SinglyLinkedList.node() in the general case, but this is much
+    //       quicker. Because we have O(1) size() we can tell whether the given
+    //       index is near the end of the list, and if so, because we have O(1)
+    //       previous() we can start at the last node and work backwards.
+    //       Imagine node(987_654) on a 1_000_000-item list!
+
     if (index < 0 || index >= this.size)
     {
       throw new IndexOutOfBoundsException();
     }
+
     Node<Item> node;
     if (index < this.size / 2)
     {
@@ -91,20 +118,30 @@ public class DoublyLinkedList<Item>
     return node;
   }
 
+
   @Override
   public void insert(int index, Item item)
     throws IndexOutOfBoundsException
   {
-    if (this.isEmpty())
-    {
-      this.first = this.last = new Node<>(this, item);
-      this.size = 1;
-    }
-    else if (index == this.size)
+    // NOTE: This is the alternative approach commented on in the
+    //       SinglyLinkedList.insert solution. We feel free to use it here
+    //       because insertPrevious() is O(1) (whereas in SinglyLinkedList only
+    //       insertNext() is).
+    // NOTE: This also differs from the SinglyLinkedList implementation in that
+    //       we have more pointers we need to make sure are correct!
+
+    if (index == this.size)
     {
       this.last = new Node<>(this, this.last, item);
-      this.last.previous.next = this.last;
       this.size++;
+      if (this.size == 1)
+      {
+        this.first = this.last;
+      }
+      else
+      {
+        this.last.previous.next = this.last;
+      }
     }
     else
     {
@@ -112,12 +149,16 @@ public class DoublyLinkedList<Item>
     }
   }
 
+
   @Override
   public Item remove(int index)
     throws IndexOutOfBoundsException
   {
+    // NOTE: Thanks to O(1) remove(), this can be much simpler than the
+    //       SinglyLinkedList implementation without sacrificing speed.
     return this.node(index).remove();
   }
+
 
   /**
    * A node in a doubly-linked list.
@@ -129,10 +170,22 @@ public class DoublyLinkedList<Item>
   public static class Node<Item>
     implements LinkedNode<Item>
   {
+
+    /** The list that contains this node. */
     private DoublyLinkedList<Item> list;
+
+
+    /** The previous node immediately before this one (null if first). */
     private Node<Item> previous;
+
+
+    /** The item that this node contains. */
     private Item item;
+
+
+    /** The next node immediately after this one (null if last). */
     private Node<Item> next;
+
 
     /**
      * Construct a node with the given item.
@@ -144,6 +197,7 @@ public class DoublyLinkedList<Item>
     {
       this(list, null, item, null);
     }
+
 
     /**
      * Construct a node with the given predecessor and item.
@@ -157,6 +211,7 @@ public class DoublyLinkedList<Item>
       this(list, previous, item, null);
     }
 
+
     /**
      * Construct a node with the given item and successor.
      *
@@ -168,6 +223,7 @@ public class DoublyLinkedList<Item>
     {
       this(list, null, item, next);
     }
+
 
     /**
      * Construct a node with the given predecessor, item and successor.
@@ -189,11 +245,13 @@ public class DoublyLinkedList<Item>
       this.next = next;
     }
 
+
     @Override
     public DoublyLinkedList<Item> list()
     {
       return this.list;
     }
+
 
     @Override
     public Item item()
@@ -201,11 +259,13 @@ public class DoublyLinkedList<Item>
       return this.item;
     }
 
+
     @Override
     public void setItem(Item item)
     {
       this.item = item;
     }
+
 
     @Override
     public Node<Item> previous()
@@ -213,16 +273,19 @@ public class DoublyLinkedList<Item>
       return this.previous;
     }
 
+
     @Override
     public Node<Item> next()
     {
       return this.next;
     }
 
+
     @Override
     public void insertPrevious(Item item)
     {
       this.previous = new Node<>(this.list, this.previous, item, this);
+
       if (this.isFirst())
       {
         this.list.first = this.previous;
@@ -231,13 +294,16 @@ public class DoublyLinkedList<Item>
       {
         this.previous.previous.next = this.previous;
       }
+
       this.list.size++;
     }
+
 
     @Override
     public void insertNext(Item item)
     {
       this.next = new Node<>(this.list, this, item, this.next);
+
       if (this.isLast())
       {
         this.list.last = this.next;
@@ -246,8 +312,10 @@ public class DoublyLinkedList<Item>
       {
         this.next.next.previous = this.next;
       }
+
       this.list.size++;
     }
+
 
     @Override
     public Item remove()
@@ -260,6 +328,7 @@ public class DoublyLinkedList<Item>
       {
         this.previous.next = this.next;
       }
+
       if (this.isLast())
       {
         this.list.last = this.previous;
@@ -268,9 +337,12 @@ public class DoublyLinkedList<Item>
       {
         this.next.previous = this.previous;
       }
+
       this.list.size--;
+
       return this.item;
     }
+
 
     @Override
     public Item removePrevious()
@@ -280,8 +352,10 @@ public class DoublyLinkedList<Item>
       {
         throw new NoSuchElementException();
       }
+
       return this.previous.remove();
     }
+
 
     @Override
     public Item removeNext()
@@ -291,7 +365,10 @@ public class DoublyLinkedList<Item>
       {
         throw new NoSuchElementException();
       }
+
       return this.next.remove();
     }
+
   }
+
 }

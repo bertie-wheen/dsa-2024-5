@@ -9,11 +9,18 @@ import java.util.Objects;
  *
  * @param <Key>   the key type
  * @param <Value> the value type
+ * @see Map
  */
 public class MapItem<Key, Value>
 {
+
+  /** The (unique, within a map) key. Can be thought of as an identifier. */
   private Key key;
+
+
+  /** The (not necessarily unique) value. The associated data. */
   private Value value;
+
 
   /**
    * Construct a map item.
@@ -27,6 +34,7 @@ public class MapItem<Key, Value>
     this.value = value;
   }
 
+
   /**
    * Get the key
    * (the unique/identifying part of the item).
@@ -37,6 +45,7 @@ public class MapItem<Key, Value>
   {
     return this.key;
   }
+
 
   /**
    * Get the value
@@ -49,7 +58,9 @@ public class MapItem<Key, Value>
     return this.value;
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="equals()+hashCode()+toString()">
+
 
   @Override
   public boolean equals(Object that)
@@ -70,11 +81,13 @@ public class MapItem<Key, Value>
       Objects.equals(this.value, that_.value);
   }
 
+
   @Override
   public int hashCode()
   {
     return Objects.hash(this.key, this.value);
   }
+
 
   @Override
   public String toString()
@@ -82,5 +95,7 @@ public class MapItem<Key, Value>
     return To.string(this);
   }
 
+
   //</editor-fold>
+
 }

@@ -9,10 +9,13 @@ import java.util.Comparator;
 
 public class MapItemSourceData
 {
+
   public static class Uniques
   {
+
     public static class IntsToStrings
     {
+
       public static final Source<Source<MapItem<Integer, String>>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = MapItemData.INTS_TO_STRINGS.replace(Source::singleton),
@@ -23,10 +26,13 @@ public class MapItemSourceData
               1 + index % IntData.ALL.size())),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
+
 
     public static class StringsToInts
     {
+
       public static final Source<Source<MapItem<String, Integer>>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = MapItemData.STRINGS_TO_INTS.replace(Source::singleton),
@@ -37,7 +43,9 @@ public class MapItemSourceData
               1 + index % StringData.NON_NULL.size())),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
+
 
     @SuppressWarnings({"rawtypes", "RedundantSuppression"})
     public static final Source<Source<MapItem>>
@@ -50,12 +58,16 @@ public class MapItemSourceData
         StringsToInts.MULTI_ITEM.cast()),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
+
 
   public static class SortedUniques
   {
+
     public static class IntsToStrings
     {
+
       public static final Source<Source<MapItem<Integer, String>>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.sortedEach(
@@ -66,10 +78,13 @@ public class MapItemSourceData
           Comparator.comparing(MapItem::key)),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
+
 
     public static class StringsToInts
     {
+
       public static final Source<Source<MapItem<String, Integer>>>
         EMPTY = Source.singleton(Source.empty()),
         SINGLETON = Source.sortedEach(
@@ -80,7 +95,9 @@ public class MapItemSourceData
           Comparator.comparing(MapItem::key)),
         NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
         ALL = Source.chain(EMPTY, NON_EMPTY);
+
     }
+
 
     @SuppressWarnings({"rawtypes", "RedundantSuppression"})
     public static final Source<Source<MapItem>>
@@ -93,5 +110,7 @@ public class MapItemSourceData
         StringsToInts.MULTI_ITEM.cast()),
       NON_EMPTY = Source.chain(SINGLETON, MULTI_ITEM),
       ALL = Source.chain(EMPTY, NON_EMPTY);
+
   }
+
 }

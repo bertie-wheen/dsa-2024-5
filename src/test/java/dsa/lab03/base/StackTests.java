@@ -1,9 +1,6 @@
 package dsa.lab03.base;
 
 import dsa.lib.*;
-import dsa.lib.IntData;
-import dsa.lib.SourceData;
-import dsa.lib.StringData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,10 +14,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface StackTests
 {
+
   @DisplayName("push")
   @DefaultDisplayNameGeneration
   interface Push
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void pushesAsTop(
@@ -30,6 +29,7 @@ public interface StackTests
       stack.push(item);
       assertEquals(item, stack.top());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -43,6 +43,7 @@ public interface StackTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void incrementsSize(
@@ -54,6 +55,7 @@ public interface StackTests
       int newSize = stack.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> stackClass)
@@ -77,12 +79,14 @@ public interface StackTests
         forType.apply(SourceData.Ints.ALL.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("top")
   @DefaultDisplayNameGeneration
   interface Top
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void returnsTop(
@@ -92,10 +96,13 @@ public interface StackTests
       assertEquals(topItem, stack.top());
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="returnsTop arguments">
     static Source<Arguments> returnsTop(Class<?> stackClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(stackClass, source),
@@ -110,6 +117,7 @@ public interface StackTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeTop(
@@ -118,6 +126,7 @@ public interface StackTests
       Item topItem = stack.top();
       assertEquals(topItem, stack.top());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -130,6 +139,7 @@ public interface StackTests
       assertArrayEquals(oldItems, newItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void doesNotChangeSize(
@@ -140,10 +150,13 @@ public interface StackTests
       assertEquals(size, stack.size());
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> stackClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(stackClass, source)})
@@ -156,12 +169,14 @@ public interface StackTests
           arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("pop")
   @DefaultDisplayNameGeneration
   interface Pop
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void returnsTop(
@@ -170,6 +185,7 @@ public interface StackTests
       Item topItem = stack.top();
       assertEquals(topItem, stack.pop());
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -184,6 +200,7 @@ public interface StackTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void decrementsSize(
@@ -195,10 +212,13 @@ public interface StackTests
       assertEquals(oldSize - 1, newSize);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> stackClass)
     {
-      return Source.from(SourceData.Strings.NON_EMPTY, SourceData.Ints.NON_EMPTY)
+      return Source.from(
+          SourceData.Strings.NON_EMPTY,
+          SourceData.Ints.NON_EMPTY)
         .flatReplace((sources) ->
           sources.replace((source) -> new Object[]{
               ClassUtils.construct(stackClass, source)})
@@ -211,5 +231,7 @@ public interface StackTests
           arguments));
     }
     //</editor-fold>
+
   }
+
 }

@@ -20,9 +20,13 @@ import java.util.NoSuchElementException;
 public class BinaryTree<Item>
   implements Container<Item>
 {
+
+  /** The root node - null if empty. */
   private Node<Item> root;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty binary tree.
@@ -31,6 +35,7 @@ public class BinaryTree<Item>
   {
     this.root = null;
   }
+
 
   /**
    * Construct a binary tree containing the given items.
@@ -42,6 +47,7 @@ public class BinaryTree<Item>
     DynamicArray<Item> itemsArray = new DynamicArray<>(items);
     this.root = BinaryTree.buildNode(this, itemsArray, 0);
   }
+
 
   /**
    * Construct a binary tree containing the given items
@@ -59,6 +65,7 @@ public class BinaryTree<Item>
     this.root = BinaryTree.buildNode(this, itemsArray, 0);
   }
 
+
   /**
    * Construct a binary tree containing the given items.
    *
@@ -69,6 +76,7 @@ public class BinaryTree<Item>
   {
     this(Arrays.asList(items), items.length);
   }
+
 
   private static <Item> Node<Item> buildNode(
     BinaryTree<Item> tree,
@@ -84,10 +92,12 @@ public class BinaryTree<Item>
     return new Node<>(tree, left, items.get(index), right);
   }
 
+
   public static <Item> BinaryTree<Item> buildInOrder(Iterable<Item> items)
   {
     return BinaryTree.buildInOrder(new DynamicArray<>(items));
   }
+
 
   public static <Item> BinaryTree<Item> buildInOrder(
     Iterable<Item> items,
@@ -96,11 +106,13 @@ public class BinaryTree<Item>
     return BinaryTree.buildInOrder(new DynamicArray<>(items, size));
   }
 
+
   @SafeVarargs
   public static <Item> BinaryTree<Item> buildInOrder(Item... items)
   {
     return BinaryTree.buildInOrder(Arrays.asList(items), items.length);
   }
+
 
   private static <Item> BinaryTree<Item> buildInOrder(DynamicArray<Item> items)
   {
@@ -108,6 +120,7 @@ public class BinaryTree<Item>
     tree.root = BinaryTree.buildNodeInOrder(tree, items, 0, items.size());
     return tree;
   }
+
 
   private static <Item> Node<Item> buildNodeInOrder(
     BinaryTree<Item> tree,
@@ -126,7 +139,9 @@ public class BinaryTree<Item>
     return new Node<>(tree, left, items.get(index), right);
   }
 
+
   //</editor-fold>
+
 
   /**
    * Get the root node.
@@ -139,6 +154,7 @@ public class BinaryTree<Item>
   {
     return this.root;
   }
+
 
   /**
    * Insert the given node as the root.
@@ -157,10 +173,11 @@ public class BinaryTree<Item>
     }
     if (root.hasParent() || root.tree != this)
     {
-      throw new IllegalStateException();
+      throw new IllegalArgumentException();
     }
     this.root = root;
   }
+
 
   /**
    * Remove and return the root.
@@ -180,6 +197,7 @@ public class BinaryTree<Item>
     return root;
   }
 
+
   /**
    * Get the number of levels below the root of the tree.
    * <p>
@@ -193,17 +211,20 @@ public class BinaryTree<Item>
     return this.isEmpty() ? -1 : this.root.height();
   }
 
+
   @Override
   public int size()
   {
     return this.isEmpty() ? 0 : this.root.size();
   }
 
+
   @Override
   public boolean isEmpty()
   {
     return this.root == null;
   }
+
 
   public void printPreOrder()
   {
@@ -213,6 +234,7 @@ public class BinaryTree<Item>
     }
   }
 
+
   public void printInOrder()
   {
     if (!this.isEmpty())
@@ -220,6 +242,7 @@ public class BinaryTree<Item>
       this.root.printInOrder();
     }
   }
+
 
   public void printPostOrder()
   {
@@ -229,6 +252,7 @@ public class BinaryTree<Item>
     }
   }
 
+
   /**
    * A node in a binary tree.
    *
@@ -236,13 +260,34 @@ public class BinaryTree<Item>
    */
   public static class Node<Item>
   {
+
+    /** The parent node. Possibly null (if root). */
     private Node<Item> parent = null;
+
+
+    /** The containing tree. */
     private BinaryTree<Item> tree;
+
+
+    /** The left child. Possibly null. */
     private Node<Item> left;
+
+
+    /** The contained item. */
     private Item item;
+
+
+    /** The right child. Possibly null. */
     private Node<Item> right;
+
+
+    /** The height of the subtree rooted at this node. */
     private int height;
+
+
+    /** The size of the subtree rooted at this node. */
     private int size;
+
 
     /**
      * Construct a binary node with no parent nor children.
@@ -256,6 +301,7 @@ public class BinaryTree<Item>
     {
       this(tree, null, item, null);
     }
+
 
     /**
      * Construct a binary node with no parent and only a left child.
@@ -272,6 +318,7 @@ public class BinaryTree<Item>
       this(tree, left, item, null);
     }
 
+
     /**
      * Construct a binary node with no parent and only a right child.
      *
@@ -286,6 +333,7 @@ public class BinaryTree<Item>
     {
       this(tree, null, item, right);
     }
+
 
     /**
      * Construct a binary node with no parent and both children.
@@ -324,6 +372,7 @@ public class BinaryTree<Item>
       this.recalculateSizeAndHeight();
     }
 
+
     /**
      * Get the parent node.
      *
@@ -333,6 +382,7 @@ public class BinaryTree<Item>
     {
       return this.parent;
     }
+
 
     /**
      * Get the containing binary tree.
@@ -344,6 +394,7 @@ public class BinaryTree<Item>
       return this.tree;
     }
 
+
     /**
      * Get the left child node.
      *
@@ -353,6 +404,7 @@ public class BinaryTree<Item>
     {
       return this.left;
     }
+
 
     /**
      * Get the contained item.
@@ -364,6 +416,7 @@ public class BinaryTree<Item>
       return this.item;
     }
 
+
     /**
      * Get the right child node.
      *
@@ -373,6 +426,7 @@ public class BinaryTree<Item>
     {
       return this.right;
     }
+
 
     /**
      * Set the contained item.
@@ -384,6 +438,7 @@ public class BinaryTree<Item>
       this.item = item;
     }
 
+
     /**
      * Check if it has a parent (i.e. isn't the root).
      *
@@ -393,6 +448,7 @@ public class BinaryTree<Item>
     {
       return this.parent != null;
     }
+
 
     /**
      * Check if it has a left child.
@@ -404,6 +460,7 @@ public class BinaryTree<Item>
       return this.left != null;
     }
 
+
     /**
      * Check if it has a right child.
      *
@@ -413,6 +470,7 @@ public class BinaryTree<Item>
     {
       return this.right != null;
     }
+
 
     /**
      * Check if it is the root (i.e. doesn't have a parent).
@@ -424,6 +482,7 @@ public class BinaryTree<Item>
       return !this.hasParent();
     }
 
+
     /**
      * Check if it is a leaf (i.e. doesn't have either child).
      *
@@ -433,6 +492,7 @@ public class BinaryTree<Item>
     {
       return !this.hasLeft() && !this.hasRight();
     }
+
 
     /**
      * Check if it is a left child (i.e. has a parent and is its left child).
@@ -444,6 +504,7 @@ public class BinaryTree<Item>
       return this.hasParent() && this.parent.left == this;
     }
 
+
     /**
      * Check if it is a right child (i.e. has a parent and is its right child).
      *
@@ -453,6 +514,7 @@ public class BinaryTree<Item>
     {
       return this.hasParent() && this.parent.right == this;
     }
+
 
     /**
      * Get the number of contained items.
@@ -464,6 +526,7 @@ public class BinaryTree<Item>
       return this.size;
     }
 
+
     /**
      * Get the number of levels below.
      *
@@ -474,6 +537,7 @@ public class BinaryTree<Item>
       return this.height;
     }
 
+
     /**
      * Get the number of levels above.
      *
@@ -483,6 +547,7 @@ public class BinaryTree<Item>
     {
       return this.hasParent() ? this.parent.level() + 1 : 0;
     }
+
 
     /**
      * Calculate the number of contained items.
@@ -499,6 +564,7 @@ public class BinaryTree<Item>
       return leftSize + rightSize + 1;
     }
 
+
     /**
      * Calculate the number of levels below.
      * <p>
@@ -514,6 +580,7 @@ public class BinaryTree<Item>
       return Math.max(leftHeight, rightHeight) + 1;
     }
 
+
     private void recalculateSizeAndHeight()
     {
       this.size = this.calculateSize();
@@ -523,6 +590,7 @@ public class BinaryTree<Item>
         this.parent.recalculateSizeAndHeight();
       }
     }
+
 
     /**
      * Print out the items in this subtree, "pre-order".
@@ -543,6 +611,7 @@ public class BinaryTree<Item>
       }
     }
 
+
     /**
      * Print out the items in this subtree, "in-order".
      * <p>
@@ -561,6 +630,7 @@ public class BinaryTree<Item>
         this.right.printInOrder();
       }
     }
+
 
     /**
      * Print out the items in this subtree, "post-order".
@@ -581,6 +651,7 @@ public class BinaryTree<Item>
       System.out.println(this.item);
     }
 
+
     /**
      * Insert the given node as the left child.
      *
@@ -598,12 +669,13 @@ public class BinaryTree<Item>
       }
       if (left.hasParent() || left.tree != this.tree)
       {
-        throw new IllegalStateException();
+        throw new IllegalArgumentException();
       }
       this.left = left;
       left.parent = this;
       this.recalculateSizeAndHeight();
     }
+
 
     /**
      * Insert the given node as the right child.
@@ -622,12 +694,13 @@ public class BinaryTree<Item>
       }
       if (right.hasParent() || right.tree != this.tree)
       {
-        throw new IllegalStateException();
+        throw new IllegalArgumentException();
       }
       this.right = right;
       right.parent = this;
       this.recalculateSizeAndHeight();
     }
+
 
     /**
      * Remove and return the left child.
@@ -648,6 +721,7 @@ public class BinaryTree<Item>
       return left;
     }
 
+
     /**
      * Remove and return the right child.
      *
@@ -667,18 +741,22 @@ public class BinaryTree<Item>
       return right;
     }
 
+
     @Override
     public String toString()
     {
       return To.string(this.item);
     }
+
   }
+
 
   @Override
   public String toString()
   {
     return this.toString(root);
   }
+
 
   private String toString(Node<Item> node)
   {
@@ -691,73 +769,88 @@ public class BinaryTree<Item>
     return "[" + l + ' ' + node + ' ' + r + "]";
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   public Iterable<Node<Item>> preOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.PRE);
   }
 
+
   public Iterable<Node<Item>> inOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.IN);
   }
+
 
   public Iterable<Node<Item>> postOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.POST);
   }
 
+
   public Iterable<Node<Item>> reversePreOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.REVERSE_PRE);
   }
+
 
   public Iterable<Node<Item>> reverseInOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.REVERSE_IN);
   }
 
+
   public Iterable<Node<Item>> reversePostOrderNodes()
   {
     return () -> new NodeIterator<>(this, IterationOrder.REVERSE_POST);
   }
+
 
   public Iterable<Item> preOrder()
   {
     return Iterators.applyEach(this.preOrderNodes(), Node::item);
   }
 
+
   public Iterable<Item> inOrder()
   {
     return Iterators.applyEach(this.inOrderNodes(), Node::item);
   }
+
 
   public Iterable<Item> postOrder()
   {
     return Iterators.applyEach(this.postOrderNodes(), Node::item);
   }
 
+
   public Iterable<Item> reversePreOrder()
   {
     return Iterators.applyEach(this.reversePreOrderNodes(), Node::item);
   }
+
 
   public Iterable<Item> reverseInOrder()
   {
     return Iterators.applyEach(this.reverseInOrderNodes(), Node::item);
   }
 
+
   public Iterable<Item> reversePostOrder()
   {
     return Iterators.applyEach(this.reversePostOrderNodes(), Node::item);
   }
+
 
   @Override
   public Iterable<Item> items()
   {
     return this.preOrder();
   }
+
 
   public enum IterationOrder
   {
@@ -772,10 +865,18 @@ public class BinaryTree<Item>
   public static class NodeIterator<Item>
     implements Iterator<Node<Item>>
   {
+
     private Node<Item> node;
+
+
     private NodeIterator<Item> left;
+
+
     private NodeIterator<Item> right;
+
+
     private IterationOrder order;
+
 
     /**
      * Construct an iterator over the nodes in a binary tree.
@@ -787,6 +888,7 @@ public class BinaryTree<Item>
     {
       this(tree.root(), order);
     }
+
 
     private NodeIterator(Node<Item> node, IterationOrder order)
     {
@@ -802,20 +904,24 @@ public class BinaryTree<Item>
       }
     }
 
+
     private boolean hasNode()
     {
       return this.node != null;
     }
+
 
     private boolean hasLeft()
     {
       return this.left != null && this.left.hasNext();
     }
 
+
     private boolean hasRight()
     {
       return this.right != null && this.right.hasNext();
     }
+
 
     private Node<Item> node()
     {
@@ -824,21 +930,25 @@ public class BinaryTree<Item>
       return node;
     }
 
+
     private Node<Item> left()
     {
       return this.left.next();
     }
+
 
     private Node<Item> right()
     {
       return this.right.next();
     }
 
+
     @Override
     public boolean hasNext()
     {
       return this.hasNode() || this.hasLeft() || this.hasRight();
     }
+
 
     @Override
     public Node<Item> next()
@@ -933,7 +1043,10 @@ public class BinaryTree<Item>
       }
       throw new NoSuchElementException();
     }
+
   }
 
+
   //</editor-fold>
+
 }

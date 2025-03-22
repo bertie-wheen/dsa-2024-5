@@ -14,9 +14,13 @@ import java.util.Objects;
 public class Array<Item>
   implements Container<Item>
 {
+
   private Item[] items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
+
   /**
    * Construct an empty array.
    */
@@ -25,6 +29,7 @@ public class Array<Item>
   {
     this.items = (Item[]) new Object[0];
   }
+
 
   /**
    * Construct an array containing the given items.
@@ -41,13 +46,17 @@ public class Array<Item>
       this.items[i] = items[i];
     }
   }
+
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
     return this.items.length;
   }
+
 
   @Override
   public boolean contains(Item item)
@@ -61,4 +70,5 @@ public class Array<Item>
     }
     return false;
   }
+
 }

@@ -10,9 +10,13 @@ import dsa.lab01.base.StringContainer;
 public class StringArray
   implements StringContainer
 {
+
   private String[] strings;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
+
   /**
    * Construct an empty string array.
    */
@@ -20,6 +24,7 @@ public class StringArray
   {
     this.strings = new String[0];
   }
+
 
   /**
    * Construct a string array containing the given strings.
@@ -34,13 +39,17 @@ public class StringArray
       this.strings[i] = strings[i];
     }
   }
+
+
   //</editor-fold>
+
 
   @Override
   public int size()
   {
     return this.strings.length;
   }
+
 
   @Override
   public boolean contains(String string)
@@ -67,4 +76,5 @@ public class StringArray
     }
     return false;
   }
+
 }

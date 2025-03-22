@@ -14,4 +14,5 @@ import java.lang.annotation.Target;
   generator = ReplaceCamelCaseDisplayNameGenerator.class)
 public @interface DefaultDisplayNameGeneration
 {
+
 }

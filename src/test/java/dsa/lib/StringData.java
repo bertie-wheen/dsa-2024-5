@@ -2,6 +2,7 @@ package dsa.lib;
 
 public class StringData
 {
+
   public static final Source<String>
     NULL = Source.singleton(null),
     EMPTY = Source.singleton(""),
@@ -16,4 +17,5 @@ public class StringData
         "*&^%$£!"),
     NON_NULL = Source.chain(EMPTY, NON_EMPTY),
     ALL = Source.chain(NULL, NON_NULL);
+
 }

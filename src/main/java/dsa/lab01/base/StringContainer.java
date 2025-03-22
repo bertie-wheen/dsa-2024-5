@@ -8,12 +8,14 @@ package dsa.lab01.base;
  */
 public interface StringContainer
 {
+
   /**
    * Get the number of contained strings.
    *
    * @return the size
    */
   int size();
+
 
   /**
    * Check if it's empty.
@@ -25,6 +27,7 @@ public interface StringContainer
     return this.size() == 0;
   }
 
+
   /**
    * Check if the given string is equal to any of those contained.
    *
@@ -32,4 +35,5 @@ public interface StringContainer
    * @return whether such a string is contained
    */
   boolean contains(String string);
+
 }

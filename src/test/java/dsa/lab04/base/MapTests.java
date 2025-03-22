@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -19,6 +18,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface MapTests
 {
+
   static <Key, Value> Source<MapItem<Key, Value>> sortedItems(
     Map<Key, Value> map)
   {
@@ -26,15 +26,18 @@ public interface MapTests
       .sorted(Comparator.comparing((item) -> Objects.hashCode(item.key())));
   }
 
+
   static <Key, Value> Predicate<MapItem<Key, Value>> keyNotEquals(Key key)
   {
     return (item) -> !Objects.equals(key, item.key());
   }
 
+
   @DisplayName("find")
   @DefaultDisplayNameGeneration
   interface Find
   {
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void findsIfContained(
@@ -43,6 +46,7 @@ public interface MapTests
     {
       assertEquals(item, map.find(item.key()));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="findsIfContained arguments">
     static Source<Arguments> findsIfContained(Class<?> mapClass)
@@ -66,6 +70,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void doesNotFindIfNotContained(
@@ -76,6 +81,7 @@ public interface MapTests
         NoSuchElementException.class,
         () -> map.find(key));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="doesNotFindIfNotContained arguments">
     static Source<Arguments> doesNotFindIfNotContained(Class<?> mapClass)
@@ -99,6 +105,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Key, Value> void doesNotChangeItems(
@@ -117,6 +124,7 @@ public interface MapTests
       assertArrayEquals(oldItems, newItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Key, Value> void doesNotChangeSize(
@@ -134,6 +142,7 @@ public interface MapTests
       int newSize = map.size();
       assertEquals(oldSize, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> mapClass)
@@ -158,12 +167,14 @@ public interface MapTests
             arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("insert")
   @DefaultDisplayNameGeneration
   interface Insert
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Key, Value> void inserts(
@@ -173,6 +184,7 @@ public interface MapTests
       map.insert(item);
       assertEquals(item, map.find(item.key()));
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -188,6 +200,7 @@ public interface MapTests
       assertArrayEquals(before, after);
     }
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void doesNotChangeSizeIfContained(
@@ -199,6 +212,7 @@ public interface MapTests
       int newSize = map.size();
       assertEquals(oldSize, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="doesNotChangeSizeIfContained arguments">
     static Source<Arguments> doesNotChangeSizeIfContained(Class<?> mapClass)
@@ -228,6 +242,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void incrementsSizeIfNotContained(
@@ -239,6 +254,7 @@ public interface MapTests
       int newSize = map.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="incrementsSizeIfNotContained arguments">
     static Source<Arguments> incrementsSizeIfNotContained(Class<?> mapClass)
@@ -268,6 +284,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> mapClass)
     {
@@ -291,12 +308,14 @@ public interface MapTests
             arguments));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("remove")
   @DefaultDisplayNameGeneration
   interface Remove
   {
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void returnsItemIfContained(
@@ -305,6 +324,7 @@ public interface MapTests
     {
       assertEquals(item, map.remove(item.key()));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="returnsItemIfContained arguments">
     static Source<Arguments> returnsItemIfContained(Class<?> mapClass)
@@ -328,6 +348,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void removesIfContained(
@@ -337,6 +358,7 @@ public interface MapTests
       map.remove(key);
       assertFalse(map.containsKey(key));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="removesIfContained arguments">
     static Source<Arguments> removesIfContained(Class<?> mapClass)
@@ -360,6 +382,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void throwsIfNotContained(
@@ -370,6 +393,7 @@ public interface MapTests
         NoSuchElementException.class,
         () -> map.remove(key));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfNotContained arguments">
     static Source<Arguments> throwsIfNotContained(Class<?> mapClass)
@@ -393,6 +417,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void doesNotChangeOthers(
@@ -412,6 +437,7 @@ public interface MapTests
         sortedItems(map).array(MapItem.class);
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="doesNotChangeOthers arguments">
     static Source<Arguments> doesNotChangeOthers(Class<?> mapClass)
@@ -437,6 +463,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void decrementsSizeIfContained(
@@ -448,6 +475,7 @@ public interface MapTests
       int newSize = map.size();
       assertEquals(oldSize - 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="decrementsSizeIfContained arguments">
     static Source<Arguments> decrementsSizeIfContained(Class<?> mapClass)
@@ -471,6 +499,7 @@ public interface MapTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Key, Value> void doesNotChangeSizeIfNotContained(
@@ -488,6 +517,7 @@ public interface MapTests
       int newSize = map.size();
       assertEquals(oldSize, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="doesNotChangeSizeIfNotContained arguments">
     static Source<Arguments> doesNotChangeSizeIfNotContained(Class<?> mapClass)
@@ -510,5 +540,7 @@ public interface MapTests
             arguments));
     }
     //</editor-fold>
+
   }
+
 }

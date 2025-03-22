@@ -16,9 +16,12 @@ import java.util.NoSuchElementException;
 public class LinkedStack<Item>
   implements Stack<Item>
 {
+
   private SinglyLinkedList<Item> items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty linked stack.
@@ -27,6 +30,7 @@ public class LinkedStack<Item>
   {
     this.items = new SinglyLinkedList<>();
   }
+
 
   /**
    * Construct a linked stack containing the given items.
@@ -37,6 +41,7 @@ public class LinkedStack<Item>
   {
     this.items = new SinglyLinkedList<>(items);
   }
+
 
   /**
    * Construct a linked stack containing the given items.
@@ -49,13 +54,16 @@ public class LinkedStack<Item>
     this(Arrays.asList(items));
   }
 
+
   //</editor-fold>
+
 
   @Override
   public void push(Item item)
   {
     this.items.insertFirst(item);
   }
+
 
   @Override
   public Item pop()
@@ -64,6 +72,7 @@ public class LinkedStack<Item>
     return this.items.removeFirst();
   }
 
+
   @Override
   public Item top()
     throws NoSuchElementException
@@ -71,15 +80,18 @@ public class LinkedStack<Item>
     return this.items.first();
   }
 
+
   @Override
   public int size()
   {
     return this.items.size();
   }
 
+
   @Override
   public Iterable<Item> items()
   {
     return this.items.items();
   }
+
 }

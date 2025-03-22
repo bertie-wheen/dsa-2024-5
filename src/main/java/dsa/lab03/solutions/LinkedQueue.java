@@ -16,9 +16,12 @@ import java.util.NoSuchElementException;
 public class LinkedQueue<Item>
   implements Queue<Item>
 {
+
   private SinglyLinkedList<Item> items;
 
+
   //<editor-fold defaultstate="collapsed" desc="Constructors">
+
 
   /**
    * Construct an empty linked queue.
@@ -27,6 +30,7 @@ public class LinkedQueue<Item>
   {
     this.items = new SinglyLinkedList<>();
   }
+
 
   /**
    * Construct a linked queue containing the given items.
@@ -37,6 +41,7 @@ public class LinkedQueue<Item>
   {
     this.items = new SinglyLinkedList<>(items);
   }
+
 
   /**
    * Construct a linked queue containing the given items.
@@ -49,13 +54,16 @@ public class LinkedQueue<Item>
     this(Arrays.asList(items));
   }
 
+
   //</editor-fold>
+
 
   @Override
   public void enqueue(Item item)
   {
     this.items.insertLast(item);
   }
+
 
   @Override
   public Item dequeue()
@@ -64,6 +72,7 @@ public class LinkedQueue<Item>
     return this.items.removeFirst();
   }
 
+
   @Override
   public Item front()
     throws NoSuchElementException
@@ -71,15 +80,18 @@ public class LinkedQueue<Item>
     return this.items.first();
   }
 
+
   @Override
   public int size()
   {
     return this.items.size();
   }
 
+
   @Override
   public Iterable<Item> items()
   {
     return this.items.items();
   }
+
 }

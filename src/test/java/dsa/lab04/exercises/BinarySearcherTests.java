@@ -20,6 +20,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 @DisplayName("BinarySearcher")
 public class BinarySearcherTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(BinarySearcher.class);
@@ -28,6 +29,7 @@ public class BinarySearcherTests
   @DefaultDisplayNameGeneration
   interface SearchTests
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item extends Comparable<Item>> void returnsCorrectIndexIfContained(
@@ -38,6 +40,7 @@ public class BinarySearcherTests
       assertNotEquals(-1, index);
       assertEquals(item, sequence.get(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="returnsCorrectIndexIfContained arguments">
     static Source<Arguments> returnsCorrectIndexIfContained(
@@ -69,6 +72,7 @@ public class BinarySearcherTests
     }
     //</editor-fold>
 
+
     @DisplayName("returns -1 if not contained")
     @ParameterizedTest
     @MethodSource
@@ -78,6 +82,7 @@ public class BinarySearcherTests
     {
       assertEquals(-1, new BinarySearcher().search(sequence, item));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="returnsNegativeOneIfNotContained arguments">
     static Source<Arguments> returnsNegativeOneIfNotContained(Class<?> binarySearcherClass)
@@ -107,11 +112,14 @@ public class BinarySearcherTests
             arguments));
     }
     //</editor-fold>
+
   }
 
   @Nested
   class Search
     implements SearchTests
   {
+
   }
+
 }

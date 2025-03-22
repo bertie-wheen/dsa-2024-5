@@ -15,10 +15,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface SorterTests
 {
+
   @DisplayName("sort")
   @DefaultDisplayNameGeneration
   interface Sort
   {
+
     static <Item> void sorts(
       Sorter sorter,
       StaticSequence<Item> items,
@@ -30,6 +32,7 @@ public interface SorterTests
       assertArrayEquals(oldItemsSorted, newItems);
     }
 
+
     @ParameterizedTest
     @MethodSource
     default <Item extends Comparable<Item>> void sortsInNaturalOrder(
@@ -38,6 +41,7 @@ public interface SorterTests
     {
       sorts(sorter, items, Comparator.nullsFirst(Comparator.naturalOrder()));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="sortsInNaturalOrder arguments">
     static Source<Arguments> sortsInNaturalOrder(Class<?> sorterClass)
@@ -60,6 +64,7 @@ public interface SorterTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @MethodSource
     default <Item extends Comparable<Item>> void sortsInReverseOrder(
@@ -68,6 +73,7 @@ public interface SorterTests
     {
       sorts(sorter, items, Comparator.nullsLast(Comparator.reverseOrder()));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="sortsInReverseOrder arguments">
     static Source<Arguments> sortsInReverseOrder(Class<?> sorterClass)
@@ -89,5 +95,7 @@ public interface SorterTests
             sequence));
     }
     //</editor-fold>
+
   }
+
 }

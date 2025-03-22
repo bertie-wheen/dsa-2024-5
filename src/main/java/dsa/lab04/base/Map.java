@@ -20,6 +20,7 @@ import java.util.Objects;
 public interface Map<Key, Value>
   extends Container<MapItem<Key, Value>>
 {
+
   /**
    * Find the item with the given key.
    *
@@ -29,6 +30,7 @@ public interface Map<Key, Value>
    */
   MapItem<Key, Value> find(Key key)
     throws NoSuchElementException;
+
 
   /**
    * Insert the given item.
@@ -42,6 +44,7 @@ public interface Map<Key, Value>
    * @param item the item
    */
   void insert(MapItem<Key, Value> item);
+
 
   /**
    * Insert an item with the given key and value.
@@ -60,6 +63,7 @@ public interface Map<Key, Value>
     this.insert(new MapItem<>(key, value));
   }
 
+
   /**
    * Remove and return the item with the given key.
    * <p>
@@ -71,6 +75,7 @@ public interface Map<Key, Value>
    */
   MapItem<Key, Value> remove(Key key)
     throws NoSuchElementException;
+
 
   /**
    * Check if the given key is equal to any of those contained.
@@ -90,6 +95,7 @@ public interface Map<Key, Value>
     return false;
   }
 
+
   /**
    * Check if the given value is equal to any of those contained.
    *
@@ -108,6 +114,7 @@ public interface Map<Key, Value>
     return false;
   }
 
+
   /**
    * Get the value associated with the given key.
    *
@@ -118,10 +125,16 @@ public interface Map<Key, Value>
   default Value get(Key key)
     throws NoSuchElementException
   {
+    // NOTE: Sometimes maps are thought of, rather than as storing items by key,
+    //       instead as storing key/value mappings. In that case you may want to
+    //       get the corresponding value for a given key, rather than find the
+    //       item with a given key. For that, there's this!
     return this.find(key).value();
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
+
 
   /**
    * Get an iterable that yields each key once.
@@ -133,6 +146,7 @@ public interface Map<Key, Value>
     return Iterators.applyEach(this, MapItem::key);
   }
 
+
   /**
    * Get an iterable that yields each value once.
    *
@@ -143,5 +157,7 @@ public interface Map<Key, Value>
     return Iterators.applyEach(this, MapItem::value);
   }
 
+
   //</editor-fold>
+
 }

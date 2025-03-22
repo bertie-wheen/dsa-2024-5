@@ -15,12 +15,18 @@ import java.util.NoSuchElementException;
 public interface Queue<Item>
   extends Container<Item>
 {
+
+  // NOTE: Some people will include additional methods/operations, but here we
+  //       include only the core operations that define the essence of a queue.
+
+
   /**
    * Enqueue (insert) the given item to the back.
    *
    * @param item the new back item
    */
   void enqueue(Item item);
+
 
   /**
    * Dequeue (remove and return) the given item from the front.
@@ -32,6 +38,7 @@ public interface Queue<Item>
   Item dequeue()
     throws NoSuchElementException;
 
+
   /**
    * Get the item at the front.
    *
@@ -41,4 +48,5 @@ public interface Queue<Item>
    */
   Item front()
     throws NoSuchElementException;
+
 }

@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("BinaryTree")
 public class BinaryTreeTests
 {
+
   @DisplayName("level")
   @ParameterizedTest
   @DefaultMethodSource
@@ -34,6 +35,7 @@ public class BinaryTreeTests
     int solutionLevel = solutionNode.level();
     assertEquals(solutionLevel, node.level());
   }
+
 
   @DisplayName("calculate size")
   @ParameterizedTest
@@ -58,6 +60,7 @@ public class BinaryTreeTests
     int solutionSize = (int) solutionCalculateSize.invoke(solutionNode);
     assertEquals(solutionSize, (int) calculateSize.invoke(node));
   }
+
 
   @DisplayName("calculate height")
   @ParameterizedTest
@@ -84,6 +87,7 @@ public class BinaryTreeTests
     assertEquals(solutionHeight, (int) calculateHeight.invoke(node));
   }
 
+
   @DisplayName("print pre order")
   @ParameterizedTest
   @DefaultMethodSource
@@ -96,6 +100,7 @@ public class BinaryTreeTests
     String solutionOutput = captureOutput(solutionNode::printPreOrder);
     assertEquals(solutionOutput, captureOutput(node::printPreOrder));
   }
+
 
   @DisplayName("print in order")
   @ParameterizedTest
@@ -110,6 +115,7 @@ public class BinaryTreeTests
     assertEquals(solutionOutput, captureOutput(node::printInOrder));
   }
 
+
   @DisplayName("print post order")
   @ParameterizedTest
   @DefaultMethodSource
@@ -122,6 +128,7 @@ public class BinaryTreeTests
     String solutionOutput = captureOutput(solutionNode::printPostOrder);
     assertEquals(solutionOutput, captureOutput(node::printPostOrder));
   }
+
 
   //<editor-fold defaultstate="collapsed" desc="arguments">
   static Source<Arguments> arguments()
@@ -141,6 +148,7 @@ public class BinaryTreeTests
   }
   //</editor-fold>
 
+
   //<editor-fold defaultstate="collapsed" desc="helper functions">
   private static <Item> dsa.lab06.solutions.BinaryTree<Item> similarSolution(
     BinaryTree<Item> tree)
@@ -150,6 +158,7 @@ public class BinaryTreeTests
     solutionTree.insertRoot(similarSolution(solutionTree, tree.root()));
     return solutionTree;
   }
+
 
   private static <Item> dsa.lab06.solutions.BinaryTree.Node<Item> similarSolution(
     dsa.lab06.solutions.BinaryTree<Item> tree,
@@ -166,6 +175,7 @@ public class BinaryTreeTests
       similarSolution(tree, node.right()));
   }
 
+
   private static <Item> Stack<Boolean> toPath(BinaryTree.Node<Item> node)
   {
     Stack<Boolean> path = new ArrayStack<>();
@@ -178,6 +188,7 @@ public class BinaryTreeTests
     return path;
   }
 
+
   private static <Item> dsa.lab06.solutions.BinaryTree.Node<Item> fromPath(
     dsa.lab06.solutions.BinaryTree<Item> tree,
     Stack<Boolean> path)
@@ -189,6 +200,7 @@ public class BinaryTreeTests
     }
     return node;
   }
+
 
   private static String captureOutput(Runnable runnable)
   {
@@ -207,4 +219,5 @@ public class BinaryTreeTests
     return String.join(",", lines);
   }
   //</editor-fold>
+
 }

@@ -14,10 +14,12 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
 public interface DynamicSequenceTests
 {
+
   @DisplayName("insert")
   @DefaultDisplayNameGeneration
   interface Insert
   {
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void insertsIntoCorrectIndex(
@@ -28,6 +30,7 @@ public interface DynamicSequenceTests
       dynamicSequence.insert(index, item);
       assertEquals(item, dynamicSequence.get(index));
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -44,6 +47,7 @@ public interface DynamicSequenceTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void incrementsSize(
@@ -56,6 +60,7 @@ public interface DynamicSequenceTests
       int newSize = dynamicSequence.size();
       assertEquals(oldSize + 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> sequenceClass)
@@ -80,12 +85,14 @@ public interface DynamicSequenceTests
         forType.apply(SourceData.Ints.ALL.cast(), IntData.ALL));
     }
     //</editor-fold>
+
   }
 
   @DisplayName("remove")
   @DefaultDisplayNameGeneration
   interface Remove
   {
+
     @ParameterizedTest
     @MethodSource
     default <Item> void throwsIfEmpty(
@@ -96,6 +103,7 @@ public interface DynamicSequenceTests
         IndexOutOfBoundsException.class,
         () -> dynamicSequence.remove(index));
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="throwsIfEmpty arguments">
     static Source<Arguments> throwsIfEmpty(
@@ -111,6 +119,7 @@ public interface DynamicSequenceTests
     }
     //</editor-fold>
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void removesFromCorrectIndex(
@@ -120,6 +129,7 @@ public interface DynamicSequenceTests
       Item item = dynamicSequence.get(index);
       assertEquals(item, dynamicSequence.remove(index));
     }
+
 
     @ParameterizedTest
     @DefaultMethodSource
@@ -135,6 +145,7 @@ public interface DynamicSequenceTests
       assertArrayEquals(oldOtherItems, newOtherItems);
     }
 
+
     @ParameterizedTest
     @DefaultMethodSource
     default <Item> void decrementsSize(
@@ -146,6 +157,7 @@ public interface DynamicSequenceTests
       int newSize = dynamicSequence.size();
       assertEquals(oldSize - 1, newSize);
     }
+
 
     //<editor-fold defaultstate="collapsed" desc="arguments">
     static Source<Arguments> arguments(Class<?> sequenceClass)
@@ -167,5 +179,7 @@ public interface DynamicSequenceTests
           arguments));
     }
     //</editor-fold>
+
   }
+
 }

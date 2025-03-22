@@ -6,6 +6,7 @@ package dsa.lib;
 class ImpossibleException
   extends RuntimeException
 {
+
   /**
    * Construct an ImpossibleException.
    */
@@ -14,6 +15,7 @@ class ImpossibleException
     super("Something impossible happened - contact the module team!");
   }
 
+
   /**
    * Construct an ImpossibleException with the given cause.
    */
@@ -21,4 +23,5 @@ class ImpossibleException
   {
     super("Something impossible happened - contact the module team!", cause);
   }
+
 }

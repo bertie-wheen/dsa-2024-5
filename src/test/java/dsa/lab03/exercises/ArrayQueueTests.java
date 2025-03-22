@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("ArrayQueue")
 public class ArrayQueueTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(ArrayQueue.class);
@@ -18,17 +19,21 @@ public class ArrayQueueTests
   public class Enqueue
     implements QueueTests.Enqueue
   {
+
   }
 
   @Nested
   public class Front
     implements QueueTests.Front
   {
+
   }
 
   @Nested
   public class Dequeue
     implements QueueTests.Dequeue
   {
+
   }
+
 }

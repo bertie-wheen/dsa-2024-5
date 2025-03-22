@@ -14,12 +14,29 @@ import java.util.NoSuchElementException;
  */
 public interface LinkedNode<Item>
 {
+
   /**
    * Get the containing list.
    *
    * @return the list
    */
   LinkedList<Item> list();
+  // NOTE: Some linked list implementations don't have any methods (at least not
+  //       any insert/remove methods) on nodes, and instead only have
+  //       (insert/remove) methods on the list(s). Such implementations usually
+  //       don't store a pointer to the containing list on each of the nodes,
+  //       and would thus not be able to implement this method. However, we're
+  //       not programming an implementation like that here. (If you're taking
+  //       a less object-oriented approach than we are here, perhaps because
+  //       you're using a less object-oriented language than Java, it does have
+  //       the advantage of being more memory efficient - not storing the list
+  //       pointers reduces the space each node requires by 1/4 to 1/3 (if the
+  //       nodes are doubly- or singly-linked, respectively), and since for
+  //       large lists (i.e. with lots of nodes) the nodes dominate the list's
+  //       overall space requirement, it can cut the overall space required by
+  //       the list(s) by nearly 1/4 to 1/3.) (It's the same difference in space
+  //       requirements as with singly- vs doubly-linked nodes/lists.)
+
 
   /**
    * Get the contained item.
@@ -27,6 +44,7 @@ public interface LinkedNode<Item>
    * @return the item
    */
   Item item();
+
 
   /**
    * Set the contained item.
@@ -37,12 +55,18 @@ public interface LinkedNode<Item>
    */
   void setItem(Item item);
 
+
   /**
    * Get the previous node. or {@code null} if this is the first.
    *
    * @return the predecessor
    */
   LinkedNode<Item> previous();
+  // NOTE: For doubly-linked nodes will be O(1).
+  // NOTE: For singly-linked nodes that don't store a previous pointer, O(n),
+  //       as we'll have to find the previous node by starting at the first node
+  //       and repeatedly going to the next node until we do.
+
 
   /**
    * Get the next node. or {@code null} if this is the last.
@@ -50,6 +74,15 @@ public interface LinkedNode<Item>
    * @return the successor
    */
   LinkedNode<Item> next();
+  // NOTE: For doubly-linked nodes will be O(1).
+  // NOTE: For the singly-linked nodes we'll implement, also O(1).
+  // NOTE: A singly-linked variant we don't cover (because it's essentially
+  //       equivalent to the one we do) instead stores a link to the previous
+  //       node, but not to the next node, in which case this would be O(n).
+  // NOTE: When we talk about singly-linked nodes/lists, we will always mean
+  //       ones with a next link but no previous link, and will not consider the
+  //       other variety.
+
 
   /**
    * Insert a node containing the given item
@@ -58,6 +91,8 @@ public interface LinkedNode<Item>
    * @param item the new previous item
    */
   void insertPrevious(Item item);
+  // NOTE: For singly-linked, O(n); doubly-linked, O(1).
+
 
   /**
    * Insert a node containing the given item
@@ -66,6 +101,8 @@ public interface LinkedNode<Item>
    * @param item the new next item
    */
   void insertNext(Item item);
+  // NOTE: For singly- and doubly-linked, O(1).
+
 
   /**
    * Remove the node from the list and return its item.
@@ -73,6 +110,8 @@ public interface LinkedNode<Item>
    * @return the item
    */
   Item remove();
+  // NOTE: For singly-linked, O(n); doubly-linked, O(1).
+
 
   /**
    * Remove the previous node from the list and return its item.
@@ -83,6 +122,8 @@ public interface LinkedNode<Item>
    */
   Item removePrevious()
     throws NoSuchElementException;
+  // NOTE: For singly-linked, O(n); doubly-linked, O(1).
+
 
   /**
    * Remove the next node from the list and return its item.
@@ -93,6 +134,8 @@ public interface LinkedNode<Item>
    */
   Item removeNext()
     throws NoSuchElementException;
+  // NOTE: For singly- and doubly-linked, O(1).
+
 
   /**
    * Check if it's the first in the list.
@@ -101,8 +144,11 @@ public interface LinkedNode<Item>
    */
   default boolean isFirst()
   {
+    // NOTE: Could alternatively implement in terms of previous(), but that
+    //       may be O(n) and this is likely to be O(1).
     return this.list().firstNode() == this;
   }
+
 
   /**
    * Check if it's the last in the list.
@@ -114,6 +160,7 @@ public interface LinkedNode<Item>
     return this.list().lastNode() == this;
   }
 
+
   /**
    * Check if it has a previous node.
    *
@@ -121,8 +168,12 @@ public interface LinkedNode<Item>
    */
   default boolean hasPrevious()
   {
+    // NOTE: Similar comments to isFirst().
+    // NOTE: Could instead implement isFirst() in terms of this, and this in
+    //       terms of list().firstNode(), which would be equivalently good.
     return !this.isFirst();
   }
+
 
   /**
    * Check if it has a next node.
@@ -133,4 +184,5 @@ public interface LinkedNode<Item>
   {
     return !this.isLast();
   }
+
 }

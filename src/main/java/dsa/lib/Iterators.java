@@ -1,12 +1,14 @@
 package dsa.lib;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 @SuppressWarnings("UnnecessaryBoxing")  // (it's to satisfy corretto-1.8)
 public final class Iterators
 {
+
   private Iterators()
   {
   }
@@ -27,11 +29,13 @@ public final class Iterators
     {
       private Iterator<A> iterator = iterable.iterator();
 
+
       @Override
       public boolean hasNext()
       {
         return this.iterator.hasNext();
       }
+
 
       @Override
       public B next()
@@ -41,6 +45,7 @@ public final class Iterators
     };
   }
 
+
   @SuppressWarnings("AssignmentUsedAsCondition")
   public static <T> Iterable<T> filter(
     Predicate<T> predicate,
@@ -49,8 +54,13 @@ public final class Iterators
     return () -> new Iterator<T>()
     {
       private Iterator<T> iterator = iterable.iterator();
+
+
       private T next = null;
+
+
       private boolean hasNext = false;
+
 
       {
         while (this.iterator.hasNext())
@@ -63,11 +73,13 @@ public final class Iterators
         }
       }
 
+
       @Override
       public boolean hasNext()
       {
         return this.hasNext;
       }
+
 
       @Override
       public T next()
@@ -91,13 +103,17 @@ public final class Iterators
     };
   }
 
+
   public static <T> Iterable<T> flatten(
     Iterable<? extends Iterable<T>> iterable)
   {
     return () -> new Iterator<T>()
     {
       private Iterator<? extends Iterable<T>> iterator = iterable.iterator();
+
+
       private Iterator<T> innerIterator;
+
 
       {
         do
@@ -108,11 +124,13 @@ public final class Iterators
         while (this.innerIterator != null && !this.innerIterator.hasNext());
       }
 
+
       @Override
       public boolean hasNext()
       {
         return this.innerIterator != null;
       }
+
 
       @Override
       public T next()
@@ -132,13 +150,16 @@ public final class Iterators
     };
   }
 
+
   public static <T> Iterable<T> reversed(Iterable<T> iterable)
   {
     return Source.from(iterable).reversed();
   }
 
+
   public static <T> Iterable<T> reversed(Iterable<T> iterable, int ignored)
   {
     return Source.from(iterable).reversed();
   }
+
 }

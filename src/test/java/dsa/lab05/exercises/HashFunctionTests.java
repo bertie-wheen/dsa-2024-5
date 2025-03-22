@@ -17,6 +17,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 @DisplayName("HashFunction")
 public class HashFunctionTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(HashFunction.class);
@@ -25,6 +26,7 @@ public class HashFunctionTests
   @DefaultDisplayNameGeneration
   interface HashTests
   {
+
     @ParameterizedTest
     @MethodSource
     default void returnsSameAsSolution(int size, Object object)
@@ -52,6 +54,7 @@ public class HashFunctionTests
       assertEquals(solutionHash, hash);
     }
 
+
     //<editor-fold defaultstate="collapsed" desc="returnsSameAsSolution arguments">
     static Source<Arguments> returnsSameAsSolution(Class<?> hashFunctionClass)
     {
@@ -65,11 +68,14 @@ public class HashFunctionTests
             object)));
     }
     //</editor-fold>
+
   }
 
   @Nested
   class Hash
     implements HashTests
   {
+
   }
+
 }

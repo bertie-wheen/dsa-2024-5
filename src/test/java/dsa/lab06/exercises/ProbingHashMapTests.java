@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @DisplayName("ProbingHashMap")
 public class ProbingHashMapTests
 {
+
   @RegisterExtension
   static final ParameterResolver classResolver =
     ClassUtils.resolver(ProbingHashMap.class);
@@ -18,17 +19,21 @@ public class ProbingHashMapTests
   class Find
     implements MapTests.Find
   {
+
   }
 
   @Nested
   class Insert
     implements MapTests.Insert
   {
+
   }
 
   @Nested
   class Remove
     implements MapTests.Remove
   {
+
   }
+
 }
