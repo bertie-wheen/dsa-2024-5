@@ -168,11 +168,13 @@ rotation, because their heights might have changed and, after the rotation,
 `node` is now below `left`. Don't delete these two lines of code! Same for
 `rotateA(node)`.
 
-Remember to `Run Lab 8 
-tests` (be sure that you understand our comments about testing above) 
-and to 
-compare your code with the solutions, which
-you can find in `lab08\solutions`.
+Remember to `Run Lab 8 tests` (be sure that you understand our comments about
+testing above) and to compare your code with the solutions, which you can find
+in `lab08\solutions`.
+
+(Note that, if you're using e.g. slide 21 of the Lecture 14, you may wish to
+rename `node` in `rotateC` to `z` and `z.left` to `y` - and perhaps introduce
+e.g. a local variable `Node<Key, Value> t2 = y.right;`.)
 
 
 ## Exercise 2: rebalancing
