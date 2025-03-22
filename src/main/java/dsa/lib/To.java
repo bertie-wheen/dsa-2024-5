@@ -4,6 +4,7 @@ import dsa.lab02.base.Container;
 import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
 import dsa.lab06.solutions.BinaryTree;
+import dsa.lab09.base.PriorityQueueItem;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -77,6 +78,10 @@ public class To
     if (Is.mapItem(object))
     {
       return To.string((MapItem<?, ?>) object, indent);
+    }
+    if (Is.priorityQueueItem(object))
+    {
+      return To.string((PriorityQueueItem<?, ?>) object, indent);
     }
     if (Is.container(object))
     {
@@ -287,6 +292,23 @@ public class To
   {
     return To.string(item.key(), indent) + " => " + To.string(
       item.value(),
+      indent);
+  }
+
+
+  public static <Priority extends Comparable<Priority>, Item> String string(
+    PriorityQueueItem<Priority, Item> item)
+  {
+    return To.string(item, "");
+  }
+
+
+  public static <Priority extends Comparable<Priority>, Item> String string(
+    PriorityQueueItem<Priority, Item> item,
+    String indent)
+  {
+    return "Priority " + To.string(item.priority(), indent) + ": " + To.string(
+      item.item(),
       indent);
   }
 

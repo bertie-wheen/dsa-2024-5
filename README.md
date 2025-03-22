@@ -18,6 +18,7 @@
 6. [Probing & Binary Trees](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab06)
 7. [Binary Search Trees](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab07)
 8. [AVL Trees](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab08)
+9. [Priority Queues & Binary Heaps](https://github.com/bertie-wheen/dsa-2024-5/tree/trunk/src/main/java/dsa/lab09)
 
 
 ## Setup

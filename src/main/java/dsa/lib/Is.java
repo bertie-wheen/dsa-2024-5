@@ -4,6 +4,7 @@ import dsa.lab02.base.Container;
 import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
 import dsa.lab06.solutions.BinaryTree;
+import dsa.lab09.base.PriorityQueueItem;
 
 import java.util.Arrays;
 
@@ -91,6 +92,18 @@ public class Is
   public static boolean mapItem(Class<?> class_)
   {
     return class_.equals(MapItem.class);
+  }
+
+
+  public static boolean priorityQueueItem(Object object)
+  {
+    return object != null && Is.mapItem(object.getClass());
+  }
+
+
+  public static boolean priorityQueueItem(Class<?> class_)
+  {
+    return class_.equals(PriorityQueueItem.class);
   }
 
 
