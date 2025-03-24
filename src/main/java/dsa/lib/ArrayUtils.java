@@ -146,8 +146,18 @@ public class ArrayUtils
   @SuppressWarnings("unchecked")
   public static <Item> Item[] from(Iterable<Item> items)
   {
+    int index = 0;
     ArrayList<Item> itemsList = new ArrayList<>();
-    items.forEach(itemsList::add);
+    for (Item item : items)
+    {
+      itemsList.add(item);
+      index++;
+      if (index == 100_000)
+      {
+        itemsList.clear();
+        break;
+      }
+    }
     return (Item[]) itemsList.toArray();
   }
 

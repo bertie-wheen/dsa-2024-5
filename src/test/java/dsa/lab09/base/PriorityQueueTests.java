@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.function.BiFunction;
 
 import static dsa.lib.lab09.PriorityQueueItemData.INTS_TO_INTS;
@@ -207,10 +208,15 @@ public interface PriorityQueueTests
       PriorityQueue<Priority, Item> queue)
     {
       PriorityQueueItem<Priority, Item>[] oldItems =
-        Source.from(queue).skipFirstSame(queue.max()).array(PriorityQueueItem.class);
+        Source.from(queue)
+          .skipFirstSame(queue.max())
+          .sorted(Comparator.comparing(Object::hashCode))
+          .array(PriorityQueueItem.class);
       queue.removeMax();
       PriorityQueueItem<Priority, Item>[] newItems =
-        Source.from(queue).array(PriorityQueueItem.class);
+        Source.from(queue)
+          .sorted(Comparator.comparing(Object::hashCode))
+          .array(PriorityQueueItem.class);
       assertArrayEquals(oldItems, newItems);
     }
 
