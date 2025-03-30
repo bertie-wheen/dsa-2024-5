@@ -15,6 +15,11 @@ public class HashFunction
   // NOTE: Since size is an int, its maximum value is 2^31 - 1.
   // NOTE: For this to be larger, it must be a long.
   // NOTE: (This prime was chosen specially for this module!)
+  // NOTE: In a highly-optimized implementation, you would probably choose a
+  //       Mersenne prime, as it's possible to more efficiently compute the
+  //       modulus if the divisor is a Mersenne prime than other sorts of
+  //       primes. You would also vary the prime based on the specific size.
+  // NOTE: https://ariya.io/2007/02/modulus-with-mersenne-prime
 
 
   /** A random value 1 <= a < LARGE_PRIME. */

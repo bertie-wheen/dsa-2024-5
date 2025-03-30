@@ -119,21 +119,33 @@ public class SortedArrayMap<Key extends Comparable<Key>, Value>
   private int indexFor(Key key, int start, int stop)
   {
     // NOTE: This corresponds to BinarySearchMap in the lecture slides.
+    // NOTE: Compare this to BinarySearcher.search() - it's very much the same,
+    //       just with a different base case if the key is not found (instead of
+    //       returning -1 to indicate this, it returns the index reached, which
+    //       is where an item with such a key should be - this will be useful
+    //       particularly in insert(), which will then insert such an item
+    //       at that index, as well as in previous() and next()).
+
     if (start >= stop)
     {
       return start;
     }
+
     int middleIndex = (start + stop) / 2;
     Key middleKey = this.items.get(middleIndex).key();
+
     int comparison = key.compareTo(middleKey);
+
     if (comparison < 0)
     {
       return this.indexFor(key, start, middleIndex);
     }
+
     if (comparison > 0)
     {
       return this.indexFor(key, middleIndex + 1, stop);
     }
+
     return middleIndex;
   }
 
