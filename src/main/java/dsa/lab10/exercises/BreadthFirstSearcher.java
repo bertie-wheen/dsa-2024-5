@@ -48,8 +48,7 @@ public class BreadthFirstSearcher
     Vertex source)
   {
     // NOTE: Initialise the map of path information.
-    Map<Vertex, Path<Vertex, Integer>> paths =
-      new ChainingHashMap<>(new MapItem<>(source, new Path<>(null, 0)));
+    Map<Vertex, Path<Vertex, Integer>> paths = new ChainingHashMap<>();
 
     // NOTE: Initially, the only vertex we know is reachable from the given
     //       source is the source itself. This takes 0 steps, and there is no
