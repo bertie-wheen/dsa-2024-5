@@ -60,7 +60,7 @@ public class Source<Item>
 
   public static <Item> Source<Item> from(Iterator<Item> items)
   {
-    return Source.from(() -> items);
+    return from(() -> items);
   }
 
 
@@ -80,7 +80,7 @@ public class Source<Item>
   @SafeVarargs
   public static <Item> Source<Item> chain(Source<Item>... sources)
   {
-    return flatten(Source.from(sources));
+    return flatten(from(sources));
   }
 
 
@@ -228,7 +228,7 @@ public class Source<Item>
     int sourcesSize = sources.length;
     if (sourcesSize == 0)
     {
-      return Source.singleton(Source.singleton(ArrayUtils.empty()));
+      return singleton(singleton(ArrayUtils.empty()));
     }
     int size = sources[0].size();
     for (int i = 1; i < sourcesSize; i++)
@@ -238,7 +238,7 @@ public class Source<Item>
         throw new IllegalArgumentException();
       }
     }
-    return Source.from(
+    return from(
       size, (int i) ->
       {
         Source<? extends Item>[] productSources =
@@ -262,9 +262,9 @@ public class Source<Item>
     for (int size = minSize; size <= maxSize; size++)
     {
       sources.add(
-        productSourceQuadraticLimit(limit, Source.from(size, source::cycle)));
+        productSourceQuadraticLimit(limit, from(size, source::cycle)));
     }
-    return Source.flatten(Source.from(sources));
+    return flatten(from(sources));
   }
 
 
@@ -332,7 +332,7 @@ public class Source<Item>
     int sourcesSize = sources.length;
     if (sourcesSize == 0)
     {
-      return Source.singleton(makeArray.apply(0));
+      return singleton(makeArray.apply(0));
     }
     int size = sources[0].size();
     for (int i = 1; i < sourcesSize; i++)
@@ -342,7 +342,7 @@ public class Source<Item>
         throw new IllegalArgumentException();
       }
     }
-    return Source.from(
+    return from(
       size,
       (i) ->
         ArrayUtils.from(makeArray, sourcesSize, (j) -> sources[j].getAt(i)));
@@ -409,11 +409,36 @@ public class Source<Item>
   public Source<Item> cycle(int offset)
   {
     int size = this.size();
+    if (size == 0)
+    {
+      return this;
+    }
     offset = Math.floorMod(offset, size);
     Item[] items = ArrayUtils.make(size);
     ArrayUtils.copy(size - offset, this.items, items, offset);
     ArrayUtils.copy(offset, this.items, size - offset, items);
     return new Source<>(items);
+  }
+
+
+  public Source<Source<Item>> cycledSubs()
+  {
+    return from(this.size() + 1, (index) ->
+      this.cycle(index).limit(index));
+  }
+
+
+  public int firstIndex(Item item)
+  {
+    int size = this.size();
+    for (int i = 0; i < size; i++)
+    {
+      if (Objects.equals(item, this.items[i]))
+      {
+        return i;
+      }
+    }
+    return -1;
   }
 
 
@@ -462,7 +487,7 @@ public class Source<Item>
     {
       function.apply(this.items[i], i).forEach(results::add);
     }
-    return Source.from(results);
+    return from(results);
   }
 
 
@@ -487,7 +512,7 @@ public class Source<Item>
       map.putIfAbsent(group, new ArrayList<>());
       map.get(group).add(item);
     }
-    return Source.from(map.values()).replace((items) -> Source.from(items));
+    return from(map.values()).replace((items) -> from(items));
   }
 
 
@@ -517,7 +542,7 @@ public class Source<Item>
   public Source<Item> quadratic()
   {
     List<Item> itemsList = new ArrayList<>(this.list());
-    return Source.from(
+    return from(
       Math.min(this.size(), (int) Math.sqrt(Integer.MAX_VALUE)),
       (i) -> itemsList.remove((i * i - i) % itemsList.size()));
   }
@@ -530,9 +555,7 @@ public class Source<Item>
       throw new IllegalArgumentException();
     }
     int size = this.size();
-    return Source.from(
-      size * repetitions,
-      (i) -> this.items[i % size]);
+    return from(size * repetitions, (i) -> this.items[i % size]);
   }
 
 
@@ -552,7 +575,7 @@ public class Source<Item>
   {
     List<Item> items = this.list();
     Collections.shuffle(items, random);
-    return Source.from(items);
+    return from(items);
   }
 
 
@@ -571,6 +594,12 @@ public class Source<Item>
   public Source<Item> skipLast()
   {
     return this.skipIndex(this.size() - 1);
+  }
+
+
+  public Source<Item> skipFirst(Item item)
+  {
+    return this.skipIndex(this.firstIndex(item));
   }
 
 
@@ -602,7 +631,7 @@ public class Source<Item>
     {
       throw new IllegalArgumentException();
     }
-    return Source.from(this.size() / step, (i) -> this.items[i * step]);
+    return from(this.size() / step, (i) -> this.items[i * step]);
   }
 
 
@@ -614,7 +643,7 @@ public class Source<Item>
 
   public Source<Item> uniques()
   {
-    return Source.from(new LinkedHashSet<>(this.list()));
+    return from(new LinkedHashSet<>(this.list()));
   }
 
 
@@ -628,31 +657,31 @@ public class Source<Item>
         list.add(item);
       }
     }
-    return Source.from(list);
+    return from(list);
   }
 
 
   public Source<Integer> validIndices()
   {
-    return Source.from(this.size(), (i) -> i);
+    return from(this.size(), (i) -> i);
   }
 
 
   public Source<Integer> validNonFirstIndices()
   {
-    return Source.from(this.size() - 1, (i) -> i + 1);
+    return from(this.size() - 1, (i) -> i + 1);
   }
 
 
   public Source<Integer> validNonLastIndices()
   {
-    return Source.from(this.size() - 1, (i) -> i);
+    return from(this.size() - 1, (i) -> i);
   }
 
 
   public Source<Integer> validInsertIndices()
   {
-    return this.validIndices().then(Source.singleton(this.size()));
+    return this.validIndices().then(singleton(this.size()));
   }
 
 
