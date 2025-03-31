@@ -5,6 +5,8 @@ import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
 import dsa.lab06.solutions.BinaryTree;
 import dsa.lab09.base.PriorityQueueItem;
+import dsa.lab10.base.Edge;
+import dsa.lab10.base.Path;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -82,6 +84,14 @@ public class To
     if (Is.priorityQueueItem(object))
     {
       return To.string((PriorityQueueItem<?, ?>) object, indent);
+    }
+    if (Is.edge(object))
+    {
+      return To.string((Edge<?, ?>) object, indent);
+    }
+    if (Is.path(object))
+    {
+      return To.string((Path<?, ?>) object, indent);
     }
     if (Is.container(object))
     {
@@ -384,6 +394,38 @@ public class To
       }
     }
     return sb.toString();
+  }
+
+
+  public static <Vertex, Weight> String string(Edge<Vertex, Weight> edge)
+  {
+    return To.string(edge, "");
+  }
+
+
+  public static <Vertex, Weight> String string(
+    Edge<Vertex, Weight> edge,
+    String indent)
+  {
+    Weight weight = edge.weight();
+    return To.string(edge.source(), indent) +
+      " -" + (weight == null ? "" : "[ " + weight + " ]") + "-> " +
+      To.string(edge.target(), indent);
+  }
+
+
+  public static <Vertex, Distance> String string(Path<Vertex, Distance> path)
+  {
+    return To.string(path, "");
+  }
+
+
+  public static <Vertex, Distance> String string(
+    Path<Vertex, Distance> path,
+    String indent)
+  {
+    return "previous: " + To.string(path.previous(), indent) +
+      " (distance: " + To.string(path.distance(), indent) + ")";
   }
 
 

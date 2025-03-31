@@ -5,6 +5,8 @@ import dsa.lab04.base.Map;
 import dsa.lab04.base.MapItem;
 import dsa.lab06.solutions.BinaryTree;
 import dsa.lab09.base.PriorityQueueItem;
+import dsa.lab10.base.Edge;
+import dsa.lab10.base.Path;
 
 import java.util.Arrays;
 
@@ -140,6 +142,30 @@ public class Is
   public static boolean binaryTree(Class<?> class_)
   {
     return Is.interface_(class_, BinaryTree.class);
+  }
+
+
+  public static boolean edge(Object object)
+  {
+    return object != null && Is.edge(object.getClass());
+  }
+
+
+  public static boolean edge(Class<?> class_)
+  {
+    return class_.equals(Edge.class);
+  }
+
+
+  public static boolean path(Object object)
+  {
+    return object != null && Is.path(object.getClass());
+  }
+
+
+  public static boolean path(Class<?> class_)
+  {
+    return class_.equals(Path.class);
   }
 
 

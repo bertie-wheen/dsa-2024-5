@@ -1,5 +1,9 @@
 package dsa.lab10.base;
 
+import dsa.lib.To;
+
+import java.util.Objects;
+
 /**
  * Information about a path (of zero or more edges) from some source to some
  * target vertex.
@@ -67,5 +71,38 @@ public class Path<Vertex, Distance>
   {
     return this.distance;
   }
+
+
+  //<editor-fold defaultstate="collapsed" desc="equals()+hashCode()+toString()">
+
+
+  @Override
+  public boolean equals(Object that)
+  {
+    if (that == null || this.getClass() != that.getClass())
+    {
+      return false;
+    }
+    Path<?, ?> that_ = (Path<?, ?>) that;
+    return Objects.equals(this.previous, that_.previous) &&
+      Objects.equals(this.distance, that_.distance);
+  }
+
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(this.previous, this.distance);
+  }
+
+
+  @Override
+  public String toString()
+  {
+    return To.string(this);
+  }
+
+
+  //</editor-fold>
 
 }

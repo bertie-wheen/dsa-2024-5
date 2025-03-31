@@ -1,5 +1,9 @@
 package dsa.lab10.base;
 
+import dsa.lib.To;
+
+import java.util.Objects;
+
 /**
  * An edge in a directed graph.
  *
@@ -75,9 +79,43 @@ public class Edge<Vertex, Weight>
    *
    * @return the weight data
    */
-  public Weight getWeight()
+  public Weight weight()
   {
     return this.weight;
   }
+
+
+  //<editor-fold defaultstate="collapsed" desc="equals()+hashCode()+toString()">
+
+
+  @Override
+  public boolean equals(Object that)
+  {
+    if (that == null || this.getClass() != that.getClass())
+    {
+      return false;
+    }
+    Edge<?, ?> that_ = (Edge<?, ?>) that;
+    return Objects.equals(this.source, that_.source) &&
+      Objects.equals(this.target, that_.target) &&
+      Objects.equals(this.weight, that_.weight);
+  }
+
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(this.source, this.target, this.weight);
+  }
+
+
+  @Override
+  public String toString()
+  {
+    return To.string(this);
+  }
+
+
+  //</editor-fold>
 
 }
