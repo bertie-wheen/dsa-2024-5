@@ -18,8 +18,8 @@ public class ClassUtils
     }
     catch (InstantiationException | IllegalAccessException e)
     {
-      throw e.getCause() instanceof TODO
-        ? (TODO) e.getCause()
+      throw e.getCause() instanceof RuntimeException
+        ? (RuntimeException) e.getCause()
         : new ImpossibleException(e);
     }
   }
@@ -35,8 +35,8 @@ public class ClassUtils
     catch (InstantiationException | IllegalAccessException |
            InvocationTargetException | NoSuchMethodException e)
     {
-      throw e.getCause() instanceof TODO
-        ? (TODO) e.getCause()
+      throw e.getCause() instanceof RuntimeException
+        ? (RuntimeException) e.getCause()
         : new ImpossibleException(e);
     }
   }
