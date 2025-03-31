@@ -59,13 +59,13 @@ we'll need it in the next lab.
 
 Open and inspect the `lab10\exercises\DirectedGraph.java` file, that features
 the `DirectedGraph<Vertex, Weight>` class, extending `Container<Vertex>`. We
-have only field: `adjacencyList`, which is of type
+have only field: `adjacencyLists`, which is of type
 `Map<Vertex, DynamicSequence<Edge<Vertex, Weight>>>`. Let's unravel all of this:
-the object `adjacencyList` contains objects of type `MapItem<Key, Value>` where
+the object `adjacencyLists` contains objects of type `MapItem<Key, Value>` where
 the type `Key` is `Vertex` here, and the type `Value` is (the type of any class
 implementing) `DynamicSequence<Item>`, where `Item` here is
 `Edge<Vertex, Weight>`. In other words, we are storing in the map
-`adjacencyList` the vertices of our graph paired up with a sequence of edges,
+`adjacencyLists` the vertices of our graph paired up with a sequence of edges,
 which are supposed to be the *outgoing* edges from that vertex. This is one
 inconsistency with what we saw in the lectures, where I said that one stores the
 sets $Adj(u)$ (consisting of the vertices adjacent to $u$) as items with a
@@ -83,18 +83,24 @@ all rather inelegant.)
 
 There are a few methods for you to implement:
 
-* `edge(source, target)`: return, if it's stored in this graph, the edge from
-  `source` to `target`. You'll have to use `this.adjacencyList`, which supports
-  all the methods of the `Map` interface, see `lab04\base`: first find the
-  appropriate adjacency list (which is a dynamic sequence of edges) that stands
-  a chance of containing an edge from `source` to `target`, and then linearly
-  search for such an edge in it, using the methods of the `DynamicSequence`
-  interface, see `lab02\base`. Consider that our adjacency lists are not stored
-  in a sorted order, given that our vertices are not necessarily comparable.
-* `degree(vertex)`: return the outgoing degree of `vertex` (see the lecture
-  slides if you can't remember what that is). Again use `this.adjacencyList`
-  and its supported methods; you should only require one line of code.
-* `contains(vertex)` and `contains(edge)` are self-explanatory.
+* `contains(vertex)` is self-explanatory.
+* `contains(edge)`: return whether `edge` is stored in this graph or not. For 
+this, you'll have to use `this.adjacencyLists`, which supports all the methods 
+of the `Map` interface, see `lab04\base`: first find the appropriate adjacency 
+list (which is a dynamic sequence of edges) that stands a chance of containing 
+`edge`, and then check if that list contains it, using the method `contains` 
+provided by the Dynamic Sequence interface.
+* `degree(vertex)`: return the outgoing degree of `vertex` (see the lecture 
+slides if you can't remember what that is). Again use `this.adjacencyLists` and
+ its supported methods; you should only require one line of code.
+* `edge(source, target)`: return, if it's stored in this graph, the edge from 
+`source` to `target`. Again you'll have to use `this.adjacencyLists`, which 
+supports all the methods of the `Map` interface: first find the appropriate 
+adjacency list (which is a dynamic sequence of edges) that stands a chance of 
+containing an edge from `source` to `target`, and then linearly search for such
+ an edge in it, using the methods of the `DynamicSequence` interface, see 
+ `lab02\base`. Consider that our adjacency lists are not stored in a sorted 
+ order, given that our vertices are not necessarily comparable.
 
 As usual, you can `Run Lab 10 tests`, but always make sure to compare your work
 with our solutions, to double check whether you implemented your methods with
