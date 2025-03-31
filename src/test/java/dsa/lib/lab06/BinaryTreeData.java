@@ -58,8 +58,8 @@ public class BinaryTreeData
     return (a == null && b == null) ||
       (a != null && b != null &&
         java.util.Objects.equals(a.item(), b.item()) &&
-        (a.hasLeft() ? a.left().equals(b.left()) : !b.hasLeft()) &&
-        (a.hasRight() ? a.right().equals(b.right()) : !b.hasRight()));
+        (a.hasLeft() ? equals(a.left(), b.left()) : !b.hasLeft()) &&
+        (a.hasRight() ? equals(a.right(), b.right()) : !b.hasRight()));
   }
 
 
