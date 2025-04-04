@@ -144,6 +144,7 @@ public interface StaticSequence<Item>
     this.set(indexB, temp);
   }
 
+
   //<editor-fold defaultstate="collapsed" desc="Iteration">
 
 
@@ -216,6 +217,7 @@ public interface StaticSequence<Item>
     }
 
   }
+
 
   /**
    * A reverse iterator over the items in a sequence.

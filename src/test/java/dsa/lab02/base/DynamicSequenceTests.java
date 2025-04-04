@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.function.BiFunction;
 
-import static dsa.lib.ClassUtils.construct;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 
@@ -70,7 +69,7 @@ public interface DynamicSequenceTests
           sources.flatReplace((source) ->
               source.validInsertIndices().flatReplace((index) ->
                 items.replace((item) -> new Object[]{
-                  construct(sequenceClass, source),
+                  ClassUtils.construct(sequenceClass, source),
                   index,
                   item})))
             .quadratic()
@@ -114,7 +113,7 @@ public interface DynamicSequenceTests
           TestNames.format(
             TestNames.constructor(sequenceClass),
             TestNames.method("remove", index)),
-          construct(sequenceClass),
+          ClassUtils.construct(sequenceClass),
           index));
     }
     //</editor-fold>
@@ -168,7 +167,7 @@ public interface DynamicSequenceTests
         .flatReplace((sources) ->
           sources.flatReplace((source) ->
               source.validIndices().replace((index) -> new Object[]{
-                construct(sequenceClass, source),
+                ClassUtils.construct(sequenceClass, source),
                 index}))
             .quadratic()
             .limit())

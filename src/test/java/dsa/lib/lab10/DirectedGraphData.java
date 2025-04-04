@@ -20,8 +20,7 @@ public class DirectedGraphData
           new Edge<Vertex, Weight>(pair.getAt(0), pair.getAt(1)))
         .uniques()
         .cycledSubs()
-        .replace((es) ->
-          new DirectedGraph<>(vs, es)));
+        .replace((es) -> new DirectedGraph<>(vs, es)));
   }
 
 
